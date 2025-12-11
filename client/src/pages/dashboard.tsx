@@ -53,7 +53,7 @@ const systems = [
     title: "تحليل نتائج اختبارات",
     description: "تحليل شامل لنتائج اختبارات الطلاب ومؤشرات الأداء.",
     icon: BarChart3,
-    href: "https://results-analysis.replit.app",
+    href: "https://Exam-Analysis-Riyadh.replit.app",
     color: "bg-rose-500"
   }
 ];
