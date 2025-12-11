@@ -13,7 +13,7 @@ import {
   BarChart3
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
-import heroBg from "@assets/generated_images/educational_collage_with_books_lab_equipment_and_analysis_charts.png";
+import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
 import schoolLogo from "@assets/GQkIaRAWgAAQDHL_1765454447820.jpg";
 
 const systems = [
