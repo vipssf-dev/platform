@@ -7,7 +7,8 @@ import {
   FolderOpen,
   School,
   LayoutDashboard,
-  Bell
+  Bell,
+  BarChart3
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/modern_abstract_school_administration_background_with_soft_blue_geometry.png";
@@ -47,6 +48,13 @@ const systems = [
     icon: FolderOpen,
     href: "https://Portfolio-followup.replit.app",
     color: "bg-sky-500"
+  },
+  {
+    title: "تحليل نتائج اختبارات",
+    description: "تحليل شامل لنتائج اختبارات الطلاب ومؤشرات الأداء.",
+    icon: BarChart3,
+    href: "https://results-analysis.replit.app",
+    color: "bg-rose-500"
   }
 ];
 
