@@ -98,12 +98,12 @@ export default function Dashboard() {
       </header>
 
       {/* Hero Section */}
-      <div className="relative h-[300px] w-full overflow-hidden bg-white">
+      <div className="relative h-[300px] w-full overflow-hidden">
         <div 
-          className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-20 transform scale-90"
-          style={{ backgroundImage: `url(${schoolLogo})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroBg})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-blue-900/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/75 to-blue-900/65" />
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-start text-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
