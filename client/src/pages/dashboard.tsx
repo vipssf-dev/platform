@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Calculator, 
@@ -7,11 +8,12 @@ import {
   FolderOpen,
   School,
   LayoutDashboard,
-  Bell,
+  LayoutGrid,
+  List,
   BarChart3
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
-import heroBg from "@assets/generated_images/modern_saudi_school_architecture_with_royal_commission_vibes.png";
+import heroBg from "@assets/generated_images/educational_collage_with_books_lab_equipment_and_analysis_charts.png";
 import schoolLogo from "@assets/GQkIaRAWgAAQDHL_1765454447820.jpg";
 
 const systems = [
@@ -60,6 +62,8 @@ const systems = [
 ];
 
 export default function Dashboard() {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans" dir="rtl">
       {/* Header Section */}
@@ -74,12 +78,20 @@ export default function Dashboard() {
               <p className="text-sm text-slate-500">العام الدراسي 1447هـ</p>
             </div>
           </div>
-          <div className="flex gap-4">
-             <button className="p-2 text-slate-500 hover:text-primary transition-colors">
-               <Bell className="w-6 h-6" />
+          <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
+             <button 
+               onClick={() => setViewMode('grid')}
+               className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+               title="عرض شبكي"
+             >
+               <LayoutGrid className="w-5 h-5" />
              </button>
-             <button className="p-2 text-slate-500 hover:text-primary transition-colors">
-               <LayoutDashboard className="w-6 h-6" />
+             <button 
+               onClick={() => setViewMode('list')}
+               className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+               title="عرض قائمة"
+             >
+               <List className="w-5 h-5" />
              </button>
           </div>
         </div>
@@ -115,7 +127,7 @@ export default function Dashboard() {
 
       {/* Systems Grid */}
       <main className="container mx-auto px-4 py-12 -mt-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 max-w-3xl mx-auto'}`}>
           {systems.map((system, index) => (
             <motion.div
               key={system.title}
