@@ -145,7 +145,6 @@ export default function Dashboard() {
       <footer className="bg-white border-t border-slate-200 py-8 mt-12">
         <div className="container mx-auto px-4 text-center text-slate-500">
           <p>© 1447 مدرسة الرياض الابتدائية - جميع الحقوق محفوظة</p>
-          <p className="text-sm mt-2">تم التطوير بواسطة وحدة تقنية المعلومات</p>
         </div>
       </footer>
     </div>
