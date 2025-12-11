@@ -98,11 +98,11 @@ export default function Dashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-6 w-24 h-24 md:w-32 md:h-32 bg-white rounded-full p-1 shadow-lg overflow-hidden">
+            <div className="mb-8 w-auto h-24 md:h-32 bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg inline-block">
               <img 
                 src={schoolLogo} 
-                alt="شعار مدرسة الرياض" 
-                className="w-full h-full object-cover"
+                alt="شعار الهيئة الملكية للجبيل وينبع" 
+                className="w-full h-full object-contain"
               />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">منصة الرياض الإلكترونية</h2>
