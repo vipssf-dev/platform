@@ -11,7 +11,7 @@ import {
   BarChart3
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
-import heroBg from "@assets/generated_images/modern_abstract_school_administration_background_with_soft_blue_geometry.png";
+import heroBg from "@assets/generated_images/modern_saudi_school_architecture_with_royal_commission_vibes.png";
 import schoolLogo from "@assets/GQkIaRAWgAAQDHL_1765454447820.jpg";
 
 const systems = [
