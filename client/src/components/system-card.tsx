@@ -9,9 +9,39 @@ interface SystemCardProps {
   icon: LucideIcon;
   href: string;
   color: string;
+  mode?: 'grid' | 'list';
 }
 
-export function SystemCard({ title, description, icon: Icon, href, color }: SystemCardProps) {
+export function SystemCard({ title, description, icon: Icon, href, color, mode = 'grid' }: SystemCardProps) {
+  if (mode === 'list') {
+    return (
+      <motion.div
+        whileHover={{ x: -5 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        <a href={href} target="_blank" rel="noopener noreferrer" className="block w-full">
+          <Card className="border-transparent shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group bg-white hover:bg-slate-50">
+            <div className="flex items-center p-4 gap-4">
+              <div className={`p-3 rounded-lg flex-shrink-0 ${color.replace('bg-', 'bg-opacity-10 bg-')} text-${color.replace('bg-', '')}`}>
+                <Icon className={`w-6 h-6 ${color.replace('bg-', 'text-')}`} />
+              </div>
+              <div className="flex-grow min-w-0">
+                <CardTitle className="text-lg font-bold text-slate-800 mb-1 truncate">{title}</CardTitle>
+                <CardDescription className="text-sm text-slate-600 truncate">
+                  {description}
+                </CardDescription>
+              </div>
+              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                <ExternalLink className="w-5 h-5 text-muted-foreground" />
+              </div>
+            </div>
+            <div className={`h-1 w-full ${color}`} />
+          </Card>
+        </a>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       whileHover={{ y: -5 }}

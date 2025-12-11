@@ -135,7 +135,7 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
             >
-              <SystemCard {...system} />
+              <SystemCard {...system} mode={viewMode} />
             </motion.div>
           ))}
         </div>
