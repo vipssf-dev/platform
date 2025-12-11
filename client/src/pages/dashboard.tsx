@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/modern_abstract_school_administration_background_with_soft_blue_geometry.png";
+import schoolLogo from "@assets/GQkIaRAWgAAQDHL_1765454447820.jpg";
 
 const systems = [
   {
@@ -97,7 +98,14 @@ export default function Dashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">بوابة الخدمات الإلكترونية</h2>
+            <div className="mb-6 w-24 h-24 md:w-32 md:h-32 bg-white rounded-full p-1 shadow-lg overflow-hidden">
+              <img 
+                src={schoolLogo} 
+                alt="شعار مدرسة الرياض" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">منصة الرياض الإلكترونية</h2>
             <p className="text-xl text-blue-100 max-w-2xl leading-relaxed">
               منصة موحدة لجميع الأنظمة الإدارية والتعليمية لتسهيل العمل ورفع الكفاءة.
             </p>
