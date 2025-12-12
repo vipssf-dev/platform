@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Calculator, 
@@ -10,7 +11,8 @@ import {
   LayoutDashboard,
   LayoutGrid,
   List,
-  BarChart3
+  BarChart3,
+  LogOut
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -63,6 +65,12 @@ const systems = [
 
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [, setLocation] = useLocation();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    setLocation("/login");
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans" dir="rtl">
@@ -78,20 +86,30 @@ export default function Dashboard() {
               <p className="text-sm text-slate-500">العام الدراسي 1447هـ</p>
             </div>
           </div>
-          <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
+          <div className="flex gap-2 items-center">
+             <div className="flex gap-1 bg-slate-100 p-1 rounded-lg ml-2">
+               <button 
+                 onClick={() => setViewMode('grid')}
+                 className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+                 title="عرض شبكي"
+               >
+                 <LayoutGrid className="w-5 h-5" />
+               </button>
+               <button 
+                 onClick={() => setViewMode('list')}
+                 className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+                 title="عرض قائمة"
+               >
+                 <List className="w-5 h-5" />
+               </button>
+             </div>
+             
              <button 
-               onClick={() => setViewMode('grid')}
-               className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-               title="عرض شبكي"
+               onClick={handleLogout}
+               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-100"
              >
-               <LayoutGrid className="w-5 h-5" />
-             </button>
-             <button 
-               onClick={() => setViewMode('list')}
-               className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-               title="عرض قائمة"
-             >
-               <List className="w-5 h-5" />
+               <LogOut className="w-4 h-4" />
+               <span className="hidden md:inline">تسجيل خروج</span>
              </button>
           </div>
         </div>
