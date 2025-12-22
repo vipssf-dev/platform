@@ -13,7 +13,8 @@ import {
   List,
   BarChart3,
   LogOut,
-  Trophy
+  Trophy,
+  Bus
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -68,6 +69,13 @@ const systems = [
     icon: Trophy,
     href: "https://student-actives.replit.app/",
     color: "bg-yellow-500"
+  },
+  {
+    title: "مخالفات الحافلات المدرسية",
+    description: "رصد مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم.",
+    icon: Bus,
+    href: "https://bus-violations-monitor--vipssf.replit.app",
+    color: "bg-red-500"
   }
 ];
 
