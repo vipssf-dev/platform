@@ -12,7 +12,8 @@ import {
   LayoutGrid,
   List,
   BarChart3,
-  LogOut
+  LogOut,
+  Trophy
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -60,6 +61,13 @@ const systems = [
     icon: BarChart3,
     href: "https://Exam-Analysis-Riyadh.replit.app",
     color: "bg-rose-500"
+  },
+  {
+    title: "النشاط الطلابي لمتابعة أنشطة المدرسة",
+    description: "منصة شاملة لمتابعة وتنظيم الفعاليات والأنشطة الطلابية المدرسية.",
+    icon: Trophy,
+    href: "https://student-actives.replit.app/",
+    color: "bg-yellow-500"
   }
 ];
 
