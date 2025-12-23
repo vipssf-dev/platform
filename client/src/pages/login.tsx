@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { School, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import schoolLogo from "@assets/GQkIaRAWgAAQDHL_1765454447820.jpg";
+import schoolLogo from "@assets/شعار_الرياض_مفرغ_1766472209642.png";
 
 export default function Login() {
   const [username, setUsername] = useState("");
