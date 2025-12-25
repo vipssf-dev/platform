@@ -14,7 +14,8 @@ import {
   BarChart3,
   LogOut,
   Trophy,
-  Bus
+  Bus,
+  ClipboardCheck
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -41,6 +42,13 @@ const systems = [
     icon: FileQuestion,
     href: "https://data-transfer--vipssf.replit.app",
     color: "bg-purple-500"
+  },
+  {
+    title: "متابعة أعمال اختبارات نهاية الفصل الدراسي",
+    description: "نظام متابعة سير أعمال الاختبارات النهائية ورصد الإنجاز.",
+    icon: ClipboardCheck,
+    href: "https://exam-followup.replit.app/",
+    color: "bg-indigo-500"
   },
   {
     title: "متابعة الأعمال التحريرية",
