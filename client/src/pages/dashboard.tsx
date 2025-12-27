@@ -20,6 +20,7 @@ import {
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
 import schoolLogo from "@assets/شعار_الرياض_مفرغ_1766472209642.png";
+import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 
 const systems = [
   {
@@ -146,11 +147,12 @@ export default function Dashboard() {
           style={{ backgroundImage: `url(${heroBg})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/75 to-blue-900/65" />
-        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-start text-white">
+        <div className="relative container mx-auto px-4 h-full flex justify-between items-center text-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex flex-col justify-center items-start"
           >
             <div className="mb-8 w-auto h-24 md:h-32 bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg inline-block">
               <img 
@@ -163,6 +165,21 @@ export default function Dashboard() {
             <p className="text-xl text-blue-100 max-w-2xl leading-relaxed">
               منصة موحدة لجميع الأنظمة الإدارية والتعليمية لتسهيل العمل ورفع الكفاءة.
             </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="hidden lg:block ml-8"
+          >
+            <div className="w-48 h-48 bg-white/10 backdrop-blur-md rounded-full p-6 shadow-xl border border-white/20 flex items-center justify-center">
+                <img 
+                    src={accreditationLogo} 
+                    alt="شعار الاعتماد" 
+                    className="w-full h-full object-contain rounded-full"
+                />
+            </div>
           </motion.div>
         </div>
       </div>
