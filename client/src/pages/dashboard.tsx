@@ -173,11 +173,11 @@ export default function Dashboard() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="hidden lg:block ml-8"
           >
-            <div className="w-48 h-48 bg-white/10 backdrop-blur-md rounded-full p-6 shadow-xl border border-white/20 flex items-center justify-center">
+            <div className="w-48 h-48 bg-white/10 backdrop-blur-md rounded-full shadow-xl border border-white/20 flex items-center justify-center overflow-hidden">
                 <img 
                     src={accreditationLogo} 
                     alt="شعار الاعتماد" 
-                    className="w-full h-full object-contain rounded-full"
+                    className="w-full h-full object-cover"
                 />
             </div>
           </motion.div>
