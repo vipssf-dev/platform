@@ -15,7 +15,8 @@ import {
   LogOut,
   Trophy,
   Bus,
-  ClipboardCheck
+  ClipboardCheck,
+  Compass
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -85,6 +86,13 @@ const systems = [
     icon: Bus,
     href: "https://bus-violations.replit.app",
     color: "bg-red-500"
+  },
+  {
+    title: "خطة التوجيه الطلابي",
+    description: "لمتابعة خطط وأعمال الموجه الطلابي",
+    icon: Compass,
+    href: "https://student-counselor.replit.app/",
+    color: "bg-teal-500"
   }
 ];
 
