@@ -48,4 +48,3 @@ mockupState = "FULLSTACK"
 [userenv]
 
 [userenv.production]
-SYSTEM_OWNER = "SALEH_ALGHAMDI_1447"
