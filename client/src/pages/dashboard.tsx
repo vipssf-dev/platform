@@ -15,7 +15,8 @@ import {
   LogOut,
   Trophy,
   Bus,
-  ClipboardCheck
+  ClipboardCheck,
+  HeartHandshake
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -78,6 +79,13 @@ const systems = [
     icon: Trophy,
     href: "https://student-actives.replit.app/",
     color: "bg-yellow-500"
+  },
+  {
+    title: "خطة التوجيه الطلابي لمتابعة خطط وأعمال الموجه الطلابي",
+    description: "نظام متابعة خطة التوجيه الطلابي والأعمال المتعلقة بالموجه الطلابي.",
+    icon: HeartHandshake,
+    href: "https://student-counselor.replit.app/",
+    color: "bg-teal-500"
   },
   {
     title: "مخالفات الحافلات المدرسية",
