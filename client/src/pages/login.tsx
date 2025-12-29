@@ -91,6 +91,8 @@ export default function Login() {
         
         <p className="text-center text-sm text-slate-400 mt-8">
           © 1447 مدرسة الرياض الابتدائية
+          <br />
+          <span className="text-xs mt-1 block">تصميم وتطوير: [اسم المطور]</span>
         </p>
       </div>
     </div>
