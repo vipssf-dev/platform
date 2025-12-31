@@ -16,7 +16,8 @@ import {
   Trophy,
   Bus,
   ClipboardCheck,
-  HeartHandshake
+  HeartHandshake,
+  BookOpen
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -86,6 +87,13 @@ const systems = [
     icon: HeartHandshake,
     href: "https://student-counselor.replit.app/",
     color: "bg-teal-500"
+  },
+  {
+    title: "مركز مصادر التعلم",
+    description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
+    icon: BookOpen,
+    href: "https://learning-resources.replit.app/",
+    color: "bg-cyan-500"
   },
   {
     title: "مخالفات الحافلات المدرسية",
