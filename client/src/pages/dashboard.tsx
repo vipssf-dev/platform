@@ -17,7 +17,8 @@ import {
   Bus,
   ClipboardCheck,
   HeartHandshake,
-  BookOpen
+  BookOpen,
+  Stethoscope
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -94,6 +95,13 @@ const systems = [
     icon: BookOpen,
     href: "https://learning-resources.replit.app/",
     color: "bg-cyan-500"
+  },
+  {
+    title: "الإشراف الصحي",
+    description: "متابعة أعمال وخطط المشرف الصحي والبرامج الصحية المدرسية.",
+    icon: Stethoscope,
+    href: "https://Health-care.replit.app",
+    color: "bg-pink-500"
   },
   {
     title: "مخالفات الحافلات المدرسية",
