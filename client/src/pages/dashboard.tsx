@@ -44,7 +44,7 @@ const systems = [
     title: "تسليم أسئلة الاختبارات",
     description: "سجل متابعة تسليم واستلام أسئلة اختبارات نهاية الفصل.",
     icon: FileQuestion,
-    href: "https://data-transfer--vipssf.replit.app",
+    href: "https://exams-qs.replit.app/",
     color: "bg-purple-500"
   },
   {
