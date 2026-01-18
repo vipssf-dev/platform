@@ -106,7 +106,7 @@ const systems = [
   },
   {
     title: "سجلات المتابعة",
-    description: "نظام إدارة ومتابعة السجلات الإدارية والتعليمية.",
+    description: "نظام متابعة سجلات متابعة الطلاب.",
     icon: FileText,
     href: "https://Follow-up-Record.replit.app",
     color: "bg-amber-500"
