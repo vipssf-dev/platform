@@ -18,7 +18,8 @@ import {
   ClipboardCheck,
   HeartHandshake,
   BookOpen,
-  Stethoscope
+  Stethoscope,
+  FileText
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -102,6 +103,13 @@ const systems = [
     icon: Stethoscope,
     href: "https://Health-care.replit.app",
     color: "bg-pink-500"
+  },
+  {
+    title: "سجلات المتابعة",
+    description: "نظام إدارة ومتابعة السجلات الإدارية والتعليمية.",
+    icon: FileText,
+    href: "https://Follow-up-Record.replit.app",
+    color: "bg-amber-500"
   },
   {
     title: "مخالفات الحافلات المدرسية",
