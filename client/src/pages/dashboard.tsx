@@ -115,7 +115,7 @@ const systems = [
     title: "مخالفات الحافلات المدرسية",
     description: "رصد مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم.",
     icon: Bus,
-    href: "https://bus-violations.replit.app",
+    href: "https://busviolations.live",
     color: "bg-red-500"
   }
 ];
