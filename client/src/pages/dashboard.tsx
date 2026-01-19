@@ -31,91 +31,91 @@ const systems = [
     title: "النظام المالي",
     description: "إدارة العمليات المالية والميزانية المدرسية بكفاءة عالية.",
     icon: Calculator,
-    href: "https://financial-r.com",
+    href: "https://financial.riyadhplatform.tech",
     color: "bg-emerald-500"
   },
   {
     title: "متابعة المهام - المساعدين الإداريين",
     description: "نظام تنظيم ومتابعة المهام اليومية للطاقم الإداري.",
     icon: ClipboardList,
-    href: "https://taskfollowup.blog",
+    href: "https://tasks.riyadhplatform.tech",
     color: "bg-blue-500"
   },
   {
     title: "تسليم أسئلة الاختبارات",
     description: "سجل متابعة تسليم واستلام أسئلة اختبارات نهاية الفصل.",
     icon: FileQuestion,
-    href: "https://exams-qs.replit.app/",
+    href: "https://exams-qs.riyadhplatform.tech",
     color: "bg-purple-500"
   },
   {
     title: "متابعة أعمال اختبارات نهاية الفصل الدراسي",
     description: "نظام متابعة سير أعمال الاختبارات النهائية ورصد الإنجاز.",
     icon: ClipboardCheck,
-    href: "https://exam-followup.replit.app/",
+    href: "https://exam-followup.riyadhplatform.tech",
     color: "bg-indigo-500"
   },
   {
     title: "متابعة الأعمال التحريرية",
     description: "رصد ومتابعة الأعمال التحريرية للفصل الدراسي الأول.",
     icon: PenTool,
-    href: "https://mtbaa-laaml-lt-hryry-lf-sl-lwl-1447--vipssf.replit.app",
+    href: "https://supervision.riyadhplatform.tech",
     color: "bg-orange-500"
   },
   {
     title: "متابعة ملفات الإنجاز (OneDrive)",
     description: "بوابة متابعة ملفات الإنجاز الرقمية للمعلمين والطلاب.",
     icon: FolderOpen,
-    href: "https://Portfolio-followup.replit.app",
+    href: "https://portfolio.riyadhplatform.tech",
     color: "bg-sky-500"
   },
   {
     title: "تحليل نتائج اختبارات",
     description: "تحليل شامل لنتائج اختبارات الطلاب ومؤشرات الأداء.",
     icon: BarChart3,
-    href: "https://Exam-Analysis-Riyadh.replit.app",
+    href: "https://exam-analysis.riyadhplatform.tech",
     color: "bg-rose-500"
   },
   {
     title: "النشاط الطلابي لمتابعة أنشطة المدرسة",
     description: "منصة شاملة لمتابعة وتنظيم الفعاليات والأنشطة الطلابية المدرسية.",
     icon: Trophy,
-    href: "https://student-actives.replit.app/",
+    href: "https://activities.riyadhplatform.tech",
     color: "bg-yellow-500"
   },
   {
     title: "خطة التوجيه الطلابي لمتابعة خطط وأعمال الموجه الطلابي",
     description: "نظام متابعة خطة التوجيه الطلابي والأعمال المتعلقة بالموجه الطلابي.",
     icon: HeartHandshake,
-    href: "https://student-counselor.replit.app/",
+    href: "https://counselor.riyadhplatform.tech",
     color: "bg-teal-500"
   },
   {
     title: "مركز مصادر التعلم",
     description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
     icon: BookOpen,
-    href: "https://learningre.live",
+    href: "https://learning.riyadhplatform.tech",
     color: "bg-cyan-500"
   },
   {
     title: "الإشراف الصحي",
     description: "متابعة أعمال وخطط المشرف الصحي والبرامج الصحية المدرسية.",
     icon: Stethoscope,
-    href: "https://Health-care.replit.app",
+    href: "https://health.riyadhplatform.tech",
     color: "bg-pink-500"
   },
   {
     title: "سجلات المتابعة",
     description: "نظام متابعة سجلات متابعة الطلاب.",
     icon: FileText,
-    href: "https://Follow-up-Record.replit.app",
+    href: "https://records.riyadhplatform.tech",
     color: "bg-amber-500"
   },
   {
     title: "مخالفات الحافلات المدرسية",
     description: "رصد مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم.",
     icon: Bus,
-    href: "https://busviolations.live",
+    href: "https://bus.riyadhplatform.tech",
     color: "bg-red-500"
   }
 ];
