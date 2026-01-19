@@ -38,7 +38,7 @@ const systems = [
     title: "متابعة المهام - المساعدين الإداريين",
     description: "نظام تنظيم ومتابعة المهام اليومية للطاقم الإداري.",
     icon: ClipboardList,
-    href: "https://data-mover--vipssf.replit.app",
+    href: "https://taskfollowup.blog",
     color: "bg-blue-500"
   },
   {
