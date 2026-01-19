@@ -31,7 +31,7 @@ const systems = [
     title: "النظام المالي",
     description: "إدارة العمليات المالية والميزانية المدرسية بكفاءة عالية.",
     icon: Calculator,
-    href: "https://financial-system.replit.app",
+    href: "https://financial-r.com",
     color: "bg-emerald-500"
   },
   {
