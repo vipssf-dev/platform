@@ -94,7 +94,7 @@ const systems = [
     title: "مركز مصادر التعلم",
     description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
     icon: BookOpen,
-    href: "https://learning-resources.replit.app/",
+    href: "https://learningre.live",
     color: "bg-cyan-500"
   },
   {
