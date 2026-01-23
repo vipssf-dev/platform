@@ -14,6 +14,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import NotFound from "@/pages/not-found";
+import ExamsHub from "@/pages/exams-hub";
 import { useEffect, useState } from "react";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
@@ -39,6 +40,12 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/">
         <ProtectedRoute component={Dashboard} />
+      </Route>
+      <Route path="/dashboard">
+        <ProtectedRoute component={Dashboard} />
+      </Route>
+      <Route path="/exams">
+        <ProtectedRoute component={ExamsHub} />
       </Route>
       <Route component={NotFound} />
     </Switch>

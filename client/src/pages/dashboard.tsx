@@ -4,14 +4,11 @@ import { motion } from "framer-motion";
 import { 
   Calculator, 
   ClipboardList, 
-  FileQuestion, 
   PenTool, 
   FolderOpen,
   School,
-  LayoutDashboard,
   LayoutGrid,
   List,
-  BarChart3,
   LogOut,
   Trophy,
   Bus,
@@ -43,18 +40,12 @@ const systems = [
     color: "bg-blue-500"
   },
   {
-    title: "تسليم أسئلة الاختبارات",
-    description: "سجل متابعة تسليم واستلام أسئلة اختبارات نهاية الفصل.",
-    icon: FileQuestion,
-    href: "https://exams-qs.riyadhplatform.tech",
-    color: "bg-purple-500"
-  },
-  {
-    title: "متابعة أعمال اختبارات نهاية الفصل الدراسي",
-    description: "نظام متابعة سير أعمال الاختبارات النهائية ورصد الإنجاز.",
+    title: "أعمال الاختبارات",
+    description: "تسليم الأسئلة ومتابعة أعمال الاختبارات وتحليل النتائج.",
     icon: ClipboardCheck,
-    href: "https://exam-followup.riyadhplatform.tech",
-    color: "bg-indigo-500"
+    href: "/exams",
+    color: "bg-indigo-500",
+    isInternal: true
   },
   {
     title: "متابعة الأعمال التحريرية",
@@ -69,13 +60,6 @@ const systems = [
     icon: FolderOpen,
     href: "https://portfolio.riyadhplatform.tech",
     color: "bg-sky-500"
-  },
-  {
-    title: "تحليل نتائج اختبارات",
-    description: "تحليل شامل لنتائج اختبارات الطلاب ومؤشرات الأداء.",
-    icon: BarChart3,
-    href: "https://exam-analysis.riyadhplatform.tech",
-    color: "bg-rose-500"
   },
   {
     title: "النشاط الطلابي لمتابعة أنشطة المدرسة",
