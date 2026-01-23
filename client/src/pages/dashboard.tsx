@@ -60,7 +60,7 @@ const systems = [
     color: "bg-yellow-500"
   },
   {
-    title: "خطة التوجيه الطلابي لمتابعة خطط وأعمال الموجه الطلابي",
+    title: "التوجيه الطلابي",
     description: "نظام متابعة خطة التوجيه الطلابي والأعمال المتعلقة بالموجه الطلابي.",
     icon: HeartHandshake,
     href: "https://counselor.riyadhplatform.tech",
