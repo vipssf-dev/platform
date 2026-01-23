@@ -14,7 +14,8 @@ import {
   ClipboardCheck,
   HeartHandshake,
   BookOpen,
-  Stethoscope
+  Stethoscope,
+  Building2
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -86,6 +87,13 @@ const systems = [
     icon: Bus,
     href: "https://bus.riyadhplatform.tech",
     color: "bg-red-500"
+  },
+  {
+    title: "المبنى المدرسي",
+    description: "متابعة أعمال صيانة المبنى المدرسي.",
+    icon: Building2,
+    href: "https://maintenance.riyadhplatform.tech",
+    color: "bg-stone-500"
   }
 ];
 
