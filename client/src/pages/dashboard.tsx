@@ -53,7 +53,7 @@ const systems = [
     isInternal: true
   },
   {
-    title: "النشاط الطلابي لمتابعة أنشطة المدرسة",
+    title: "النشاط الطلابي",
     description: "منصة شاملة لمتابعة وتنظيم الفعاليات والأنشطة الطلابية المدرسية.",
     icon: Trophy,
     href: "https://activities.riyadhplatform.tech",
