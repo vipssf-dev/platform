@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { 
   Calculator, 
   ClipboardList, 
-  PenTool, 
   FolderOpen,
   School,
   LayoutGrid,
@@ -15,9 +14,7 @@ import {
   ClipboardCheck,
   HeartHandshake,
   BookOpen,
-  Stethoscope,
-  FileText,
-  Calendar
+  Stethoscope
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -48,18 +45,12 @@ const systems = [
     isInternal: true
   },
   {
-    title: "متابعة الأعمال التحريرية",
-    description: "رصد ومتابعة الأعمال التحريرية للفصل الدراسي الأول.",
-    icon: PenTool,
-    href: "https://supervision.riyadhplatform.tech",
-    color: "bg-orange-500"
-  },
-  {
-    title: "متابعة ملفات الإنجاز (OneDrive)",
-    description: "بوابة متابعة ملفات الإنجاز الرقمية للمعلمين والطلاب.",
+    title: "متابعة الأعمال الفنية",
+    description: "الجداول والملفات والسجلات والأعمال التحريرية.",
     icon: FolderOpen,
-    href: "https://portfolio.riyadhplatform.tech",
-    color: "bg-sky-500"
+    href: "/technical",
+    color: "bg-orange-500",
+    isInternal: true
   },
   {
     title: "النشاط الطلابي لمتابعة أنشطة المدرسة",
@@ -90,25 +81,11 @@ const systems = [
     color: "bg-pink-500"
   },
   {
-    title: "سجلات المتابعة",
-    description: "نظام متابعة سجلات متابعة الطلاب.",
-    icon: FileText,
-    href: "https://records.riyadhplatform.tech",
-    color: "bg-amber-500"
-  },
-  {
     title: "مخالفات الحافلات المدرسية",
     description: "رصد مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم.",
     icon: Bus,
     href: "https://bus.riyadhplatform.tech",
     color: "bg-red-500"
-  },
-  {
-    title: "الجداول المدرسية",
-    description: "استعراض جداول المعلمين والفصول الدراسية.",
-    icon: Calendar,
-    href: "https://school-timetables.riyadhplatform.tech",
-    color: "bg-violet-500"
   }
 ];
 
