@@ -5,7 +5,8 @@ import {
   FileText,
   PenTool,
   ArrowRight,
-  School
+  School,
+  UserCheck
 } from "lucide-react";
 import { Link } from "wouter";
 import { SystemCard } from "@/components/system-card";
@@ -38,6 +39,13 @@ const technicalSystems = [
     icon: PenTool,
     href: "https://supervision.riyadhplatform.tech",
     color: "bg-orange-500"
+  },
+  {
+    title: "الزيارات الفنية",
+    description: "متابعة الزيارات الفنية للمعلمين.",
+    icon: UserCheck,
+    href: "https://supervision-visit.riyadhplatform.tech",
+    color: "bg-teal-500"
   }
 ];
 
