@@ -38,21 +38,21 @@ export function SystemCard({ title, description, icon: Icon, href, color, mode =
         </>
       ) : (
         <>
-          <CardHeader className="pb-4">
+          <CardHeader className="pb-3 sm:pb-4">
             <div className="flex justify-between items-start">
-              <div className={`p-3 rounded-lg ${color.replace('bg-', 'bg-opacity-10 bg-')} text-${color.replace('bg-', '')}`}>
-                <Icon className={`w-8 h-8 ${color.replace('bg-', 'text-')}`} />
+              <div className={`p-2 sm:p-3 rounded-lg ${color.replace('bg-', 'bg-opacity-10 bg-')} text-${color.replace('bg-', '')}`}>
+                <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${color.replace('bg-', 'text-')}`} />
               </div>
               {isInternal ? <ChevronLeft className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" /> : <ExternalLink className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />}
             </div>
-            <CardTitle className="mt-4 text-xl font-bold text-slate-800">{title}</CardTitle>
+            <CardTitle className="mt-3 sm:mt-4 text-lg sm:text-xl font-bold text-slate-800">{title}</CardTitle>
           </CardHeader>
           <CardContent>
-            <CardDescription className="text-base text-slate-600 leading-relaxed">
+            <CardDescription className="text-sm sm:text-base text-slate-600 leading-relaxed">
               {description}
             </CardDescription>
-            <div className="mt-6">
-              <span className={`text-sm font-medium ${color.replace('bg-', 'text-')} flex items-center gap-2`}>
+            <div className="mt-4 sm:mt-6">
+              <span className={`text-xs sm:text-sm font-medium ${color.replace('bg-', 'text-')} flex items-center gap-2`}>
                 {isInternal ? 'عرض الأنظمة' : 'الدخول للنظام'}
                 <span className="group-hover:translate-x-[-4px] transition-transform">←</span>
               </span>
