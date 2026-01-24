@@ -7,11 +7,8 @@ import {
   LayoutGrid,
   List,
   LogOut,
-  Trophy,
-  Bus,
   ClipboardCheck,
-  HeartHandshake,
-  Stethoscope
+  HeartHandshake
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -44,32 +41,12 @@ const systems = [
     isInternal: true
   },
   {
-    title: "النشاط الطلابي",
-    description: "منصة شاملة لمتابعة وتنظيم الفعاليات والأنشطة الطلابية المدرسية.",
-    icon: Trophy,
-    href: "https://activities.riyadhplatform.tech",
-    color: "bg-yellow-500"
-  },
-  {
-    title: "التوجيه الطلابي",
-    description: "نظام متابعة خطة التوجيه الطلابي والأعمال المتعلقة بالموجه الطلابي.",
+    title: "شؤون الطلاب",
+    description: "النشاط والتوجيه والإشراف الصحي والحافلات.",
     icon: HeartHandshake,
-    href: "https://counselor.riyadhplatform.tech",
-    color: "bg-teal-500"
-  },
-  {
-    title: "الإشراف الصحي",
-    description: "متابعة أعمال وخطط المشرف الصحي والبرامج الصحية المدرسية.",
-    icon: Stethoscope,
-    href: "https://health.riyadhplatform.tech",
-    color: "bg-pink-500"
-  },
-  {
-    title: "مخالفات الحافلات المدرسية",
-    description: "رصد مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم.",
-    icon: Bus,
-    href: "https://bus.riyadhplatform.tech",
-    color: "bg-red-500"
+    href: "/students",
+    color: "bg-yellow-500",
+    isInternal: true
   }
 ];
 
