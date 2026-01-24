@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
-  FolderOpen,
   School,
   LayoutGrid,
   List,
@@ -25,19 +24,11 @@ const systems = [
     isInternal: true
   },
   {
-    title: "أعمال الاختبارات",
-    description: "تسليم الأسئلة ومتابعة أعمال الاختبارات وتحليل النتائج.",
+    title: "الشؤون التعليمية",
+    description: "أعمال الاختبارات ومتابعة الأعمال الفنية.",
     icon: ClipboardCheck,
-    href: "/exams",
+    href: "/educational",
     color: "bg-indigo-500",
-    isInternal: true
-  },
-  {
-    title: "متابعة الأعمال الفنية",
-    description: "الجداول والملفات والسجلات والأعمال التحريرية.",
-    icon: FolderOpen,
-    href: "/technical",
-    color: "bg-orange-500",
     isInternal: true
   },
   {
