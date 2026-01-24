@@ -16,6 +16,7 @@ import Login from "@/pages/login";
 import NotFound from "@/pages/not-found";
 import ExamsHub from "@/pages/exams-hub";
 import TechnicalHub from "@/pages/technical-hub";
+import SchoolAffairsHub from "@/pages/school-affairs-hub";
 import { useEffect, useState } from "react";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
@@ -50,6 +51,9 @@ function Router() {
       </Route>
       <Route path="/technical">
         <ProtectedRoute component={TechnicalHub} />
+      </Route>
+      <Route path="/school-affairs">
+        <ProtectedRoute component={SchoolAffairsHub} />
       </Route>
       <Route component={NotFound} />
     </Switch>

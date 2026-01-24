@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
-  Calculator, 
-  ClipboardList, 
   FolderOpen,
   School,
   LayoutGrid,
@@ -13,9 +11,7 @@ import {
   Bus,
   ClipboardCheck,
   HeartHandshake,
-  BookOpen,
-  Stethoscope,
-  Building2
+  Stethoscope
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
@@ -24,18 +20,12 @@ import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 
 const systems = [
   {
-    title: "النظام المالي",
-    description: "إدارة العمليات المالية والميزانية المدرسية بكفاءة عالية.",
-    icon: Calculator,
-    href: "https://financial.riyadhplatform.tech",
-    color: "bg-emerald-500"
-  },
-  {
-    title: "متابعة المهام - المساعدين الإداريين",
-    description: "نظام تنظيم ومتابعة المهام اليومية للطاقم الإداري.",
-    icon: ClipboardList,
-    href: "https://tasks.riyadhplatform.tech",
-    color: "bg-blue-500"
+    title: "الشؤون المدرسية",
+    description: "النظام المالي والمهام ومصادر التعلم والمبنى المدرسي.",
+    icon: School,
+    href: "/school-affairs",
+    color: "bg-emerald-500",
+    isInternal: true
   },
   {
     title: "أعمال الاختبارات",
@@ -68,13 +58,6 @@ const systems = [
     color: "bg-teal-500"
   },
   {
-    title: "مركز مصادر التعلم",
-    description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
-    icon: BookOpen,
-    href: "https://learning.riyadhplatform.tech",
-    color: "bg-cyan-500"
-  },
-  {
     title: "الإشراف الصحي",
     description: "متابعة أعمال وخطط المشرف الصحي والبرامج الصحية المدرسية.",
     icon: Stethoscope,
@@ -87,13 +70,6 @@ const systems = [
     icon: Bus,
     href: "https://bus.riyadhplatform.tech",
     color: "bg-red-500"
-  },
-  {
-    title: "المبنى المدرسي",
-    description: "متابعة أعمال صيانة المبنى المدرسي.",
-    icon: Building2,
-    href: "https://maintenance.riyadhplatform.tech",
-    color: "bg-stone-500"
   }
 ];
 
