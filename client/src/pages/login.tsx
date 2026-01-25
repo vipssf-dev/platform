@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { School, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import schoolLogo from "@assets/شعار_الرياض_مفرغ_1766472209642.png";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -37,12 +36,8 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 font-sans p-4" dir="rtl">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="bg-white p-4 rounded-2xl shadow-sm inline-block mb-4">
-             <img 
-              src={schoolLogo} 
-              alt="شعار الهيئة الملكية" 
-              className="h-20 object-contain"
-            />
+          <div className="bg-primary/10 p-4 rounded-2xl shadow-sm inline-block mb-4">
+            <School className="w-16 h-16 text-primary" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900">منصة الرياض الإلكترونية</h1>
           <p className="text-slate-500 mt-2">يرجى تسجيل الدخول للمتابعة</p>

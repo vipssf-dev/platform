@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
-import schoolLogo from "@assets/شعار_الرياض_مفرغ_1766472209642.png";
 import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 
 const systems = [
@@ -107,12 +106,8 @@ export default function Dashboard() {
             transition={{ duration: 0.6 }}
             className="flex flex-col justify-center items-start"
           >
-            <div className="mb-4 sm:mb-6 md:mb-8 w-auto h-16 sm:h-20 md:h-32 bg-white/10 backdrop-blur-md rounded-xl p-2 sm:p-3 md:p-4 shadow-lg inline-block">
-              <img 
-                src={schoolLogo} 
-                alt="شعار الهيئة الملكية للجبيل وينبع" 
-                className="w-full h-full object-contain"
-              />
+            <div className="mb-4 sm:mb-6 md:mb-8 bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 md:p-5 shadow-lg inline-block">
+              <School className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white" />
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">منصة الرياض الإلكترونية</h2>
             <p className="text-sm sm:text-base md:text-xl text-blue-100 max-w-2xl leading-relaxed">
