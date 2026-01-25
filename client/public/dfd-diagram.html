@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Riyadh Elementary School - Data Flow Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1e40af;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e40af;
+        }
+        h3 {
+            color: #374151;
+            margin: 20px 0 15px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .diagram {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        .level-0 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .entity {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .process {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 20px 40px;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: bold;
+        }
+        .process-rect {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .data-store {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            border-left: 4px solid #10b981;
+            border-right: 4px solid #10b981;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #6b7280;
+            margin: 10px 0;
+        }
+        .flow-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-style: italic;
+        }
+        .branches {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+        }
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .subsystem {
+            background: #e0e7ff;
+            border: 1px solid #6366f1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 5px 0;
+            font-size: 13px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #1e40af;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        @media print {
+            body {
+                padding: 20px;
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .diagram {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Al-Riyadh Elementary School Portal</h1>
+        <p class="subtitle">Data Flow Diagram (DFD) - Academic Year 1447H</p>
+
+        <h2>1. Context Diagram (Level 0)</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="entity">Administrator / User</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">Login Credentials (Username, Password)</p>
+                <div class="arrow">↓</div>
+                <div class="process">Al-Riyadh Electronic Portal</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">Navigation Requests</p>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch">
+                        <strong>School Affairs</strong>
+                        <div class="subsystem">Financial System</div>
+                        <div class="subsystem">Task Management</div>
+                        <div class="subsystem">Learning Resources</div>
+                        <div class="subsystem">Building Maintenance</div>
+                    </div>
+                    <div class="branch">
+                        <strong>Educational Affairs</strong>
+                        <div class="subsystem">Exam Management</div>
+                        <div class="subsystem">Technical Work</div>
+                        <div class="subsystem">School Timetables</div>
+                        <div class="subsystem">Achievement Files</div>
+                        <div class="subsystem">Technical Visits</div>
+                    </div>
+                    <div class="branch">
+                        <strong>Student Affairs</strong>
+                        <div class="subsystem">Student Activities</div>
+                        <div class="subsystem">Student Counseling</div>
+                        <div class="subsystem">Health Supervision</div>
+                        <div class="subsystem">Bus Violations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>2. Authentication Process (Level 1)</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="entity">User</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">Username + Password</p>
+                <div class="arrow">↓</div>
+                <div class="process-rect">1.0 Login Page</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">Validate Credentials</p>
+                <div class="arrow">↓</div>
+                <div class="process-rect">2.0 Authentication Check</div>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch" style="background: #d1fae5;">
+                        <strong style="color: #059669;">✓ Success</strong>
+                        <div class="arrow">↓</div>
+                        <div class="data-store">Store Session (localStorage)</div>
+                        <div class="arrow">↓</div>
+                        <div class="process-rect">Dashboard</div>
+                    </div>
+                    <div class="branch" style="background: #fee2e2;">
+                        <strong style="color: #dc2626;">✗ Failure</strong>
+                        <div class="arrow">↓</div>
+                        <div class="process-rect">Error Message</div>
+                        <div class="arrow">↓</div>
+                        <div class="entity">Return to Login</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>3. System Navigation Flow</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="process-rect">Dashboard (Main Portal)</div>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch">
+                        <div class="process-rect">School Affairs Hub</div>
+                        <div class="arrow">↓</div>
+                        <p class="flow-label">External Links</p>
+                    </div>
+                    <div class="branch">
+                        <div class="process-rect">Educational Affairs Hub</div>
+                        <div class="arrow">↓</div>
+                        <div class="branches" style="gap: 10px;">
+                            <div class="subsystem">Exams Hub</div>
+                            <div class="subsystem">Technical Hub</div>
+                        </div>
+                    </div>
+                    <div class="branch">
+                        <div class="process-rect">Student Affairs Hub</div>
+                        <div class="arrow">↓</div>
+                        <p class="flow-label">External Links</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>4. External Systems (Subdomains)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>System Name</th>
+                    <th>Subdomain URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="4"><strong>School Affairs</strong></td>
+                    <td>Financial System</td>
+                    <td>financial.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Task Management</td>
+                    <td>tasks.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Learning Resources Center</td>
+                    <td>learning.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Building Maintenance</td>
+                    <td>maintenance.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td rowspan="8"><strong>Educational Affairs</strong></td>
+                    <td>Exam Questions Submission</td>
+                    <td>exams-qs.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Exam Follow-up</td>
+                    <td>exam-followup.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Results Analysis</td>
+                    <td>exam-analysis.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>School Timetables</td>
+                    <td>school-timetables.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Achievement Portfolios</td>
+                    <td>portfolio.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Follow-up Records</td>
+                    <td>records.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Editorial Work</td>
+                    <td>supervision.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Technical Visits</td>
+                    <td>supervision-visit.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td rowspan="4"><strong>Student Affairs</strong></td>
+                    <td>Student Activities</td>
+                    <td>activities.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Student Counseling</td>
+                    <td>counselor.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Health Supervision</td>
+                    <td>health.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>Bus Violations</td>
+                    <td>bus.riyadhplatform.tech</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Legend</h2>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dbeafe; border: 2px solid #3b82f6;"></div>
+                <span>External Entity</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fef3c7; border: 2px solid #f59e0b;"></div>
+                <span>Process</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #d1fae5; border: 2px solid #10b981;"></div>
+                <span>Data Store</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #e0e7ff; border: 1px solid #6366f1;"></div>
+                <span>Subsystem</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Al-Riyadh Elementary School</strong></p>
+            <p>Unified Electronic Portal - Data Flow Diagram</p>
+            <p>Design & Development: Saleh Safar Al-Ghamdi</p>
+        </div>
+    </div>
+</body>
+</html>
