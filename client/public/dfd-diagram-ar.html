@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة الرياض الابتدائية - مخطط تدفق البيانات</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            color: #333;
+            direction: rtl;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1e40af;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e40af;
+        }
+        h3 {
+            color: #374151;
+            margin: 20px 0 15px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .diagram {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        .level-0 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .entity {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .process {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 20px 40px;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: bold;
+        }
+        .process-rect {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .data-store {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            border-right: 4px solid #10b981;
+            border-left: 4px solid #10b981;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #6b7280;
+            margin: 10px 0;
+        }
+        .flow-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-style: italic;
+        }
+        .branches {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            min-width: 180px;
+        }
+        .subsystem {
+            background: #e0e7ff;
+            border: 1px solid #6366f1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 5px 0;
+            font-size: 13px;
+            width: 100%;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background: #1e40af;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        @media print {
+            body {
+                padding: 20px;
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .diagram {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>منصة مدرسة الرياض الإلكترونية</h1>
+        <p class="subtitle">مخطط تدفق البيانات (DFD) - العام الدراسي 1447هـ</p>
+
+        <h2>1. مخطط السياق (المستوى 0)</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="entity">المستخدم / المشرف</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">بيانات الدخول (اسم المستخدم، كلمة المرور)</p>
+                <div class="arrow">↓</div>
+                <div class="process">منصة الرياض الإلكترونية</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">طلبات التنقل</p>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch">
+                        <strong>الشؤون المدرسية</strong>
+                        <div class="subsystem">النظام المالي</div>
+                        <div class="subsystem">متابعة المهام</div>
+                        <div class="subsystem">مصادر التعلم</div>
+                        <div class="subsystem">المبنى المدرسي</div>
+                    </div>
+                    <div class="branch">
+                        <strong>الشؤون التعليمية</strong>
+                        <div class="subsystem">أعمال الاختبارات</div>
+                        <div class="subsystem">الأعمال الفنية</div>
+                        <div class="subsystem">الجداول المدرسية</div>
+                        <div class="subsystem">ملفات الإنجاز</div>
+                        <div class="subsystem">الزيارات الفنية</div>
+                    </div>
+                    <div class="branch">
+                        <strong>شؤون الطلاب</strong>
+                        <div class="subsystem">النشاط الطلابي</div>
+                        <div class="subsystem">التوجيه الطلابي</div>
+                        <div class="subsystem">الإشراف الصحي</div>
+                        <div class="subsystem">مخالفات الحافلات</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>2. عملية تسجيل الدخول (المستوى 1)</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="entity">المستخدم</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">اسم المستخدم + كلمة المرور</p>
+                <div class="arrow">↓</div>
+                <div class="process-rect">1.0 صفحة تسجيل الدخول</div>
+                <div class="arrow">↓</div>
+                <p class="flow-label">التحقق من البيانات</p>
+                <div class="arrow">↓</div>
+                <div class="process-rect">2.0 فحص المصادقة</div>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch" style="background: #d1fae5;">
+                        <strong style="color: #059669;">✓ نجاح</strong>
+                        <div class="arrow">↓</div>
+                        <div class="data-store">تخزين الجلسة (localStorage)</div>
+                        <div class="arrow">↓</div>
+                        <div class="process-rect">الصفحة الرئيسية</div>
+                    </div>
+                    <div class="branch" style="background: #fee2e2;">
+                        <strong style="color: #dc2626;">✗ فشل</strong>
+                        <div class="arrow">↓</div>
+                        <div class="process-rect">رسالة خطأ</div>
+                        <div class="arrow">↓</div>
+                        <div class="entity">العودة لصفحة الدخول</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>3. تدفق التنقل في النظام</h2>
+        <div class="diagram">
+            <div class="level-0">
+                <div class="process-rect">الصفحة الرئيسية (البوابة)</div>
+                <div class="arrow">↓</div>
+                <div class="branches">
+                    <div class="branch">
+                        <div class="process-rect">الشؤون المدرسية</div>
+                        <div class="arrow">↓</div>
+                        <p class="flow-label">روابط خارجية</p>
+                    </div>
+                    <div class="branch">
+                        <div class="process-rect">الشؤون التعليمية</div>
+                        <div class="arrow">↓</div>
+                        <div class="branches" style="gap: 10px;">
+                            <div class="subsystem">الاختبارات</div>
+                            <div class="subsystem">الأعمال الفنية</div>
+                        </div>
+                    </div>
+                    <div class="branch">
+                        <div class="process-rect">شؤون الطلاب</div>
+                        <div class="arrow">↓</div>
+                        <p class="flow-label">روابط خارجية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>4. الأنظمة الخارجية (النطاقات الفرعية)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>القسم</th>
+                    <th>اسم النظام</th>
+                    <th>رابط النطاق الفرعي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="4"><strong>الشؤون المدرسية</strong></td>
+                    <td>النظام المالي</td>
+                    <td>financial.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>متابعة المهام</td>
+                    <td>tasks.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>مركز مصادر التعلم</td>
+                    <td>learning.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>المبنى المدرسي</td>
+                    <td>maintenance.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td rowspan="8"><strong>الشؤون التعليمية</strong></td>
+                    <td>تسليم أسئلة الاختبارات</td>
+                    <td>exams-qs.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>متابعة الاختبارات</td>
+                    <td>exam-followup.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>تحليل النتائج</td>
+                    <td>exam-analysis.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>الجداول المدرسية</td>
+                    <td>school-timetables.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>ملفات الإنجاز</td>
+                    <td>portfolio.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>سجلات المتابعة</td>
+                    <td>records.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>الأعمال التحريرية</td>
+                    <td>supervision.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>الزيارات الفنية</td>
+                    <td>supervision-visit.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td rowspan="4"><strong>شؤون الطلاب</strong></td>
+                    <td>النشاط الطلابي</td>
+                    <td>activities.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>التوجيه الطلابي</td>
+                    <td>counselor.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>الإشراف الصحي</td>
+                    <td>health.riyadhplatform.tech</td>
+                </tr>
+                <tr>
+                    <td>مخالفات الحافلات</td>
+                    <td>bus.riyadhplatform.tech</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. مفتاح الرموز</h2>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background: #dbeafe; border: 2px solid #3b82f6;"></div>
+                <span>كيان خارجي</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #fef3c7; border: 2px solid #f59e0b;"></div>
+                <span>عملية</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #d1fae5; border: 2px solid #10b981;"></div>
+                <span>مخزن بيانات</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #e0e7ff; border: 1px solid #6366f1;"></div>
+                <span>نظام فرعي</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>مدرسة الرياض الابتدائية</strong></p>
+            <p>البوابة الإلكترونية الموحدة - مخطط تدفق البيانات</p>
+            <p>تصميم وتطوير: صالح سفر الغامدي</p>
+        </div>
+    </div>
+</body>
+</html>
