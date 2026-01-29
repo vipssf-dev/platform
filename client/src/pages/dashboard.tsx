@@ -7,9 +7,11 @@ import {
   List,
   LogOut,
   ClipboardCheck,
-  HeartHandshake
+  HeartHandshake,
+  BarChart3
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
+import { KPIDashboard } from "@/components/kpi-dashboard";
 import heroBg from "@assets/generated_images/soft_childhood_education_background_with_books_and_crayons.png";
 import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 
@@ -42,6 +44,7 @@ const systems = [
 
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showKPI, setShowKPI] = useState(true);
   const [, setLocation] = useLocation();
 
   const handleLogout = () => {
@@ -65,6 +68,13 @@ export default function Dashboard() {
           </div>
           <div className="flex gap-1 sm:gap-2 items-center">
              <div className="hidden sm:flex gap-1 bg-slate-100 p-1 rounded-lg ml-2">
+               <button 
+                 onClick={() => setShowKPI(!showKPI)}
+                 className={`p-2 rounded-md transition-colors ${showKPI ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+                 title="مؤشرات الإنجاز"
+               >
+                 <BarChart3 className="w-5 h-5" />
+               </button>
                <button 
                  onClick={() => setViewMode('grid')}
                  className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
@@ -132,8 +142,22 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* KPI Dashboard */}
+      {showKPI && (
+        <section className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 -mt-8 sm:-mt-16 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6"
+          >
+            <KPIDashboard />
+          </motion.div>
+        </section>
+      )}
+
       {/* Systems Grid */}
-      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-12 -mt-8 sm:-mt-16 relative z-10">
+      <main className={`container mx-auto px-3 sm:px-4 py-6 sm:py-8 ${!showKPI ? '-mt-8 sm:-mt-16' : ''} relative z-10`}>
         <div className={`grid gap-4 sm:gap-6 ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 max-w-3xl mx-auto'}`}>
           {systems.map((system, index) => (
             <motion.div

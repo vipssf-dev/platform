@@ -1,0 +1,111 @@
+===============================================
+قالب API للتطبيقات الخارجية
+API Template for External Applications
+===============================================
+
+لربط تطبيقك بلوحة مؤشرات الإنجاز في المنصة الرئيسية،
+أضف الكود التالي إلى ملف routes.ts في تطبيقك:
+
+To connect your app to the KPI dashboard in the main portal,
+add the following code to your routes.ts file:
+
+===============================================
+الكود المطلوب إضافته / Code to Add:
+===============================================
+
+// أضف هذا المسار في ملف server/routes.ts
+// Add this route in server/routes.ts
+
+app.get("/api/stats", async (_req, res) => {
+  try {
+    // استبدل هذا بجلب البيانات الحقيقية من قاعدة البيانات
+    // Replace this with actual data from your database
+    
+    const totalTasks = 100;      // إجمالي المهام
+    const completedTasks = 75;   // المهام المنجزة
+    const pendingTasks = 25;     // المهام المعلقة
+    
+    res.json({
+      totalTasks,
+      completedTasks,
+      pendingTasks,
+      completionRate: Math.round((completedTasks / totalTasks) * 100),
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
+
+===============================================
+مثال مع Drizzle ORM:
+Example with Drizzle ORM:
+===============================================
+
+app.get("/api/stats", async (_req, res) => {
+  try {
+    const allTasks = await db.select().from(tasks);
+    const completedTasks = allTasks.filter(t => t.status === 'completed');
+    
+    res.json({
+      totalTasks: allTasks.length,
+      completedTasks: completedTasks.length,
+      pendingTasks: allTasks.length - completedTasks.length,
+      completionRate: allTasks.length > 0 
+        ? Math.round((completedTasks.length / allTasks.length) * 100) 
+        : 0,
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
+
+===============================================
+هيكل البيانات المطلوب / Required Data Structure:
+===============================================
+
+{
+  "totalTasks": number,       // إجمالي عدد المهام أو العناصر
+  "completedTasks": number,   // عدد المهام المنجزة
+  "pendingTasks": number,     // عدد المهام المعلقة
+  "completionRate": number,   // نسبة الإنجاز (0-100)
+  "lastUpdated": string       // تاريخ آخر تحديث (ISO format)
+}
+
+===============================================
+ملاحظات مهمة / Important Notes:
+===============================================
+
+1. تأكد من إضافة CORS headers إذا لزم الأمر
+   Make sure to add CORS headers if needed
+
+2. المسار يجب أن يكون: /api/stats
+   The route must be: /api/stats
+
+3. بعد إضافة الكود، أعد نشر التطبيق
+   After adding the code, republish the app
+
+===============================================
+التطبيقات التي تحتاج لإضافة هذا الكود:
+Applications that need this code:
+===============================================
+
+1. financial.riyadhplatform.tech
+2. tasks.riyadhplatform.tech
+3. learning.riyadhplatform.tech
+4. maintenance.riyadhplatform.tech
+5. exams-qs.riyadhplatform.tech
+6. exam-followup.riyadhplatform.tech
+7. exam-analysis.riyadhplatform.tech
+8. school-timetables.riyadhplatform.tech
+9. portfolio.riyadhplatform.tech
+10. records.riyadhplatform.tech
+11. supervision.riyadhplatform.tech
+12. supervision-visit.riyadhplatform.tech
+13. activities.riyadhplatform.tech
+14. counselor.riyadhplatform.tech
+15. health.riyadhplatform.tech
+16. bus.riyadhplatform.tech
+
+===============================================
