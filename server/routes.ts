@@ -23,6 +23,12 @@ const EXTERNAL_SYSTEMS = [
   { id: "bus", name: "مخالفات الحافلات", url: "https://bus.riyadhplatform.tech" }
 ];
 
+interface SystemMetric {
+  label: string;
+  value: string | number;
+  color?: string;
+}
+
 async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
   try {
     const controller = new AbortController();
@@ -39,10 +45,7 @@ async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
       return {
         systemId: system.id,
         systemName: system.name,
-        totalTasks: data.totalTasks || 0,
-        completedTasks: data.completedTasks || 0,
-        pendingTasks: data.pendingTasks || 0,
-        completionRate: data.completionRate || 0,
+        metrics: data.metrics || [],
         lastUpdated: data.lastUpdated || new Date().toISOString(),
         status: 'online' as const
       };
@@ -52,10 +55,7 @@ async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
     return {
       systemId: system.id,
       systemName: system.name,
-      totalTasks: 0,
-      completedTasks: 0,
-      pendingTasks: 0,
-      completionRate: 0,
+      metrics: [],
       lastUpdated: new Date().toISOString(),
       status: 'offline' as const
     };
@@ -74,17 +74,12 @@ export async function registerRoutes(
       );
       
       const onlineSystems = systemsStats.filter(s => s.status === 'online');
-      const totalTasks = systemsStats.reduce((sum, s) => sum + s.totalTasks, 0);
-      const completedTasks = systemsStats.reduce((sum, s) => sum + s.completedTasks, 0);
       
       res.json({
         systems: systemsStats,
         overallStats: {
           totalSystems: EXTERNAL_SYSTEMS.length,
-          onlineSystems: onlineSystems.length,
-          totalTasks,
-          completedTasks,
-          overallCompletionRate: totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
+          onlineSystems: onlineSystems.length
         },
         lastFetch: new Date().toISOString()
       });

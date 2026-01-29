@@ -1,35 +1,45 @@
 ===============================================
-قالب API للتطبيقات الخارجية
+قالب API للتطبيقات الخارجية (نسخة محدثة)
 API Template for External Applications
 ===============================================
 
-لربط تطبيقك بلوحة مؤشرات الإنجاز في المنصة الرئيسية،
-أضف الكود التالي إلى ملف routes.ts في تطبيقك:
-
-To connect your app to the KPI dashboard in the main portal,
-add the following code to your routes.ts file:
+كل تطبيق يرسل مؤشراته الخاصة. المؤشرات مرنة وتختلف حسب طبيعة التطبيق.
 
 ===============================================
-الكود المطلوب إضافته / Code to Add:
+الهيكل الجديد / New Structure:
 ===============================================
 
-// أضف هذا المسار في ملف server/routes.ts
-// Add this route in server/routes.ts
+{
+  "metrics": [
+    { "label": "اسم المؤشر", "value": "القيمة", "color": "#لون (اختياري)" },
+    { "label": "مؤشر آخر", "value": 123 }
+  ],
+  "lastUpdated": "2024-01-01T12:00:00.000Z"
+}
+
+===============================================
+مثال: النظام المالي
+===============================================
 
 app.get("/api/stats", async (_req, res) => {
   try {
-    // استبدل هذا بجلب البيانات الحقيقية من قاعدة البيانات
-    // Replace this with actual data from your database
+    const allExpenses = await db.select().from(expenses);
+    const allRevenues = await db.select().from(revenues);
     
-    const totalTasks = 100;      // إجمالي المهام
-    const completedTasks = 75;   // المهام المنجزة
-    const pendingTasks = 25;     // المهام المعلقة
+    const totalExpenses = allExpenses.reduce(
+      (sum, e) => sum + parseFloat(e.amount || "0"), 0
+    );
+    const totalRevenues = allRevenues.reduce(
+      (sum, r) => sum + parseFloat(r.receivedAmount || "0"), 0
+    );
+    const balance = totalRevenues - totalExpenses;
     
     res.json({
-      totalTasks,
-      completedTasks,
-      pendingTasks,
-      completionRate: Math.round((completedTasks / totalTasks) * 100),
+      metrics: [
+        { label: "الإيرادات", value: totalRevenues.toLocaleString('ar-SA') + " ريال", color: "#22c55e" },
+        { label: "المصروفات", value: totalExpenses.toLocaleString('ar-SA') + " ريال", color: "#ef4444" },
+        { label: "الرصيد", value: balance.toLocaleString('ar-SA') + " ريال", color: balance >= 0 ? "#22c55e" : "#ef4444" }
+      ],
       lastUpdated: new Date().toISOString()
     });
   } catch (error) {
@@ -38,22 +48,23 @@ app.get("/api/stats", async (_req, res) => {
 });
 
 ===============================================
-مثال مع Drizzle ORM:
-Example with Drizzle ORM:
+مثال: متابعة المهام
 ===============================================
 
 app.get("/api/stats", async (_req, res) => {
   try {
     const allTasks = await db.select().from(tasks);
-    const completedTasks = allTasks.filter(t => t.status === 'completed');
+    const completed = allTasks.filter(t => t.status === 'completed');
+    const rate = allTasks.length > 0 
+      ? Math.round((completed.length / allTasks.length) * 100) 
+      : 0;
     
     res.json({
-      totalTasks: allTasks.length,
-      completedTasks: completedTasks.length,
-      pendingTasks: allTasks.length - completedTasks.length,
-      completionRate: allTasks.length > 0 
-        ? Math.round((completedTasks.length / allTasks.length) * 100) 
-        : 0,
+      metrics: [
+        { label: "عدد المهام", value: allTasks.length },
+        { label: "المنجز", value: completed.length, color: "#22c55e" },
+        { label: "نسبة الإنجاز", value: rate + "%", color: rate >= 75 ? "#22c55e" : rate >= 50 ? "#f59e0b" : "#ef4444" }
+      ],
       lastUpdated: new Date().toISOString()
     });
   } catch (error) {
@@ -62,50 +73,56 @@ app.get("/api/stats", async (_req, res) => {
 });
 
 ===============================================
-هيكل البيانات المطلوب / Required Data Structure:
+مثال: النشاط الطلابي
 ===============================================
 
-{
-  "totalTasks": number,       // إجمالي عدد المهام أو العناصر
-  "completedTasks": number,   // عدد المهام المنجزة
-  "pendingTasks": number,     // عدد المهام المعلقة
-  "completionRate": number,   // نسبة الإنجاز (0-100)
-  "lastUpdated": string       // تاريخ آخر تحديث (ISO format)
-}
+app.get("/api/stats", async (_req, res) => {
+  try {
+    const allActivities = await db.select().from(activities);
+    const activeStudents = await db.select().from(students).where(eq(students.isActive, true));
+    
+    res.json({
+      metrics: [
+        { label: "الأنشطة", value: allActivities.length },
+        { label: "الطلاب المشاركين", value: activeStudents.length, color: "#3b82f6" }
+      ],
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
 
 ===============================================
-ملاحظات مهمة / Important Notes:
+مثال: مخالفات الحافلات
 ===============================================
 
-1. تأكد من إضافة CORS headers إذا لزم الأمر
-   Make sure to add CORS headers if needed
-
-2. المسار يجب أن يكون: /api/stats
-   The route must be: /api/stats
-
-3. بعد إضافة الكود، أعد نشر التطبيق
-   After adding the code, republish the app
+app.get("/api/stats", async (_req, res) => {
+  try {
+    const allViolations = await db.select().from(violations);
+    const resolved = allViolations.filter(v => v.status === 'resolved');
+    
+    res.json({
+      metrics: [
+        { label: "إجمالي المخالفات", value: allViolations.length },
+        { label: "تم معالجتها", value: resolved.length, color: "#22c55e" },
+        { label: "معلقة", value: allViolations.length - resolved.length, color: "#f59e0b" }
+      ],
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
 
 ===============================================
-التطبيقات التي تحتاج لإضافة هذا الكود:
-Applications that need this code:
+الألوان المقترحة / Suggested Colors:
 ===============================================
 
-1. financial.riyadhplatform.tech
-2. tasks.riyadhplatform.tech
-3. learning.riyadhplatform.tech
-4. maintenance.riyadhplatform.tech
-5. exams-qs.riyadhplatform.tech
-6. exam-followup.riyadhplatform.tech
-7. exam-analysis.riyadhplatform.tech
-8. school-timetables.riyadhplatform.tech
-9. portfolio.riyadhplatform.tech
-10. records.riyadhplatform.tech
-11. supervision.riyadhplatform.tech
-12. supervision-visit.riyadhplatform.tech
-13. activities.riyadhplatform.tech
-14. counselor.riyadhplatform.tech
-15. health.riyadhplatform.tech
-16. bus.riyadhplatform.tech
+#22c55e - أخضر (إيجابي، منجز، نجاح)
+#ef4444 - أحمر (سلبي، تحذير، خطأ)
+#f59e0b - برتقالي (معلق، قيد التنفيذ)
+#3b82f6 - أزرق (معلومات، إحصائيات)
+#8b5cf6 - بنفسجي (خاص، مميز)
 
 ===============================================

@@ -2,21 +2,24 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { 
   TrendingUp, 
-  CheckCircle2, 
-  Clock, 
   AlertCircle,
   RefreshCw,
-  Loader2
+  Loader2,
+  Wifi,
+  WifiOff
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface SystemMetric {
+  label: string;
+  value: string | number;
+  color?: string;
+}
 
 interface SystemStats {
   systemId: string;
   systemName: string;
-  totalTasks: number;
-  completedTasks: number;
-  pendingTasks: number;
-  completionRate: number;
+  metrics: SystemMetric[];
   lastUpdated: string;
   status: 'online' | 'offline' | 'error';
 }
@@ -26,9 +29,6 @@ interface KPIData {
   overallStats: {
     totalSystems: number;
     onlineSystems: number;
-    totalTasks: number;
-    completedTasks: number;
-    overallCompletionRate: number;
   };
   lastFetch: string;
 }
@@ -84,170 +84,83 @@ export function KPIDashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg sm:text-xl font-bold text-slate-900">مؤشرات الإنجاز</h3>
-        <button
-          onClick={() => fetchData(true)}
-          disabled={refreshing}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors disabled:opacity-50"
-        >
-          <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-          <span className="hidden sm:inline">تحديث</span>
-        </button>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs sm:text-sm font-medium opacity-90">إجمالي الأنظمة</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl sm:text-3xl font-bold">{overallStats.totalSystems}</span>
-                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 opacity-80" />
-              </div>
-              <p className="text-xs mt-2 opacity-80">{overallStats.onlineSystems} نظام متصل</p>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs sm:text-sm font-medium opacity-90">المهام المنجزة</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl sm:text-3xl font-bold">{overallStats.completedTasks}</span>
-                <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 opacity-80" />
-              </div>
-              <p className="text-xs mt-2 opacity-80">من {overallStats.totalTasks} مهمة</p>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs sm:text-sm font-medium opacity-90">قيد التنفيذ</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl sm:text-3xl font-bold">{overallStats.totalTasks - overallStats.completedTasks}</span>
-                <Clock className="w-6 h-6 sm:w-8 sm:h-8 opacity-80" />
-              </div>
-              <p className="text-xs mt-2 opacity-80">مهمة متبقية</p>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs sm:text-sm font-medium opacity-90">نسبة الإنجاز</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl sm:text-3xl font-bold">{overallStats.overallCompletionRate}%</span>
-                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 opacity-80" />
-              </div>
-              <div className="w-full bg-white/30 rounded-full h-2 mt-2">
-                <div 
-                  className="bg-white rounded-full h-2 transition-all duration-500"
-                  style={{ width: `${overallStats.overallCompletionRate}%` }}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
-      <Card className="border-slate-200">
-        <CardHeader>
-          <CardTitle className="text-base sm:text-lg">تفاصيل الأنظمة</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-slate-200">
-                  <th className="text-right py-3 px-2 font-medium text-slate-600">النظام</th>
-                  <th className="text-center py-3 px-2 font-medium text-slate-600">الحالة</th>
-                  <th className="text-center py-3 px-2 font-medium text-slate-600 hidden sm:table-cell">المنجز</th>
-                  <th className="text-center py-3 px-2 font-medium text-slate-600 hidden sm:table-cell">الإجمالي</th>
-                  <th className="text-center py-3 px-2 font-medium text-slate-600">الإنجاز</th>
-                </tr>
-              </thead>
-              <tbody>
-                {systems.map((system, index) => (
-                  <motion.tr
-                    key={system.systemId}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="border-b border-slate-100 hover:bg-slate-50"
-                  >
-                    <td className="py-3 px-2 font-medium text-slate-800">{system.systemName}</td>
-                    <td className="py-3 px-2 text-center">
-                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs ${
-                        system.status === 'online' 
-                          ? 'bg-green-100 text-green-700' 
-                          : system.status === 'offline'
-                          ? 'bg-slate-100 text-slate-500'
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${
-                          system.status === 'online' 
-                            ? 'bg-green-500' 
-                            : system.status === 'offline'
-                            ? 'bg-slate-400'
-                            : 'bg-red-500'
-                        }`} />
-                        {system.status === 'online' ? 'متصل' : system.status === 'offline' ? 'غير متصل' : 'خطأ'}
-                      </span>
-                    </td>
-                    <td className="py-3 px-2 text-center text-slate-600 hidden sm:table-cell">{system.completedTasks}</td>
-                    <td className="py-3 px-2 text-center text-slate-600 hidden sm:table-cell">{system.totalTasks}</td>
-                    <td className="py-3 px-2 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="w-16 bg-slate-200 rounded-full h-2 hidden sm:block">
-                          <div 
-                            className={`h-2 rounded-full ${
-                              system.completionRate >= 75 
-                                ? 'bg-green-500' 
-                                : system.completionRate >= 50
-                                ? 'bg-amber-500'
-                                : 'bg-red-500'
-                            }`}
-                            style={{ width: `${system.completionRate}%` }}
-                          />
-                        </div>
-                        <span className="font-medium text-slate-700">{system.completionRate}%</span>
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+        <h3 className="text-lg sm:text-xl font-bold text-slate-900">مؤشرات الأنظمة</h3>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm text-slate-600">
+            <Wifi className="w-4 h-4 text-green-500" />
+            <span>{overallStats.onlineSystems}/{overallStats.totalSystems} متصل</span>
           </div>
-        </CardContent>
-      </Card>
+          <button
+            onClick={() => fetchData(true)}
+            disabled={refreshing}
+            className="flex items-center gap-2 px-3 py-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">تحديث</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {systems.map((system, index) => (
+          <motion.div
+            key={system.systemId}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+          >
+            <Card className={`h-full border-2 transition-colors ${
+              system.status === 'online' 
+                ? 'border-green-200 bg-white' 
+                : 'border-slate-200 bg-slate-50'
+            }`}>
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-sm font-bold text-slate-800">
+                    {system.systemName}
+                  </CardTitle>
+                  {system.status === 'online' ? (
+                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      متصل
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-slate-200 text-slate-500">
+                      <WifiOff className="w-3 h-3" />
+                      غير متصل
+                    </span>
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                {system.status === 'online' && system.metrics.length > 0 ? (
+                  <div className="space-y-2">
+                    {system.metrics.map((metric, idx) => (
+                      <div key={idx} className="flex justify-between items-center text-sm">
+                        <span className="text-slate-600">{metric.label}</span>
+                        <span 
+                          className="font-bold"
+                          style={{ color: metric.color || '#1e293b' }}
+                        >
+                          {metric.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : system.status === 'online' ? (
+                  <p className="text-xs text-slate-400 text-center py-2">
+                    لا توجد بيانات
+                  </p>
+                ) : (
+                  <p className="text-xs text-slate-400 text-center py-2">
+                    يتعذر الاتصال بالنظام
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
 
       <p className="text-xs text-slate-400 text-center">
         آخر تحديث: {new Date(data.lastFetch).toLocaleString('ar-SA')}
