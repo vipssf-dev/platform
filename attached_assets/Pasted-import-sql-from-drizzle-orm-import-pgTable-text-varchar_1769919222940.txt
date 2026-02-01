@@ -1,0 +1,106 @@
+import { sql } from "drizzle-orm";
+import { pgTable, text, varchar, integer } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
+
+export const users = pgTable("users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+});
+
+export const insertUserSchema = createInsertSchema(users).pick({
+  username: true,
+  password: true,
+});
+
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
+
+export const students = pgTable("students", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  grade: text("grade").notNull(),
+  section: text("section").notNull(),
+});
+
+export const insertStudentSchema = createInsertSchema(students).omit({ id: true });
+export type InsertStudent = z.infer<typeof insertStudentSchema>;
+export type Student = typeof students.$inferSelect;
+
+export const programs = pgTable("programs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  date: text("date"),
+  duration: text("duration").notNull(),
+  status: text("status").notNull().default("pending"),
+  evidences: text("evidences").array(),
+});
+
+export const insertProgramSchema = createInsertSchema(programs).omit({ id: true });
+export type InsertProgram = z.infer<typeof insertProgramSchema>;
+export type Program = typeof programs.$inferSelect;
+
+export const loans = pgTable("loans", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  studentId: varchar("student_id").notNull(),
+  studentName: text("student_name").notNull(),
+  grade: text("grade").notNull(),
+  section: text("section").notNull(),
+  bookTitle: text("book_title").notNull(),
+  date: text("date").notNull(),
+  status: text("status").notNull().default("borrowed"),
+});
+
+export const insertLoanSchema = createInsertSchema(loans).omit({ id: true });
+export type InsertLoan = z.infer<typeof insertLoanSchema>;
+export type Loan = typeof loans.$inferSelect;
+
+export const classroomVisits = pgTable("classroom_visits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  semester: integer("semester").notNull(),
+  day: text("day").notNull(),
+  period: integer("period").notNull(),
+  grade: text("grade"),
+  section: text("section"),
+  date: text("date"),
+  status: text("status").notNull().default("pending"),
+});
+
+export const insertClassroomVisitSchema = createInsertSchema(classroomVisits).omit({ id: true });
+export type InsertClassroomVisit = z.infer<typeof insertClassroomVisitSchema>;
+export type ClassroomVisit = typeof classroomVisits.$inferSelect;
+
+export const readingSessions = pgTable("reading_sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  semester: integer("semester").notNull(),
+  day: text("day").notNull(),
+  period: integer("period").notNull(),
+  grade: text("grade"),
+  section: text("section"),
+  date: text("date"),
+  status: text("status").notNull().default("pending"),
+});
+
+export const insertReadingSessionSchema = createInsertSchema(readingSessions).omit({ id: true });
+export type InsertReadingSession = z.infer<typeof insertReadingSessionSchema>;
+export type ReadingSession = typeof readingSessions.$inferSelect;
+
+export const books = pgTable("books", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  type: text("type").notNull(),
+});
+
+export const insertBookSchema = createInsertSchema(books).omit({ id: true });
+export type InsertBook = z.infer<typeof insertBookSchema>;
+export type Book = typeof books.$inferSelect;
+
+export const GRADES = ["أول", "ثاني", "ثالث", "رابع", "خامس", "سادس"];
+export const SECTIONS = ["1", "2", "3", "4", "5", "6"];
+export const DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+export const PERIODS = [1, 2, 3, 4, 5, 6, 7];
+export const PROGRAM_STATUS = ["تم", "لم يتم", "قيد التنفيذ"];
+export const LOAN_STATUS = ["تمت الإعادة", "لم تتم الإعادة", "قيد الإعارة"];
+export const VISIT_STATUS = ["تمت الزيارة", "لم تتم الزيارة", "pending"];
+export const BOOK_TYPES = ["مرجع", "قصة", "ثقافي", "علمي", "ديني", "أدبي", "أخرى"];
