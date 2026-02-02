@@ -1,0 +1,200 @@
+import { sql } from "drizzle-orm";
+import { pgTable, text, varchar, boolean, integer, jsonb, timestamp, serial } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
+
+export const users = pgTable("users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+});
+
+export const insertUserSchema = createInsertSchema(users).pick({
+  username: true,
+  password: true,
+});
+
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
+
+export const attachmentSchema = z.object({
+  name: z.string(),
+  data: z.string(),
+  type: z.string(),
+});
+
+export type AttachmentData = z.infer<typeof attachmentSchema>;
+
+export const actionSchema = z.object({
+  text: z.string(),
+  date: z.string(),
+  period: z.string(),
+  attachments: z.array(attachmentSchema).optional(),
+});
+
+export type ActionData = z.infer<typeof actionSchema>;
+
+export const referrals = pgTable("referrals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  studentId: text("student_id").notNull(),
+  studentName: text("student_name").notNull(),
+  grade: text("grade").notNull(),
+  section: text("section").notNull(),
+  counselor: text("counselor").notNull(),
+  caseStudy: boolean("case_study"),
+  caseStudyFile: jsonb("case_study_file").$type<AttachmentData | null>(),
+  violationDegree: integer("violation_degree"),
+  violationText: text("violation_text"),
+  vicePrincipal: text("vice_principal"),
+  vicePrincipalDate: text("vice_principal_date"),
+  actionTaken: text("action_taken"),
+  actions: jsonb("actions").$type<ActionData[]>().default([]),
+  status: text("status").default("sent"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertReferralSchema = createInsertSchema(referrals).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertReferral = z.infer<typeof insertReferralSchema>;
+export type Referral = typeof referrals.$inferSelect;
+
+export const evidenceFileSchema = z.object({
+  name: z.string(),
+  data: z.string(),
+  type: z.string(),
+});
+
+export type EvidenceFile = z.infer<typeof evidenceFileSchema>;
+
+export const guidancePlanEntries = pgTable("guidance_plan_entries", {
+  id: varchar("id").primaryKey(),
+  programName: text("program_name").notNull(),
+  objectives: text("objectives").notNull(),
+  startDate: text("start_date"),
+  endDate: text("end_date"),
+  responsibility: text("responsibility"),
+  executionStatus: text("execution_status"),
+  evidenceFiles: jsonb("evidence_files").$type<EvidenceFile[]>().default([]),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertGuidancePlanEntrySchema = createInsertSchema(guidancePlanEntries).omit({
+  updatedAt: true,
+});
+
+export type InsertGuidancePlanEntry = z.infer<typeof insertGuidancePlanEntrySchema>;
+export type GuidancePlanEntry = typeof guidancePlanEntries.$inferSelect;
+
+export const sessionSchema = z.object({
+  date: z.string(),
+  content: z.string(),
+  recommendations: z.string(),
+});
+
+export type SessionData = z.infer<typeof sessionSchema>;
+
+export const caseStudies = pgTable("case_studies", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  serialNumber: integer("serial_number"),
+  studentCode: text("student_code"),
+  nationality: text("nationality"),
+  age: text("age"),
+  grade: text("grade"),
+  birthDate: text("birth_date"),
+  birthPlace: text("birth_place"),
+  address: text("address"),
+  guardianCode: text("guardian_code"),
+  guardianRelation: text("guardian_relation"),
+  guardianAge: text("guardian_age"),
+  guardianJob: text("guardian_job"),
+  guardianMaritalStatus: text("guardian_marital_status"),
+  currentGrade: text("current_grade"),
+  currentRepeatCount: text("current_repeat_count"),
+  currentWeakSubjects: text("current_weak_subjects"),
+  currentAbsenceCount: text("current_absence_count"),
+  currentLateCount: text("current_late_count"),
+  currentAcademicYear: text("current_academic_year"),
+  previousGrade: text("previous_grade"),
+  previousRepeatCount: text("previous_repeat_count"),
+  previousWeakSubjects: text("previous_weak_subjects"),
+  previousAbsenceCount: text("previous_absence_count"),
+  previousLateCount: text("previous_late_count"),
+  previousAcademicYear: text("previous_academic_year"),
+  fatherEducation: text("father_education"),
+  motherEducation: text("mother_education"),
+  siblingsEducation: jsonb("siblings_education").$type<string[]>().default([]),
+  familyMembersCount: text("family_members_count"),
+  siblingsCount: text("siblings_count"),
+  studentOrder: text("student_order"),
+  livesWithWhom: text("lives_with_whom"),
+  fatherAlive: boolean("father_alive"),
+  motherAlive: boolean("mother_alive"),
+  parentsSeparated: boolean("parents_separated"),
+  familyRelation: text("family_relation"),
+  hasHereditaryDiseases: boolean("has_hereditary_diseases"),
+  hereditaryDiseasesDetails: text("hereditary_diseases_details"),
+  hasHealthIssues: boolean("has_health_issues"),
+  healthIssuesDetails: text("health_issues_details"),
+  hasGrowthProblems: boolean("has_growth_problems"),
+  growthProblemsDetails: text("growth_problems_details"),
+  economicStatus: text("economic_status"),
+  problemSummary: text("problem_summary"),
+  problemDescription: text("problem_description"),
+  initialDiagnosis: text("initial_diagnosis"),
+  problemType: jsonb("problem_type").$type<string[]>().default([]),
+  otherProblemType: text("other_problem_type"),
+  diagnosticIntro: text("diagnostic_intro"),
+  diagnosticCore: text("diagnostic_core"),
+  diagnosticConclusion: text("diagnostic_conclusion"),
+  treatmentGoal: text("treatment_goal"),
+  treatmentPlan: text("treatment_plan"),
+  caseNotes: text("case_notes"),
+  selfTreatment: text("self_treatment"),
+  environmentalTreatment: text("environmental_treatment"),
+  sessions: jsonb("sessions").$type<SessionData[]>().default([]),
+  caseImproved: boolean("case_improved"),
+  transferredTo: text("transferred_to"),
+  closingDate: text("closing_date"),
+  transferDate: text("transfer_date"),
+  counselorName: text("counselor_name"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertCaseStudySchema = createInsertSchema(caseStudies).omit({
+  id: true,
+  serialNumber: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertCaseStudy = z.infer<typeof insertCaseStudySchema>;
+export type CaseStudy = typeof caseStudies.$inferSelect;
+
+export const parentVisits = pgTable("parent_visits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  serialNumber: integer("serial_number"),
+  studentName: text("student_name").notNull(),
+  grade: text("grade"),
+  section: text("section"),
+  guardianName: text("guardian_name").notNull(),
+  relation: text("relation"),
+  visitDate: text("visit_date").notNull(),
+  visitTime: text("visit_time"),
+  visitReason: text("visit_reason").notNull(),
+  actionTaken: text("action_taken"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertParentVisitSchema = createInsertSchema(parentVisits).omit({
+  id: true,
+  serialNumber: true,
+  createdAt: true,
+});
+
+export type InsertParentVisit = z.infer<typeof insertParentVisitSchema>;
+export type ParentVisit = typeof parentVisits.$inferSelect;

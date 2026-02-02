@@ -1,0 +1,246 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import path from "path";
+import { storage } from "./storage";
+import { insertReferralSchema, insertGuidancePlanEntrySchema, insertCaseStudySchema, insertParentVisitSchema } from "@shared/schema";
+
+export async function registerRoutes(
+  httpServer: Server,
+  app: Express
+): Promise<Server> {
+  
+  app.get("/api/referrals", async (req, res) => {
+    try {
+      const referrals = await storage.getReferrals();
+      res.json(referrals);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch referrals" });
+    }
+  });
+
+  app.get("/api/referrals/:id", async (req, res) => {
+    try {
+      const referral = await storage.getReferral(req.params.id);
+      if (!referral) {
+        return res.status(404).json({ error: "Referral not found" });
+      }
+      res.json(referral);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch referral" });
+    }
+  });
+
+  app.post("/api/referrals", async (req, res) => {
+    try {
+      const parsed = insertReferralSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: parsed.error.errors });
+      }
+      const referral = await storage.createReferral(parsed.data);
+      res.status(201).json(referral);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create referral" });
+    }
+  });
+
+  app.put("/api/referrals/:id", async (req, res) => {
+    try {
+      const referral = await storage.updateReferral(req.params.id, req.body);
+      if (!referral) {
+        return res.status(404).json({ error: "Referral not found" });
+      }
+      res.json(referral);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update referral" });
+    }
+  });
+
+  app.delete("/api/referrals/:id", async (req, res) => {
+    try {
+      await storage.deleteReferral(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete referral" });
+    }
+  });
+
+  app.get("/api/guidance-plan", async (req, res) => {
+    try {
+      const entries = await storage.getGuidancePlanEntries();
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch guidance plan entries" });
+    }
+  });
+
+  app.post("/api/guidance-plan", async (req, res) => {
+    try {
+      const parsed = insertGuidancePlanEntrySchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: parsed.error.errors });
+      }
+      const entry = await storage.upsertGuidancePlanEntry(parsed.data);
+      res.json(entry);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to save guidance plan entry" });
+    }
+  });
+
+  app.post("/api/guidance-plan/batch", async (req, res) => {
+    try {
+      const entries = req.body.entries;
+      if (!Array.isArray(entries)) {
+        return res.status(400).json({ error: "Expected entries array" });
+      }
+      
+      const validatedEntries = [];
+      for (const entry of entries) {
+        const parsed = insertGuidancePlanEntrySchema.safeParse(entry);
+        if (!parsed.success) {
+          console.error("Validation error for entry:", entry, parsed.error.errors);
+          return res.status(400).json({ error: parsed.error.errors });
+        }
+        validatedEntries.push(parsed.data);
+      }
+      
+      const results = await Promise.all(
+        validatedEntries.map((entry) => storage.upsertGuidancePlanEntry(entry))
+      );
+      res.json(results);
+    } catch (error) {
+      console.error("Error saving guidance plan entries:", error);
+      res.status(500).json({ error: "Failed to save guidance plan entries" });
+    }
+  });
+
+  app.delete("/api/guidance-plan/:id", async (req, res) => {
+    try {
+      await storage.deleteGuidancePlanEntry(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting guidance plan entry:", error);
+      res.status(500).json({ error: "Failed to delete guidance plan entry" });
+    }
+  });
+
+  app.get("/api/case-studies", async (req, res) => {
+    try {
+      const caseStudies = await storage.getCaseStudies();
+      res.json(caseStudies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch case studies" });
+    }
+  });
+
+  app.get("/api/case-studies/:id", async (req, res) => {
+    try {
+      const caseStudy = await storage.getCaseStudy(req.params.id);
+      if (!caseStudy) {
+        return res.status(404).json({ error: "Case study not found" });
+      }
+      res.json(caseStudy);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch case study" });
+    }
+  });
+
+  app.post("/api/case-studies", async (req, res) => {
+    try {
+      const parsed = insertCaseStudySchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: parsed.error.errors });
+      }
+      const caseStudy = await storage.createCaseStudy(parsed.data);
+      res.status(201).json(caseStudy);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create case study" });
+    }
+  });
+
+  app.patch("/api/case-studies/:id", async (req, res) => {
+    try {
+      const caseStudy = await storage.updateCaseStudy(req.params.id, req.body);
+      if (!caseStudy) {
+        return res.status(404).json({ error: "Case study not found" });
+      }
+      res.json(caseStudy);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update case study" });
+    }
+  });
+
+  app.delete("/api/case-studies/:id", async (req, res) => {
+    try {
+      await storage.deleteCaseStudy(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete case study" });
+    }
+  });
+
+  app.get("/api/parent-visits", async (req, res) => {
+    try {
+      const visits = await storage.getParentVisits();
+      res.json(visits);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch parent visits" });
+    }
+  });
+
+  app.get("/api/parent-visits/:id", async (req, res) => {
+    try {
+      const visit = await storage.getParentVisit(req.params.id);
+      if (!visit) {
+        return res.status(404).json({ error: "Parent visit not found" });
+      }
+      res.json(visit);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch parent visit" });
+    }
+  });
+
+  app.post("/api/parent-visits", async (req, res) => {
+    try {
+      const parsed = insertParentVisitSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: parsed.error.errors });
+      }
+      const visit = await storage.createParentVisit(parsed.data);
+      res.status(201).json(visit);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create parent visit" });
+    }
+  });
+
+  app.patch("/api/parent-visits/:id", async (req, res) => {
+    try {
+      const visit = await storage.updateParentVisit(req.params.id, req.body);
+      if (!visit) {
+        return res.status(404).json({ error: "Parent visit not found" });
+      }
+      res.json(visit);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update parent visit" });
+    }
+  });
+
+  app.delete("/api/parent-visits/:id", async (req, res) => {
+    try {
+      await storage.deleteParentVisit(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete parent visit" });
+    }
+  });
+
+  // DFD Documentation routes
+  app.get("/docs/dfd-arabic", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "client/public/dfd-arabic.html"));
+  });
+
+  app.get("/docs/dfd-english", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "client/public/dfd-english.html"));
+  });
+
+  return httpServer;
+}
