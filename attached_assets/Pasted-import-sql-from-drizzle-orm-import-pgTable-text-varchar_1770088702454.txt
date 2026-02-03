@@ -1,0 +1,71 @@
+import { sql } from "drizzle-orm";
+import { pgTable, text, varchar, integer } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
+
+export const users = pgTable("users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+});
+
+export const insertUserSchema = createInsertSchema(users).pick({
+  username: true,
+  password: true,
+});
+
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
+
+// Sessions table for persistent authentication
+export const sessions = pgTable("sessions", {
+  id: varchar("id").primaryKey(),
+  username: text("username").notNull(),
+  expiresAt: text("expires_at").notNull(),
+});
+
+// Activity schema
+export const activities = pgTable("activities", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  semester: text("semester"),
+  activity: text("activity"),
+  field: text("field"),
+  executionStartDate: text("execution_start_date"),
+  executionEndDate: text("execution_end_date"),
+  executionLevel: text("execution_level"),
+  executionResponsibility: text("execution_responsibility"),
+  participantsCount: integer("participants_count"),
+  executionStatus: text("execution_status"),
+  achievedPosition: text("achieved_position"),
+});
+
+export const insertActivitySchema = createInsertSchema(activities).omit({
+  id: true,
+});
+
+export type InsertActivity = z.infer<typeof insertActivitySchema>;
+export type Activity = typeof activities.$inferSelect;
+
+// Dropdown options for each column
+export const dropdownOptions = {
+  semester: ["الأول", "الثاني", "كامل العام الدراسي"],
+  field: ["العلمي", "الرياضي", "الثقافي", "الاجتماعي", "الكشفي", "الفني", "موهبة"],
+  executionLevel: ["المدرسة", "الهيئة الملكية", "تعليم الشرقية", "المملكة", "المستوى الدولي"],
+  executionResponsibility: ["رائد النشاط", "معلم التربية البدنية", "المرشد الطلابي", "وكيل المدرسة", "مدير المدرسة", "لجنة النشاط"],
+  executionStatus: ["تم", "لم يتم", "قيد التنفيذ"],
+  achievedPosition: ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "لا ينطبق"],
+};
+
+// Column configuration for the table
+export const tableColumns = [
+  { key: "semester", label: "الفصل الدراسي", type: "dropdown" as const },
+  { key: "activity", label: "النشاط", type: "text" as const },
+  { key: "field", label: "المجال", type: "dropdown" as const },
+  { key: "executionStartDate", label: "بداية التنفيذ", type: "date" as const },
+  { key: "executionEndDate", label: "نهاية التنفيذ", type: "date" as const },
+  { key: "executionLevel", label: "مستوى التنفيذ", type: "dropdown" as const },
+  { key: "executionResponsibility", label: "مسؤولية التنفيذ", type: "text" as const },
+  { key: "participantsCount", label: "عدد المشاركين", type: "number" as const },
+  { key: "executionStatus", label: "التنفيذ", type: "dropdown" as const },
+  { key: "achievedPosition", label: "المركز المحقق", type: "dropdown" as const },
+];
