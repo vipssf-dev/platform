@@ -1,0 +1,562 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { registerObjectStorageRoutes } from "./replit_integrations/object_storage";
+import path from "path";
+import fs from "fs";
+import {
+  insertStudentSchema,
+  insertMedicalCaseSchema,
+  insertDailyTrackingSchema,
+  insertEvacuationDrillSchema,
+  insertSupervisionPlanSchema,
+  insertEnvironmentInspectionScheduleSchema,
+  insertEnvironmentInspectionSchema,
+  insertUnhealthyBehaviorsSchema,
+  insertChronicDiseasesSchema,
+  insertInfectiousDiseasesSchema,
+} from "@shared/schema";
+
+export async function registerRoutes(
+  httpServer: Server,
+  app: Express
+): Promise<Server> {
+  
+  // Register object storage routes for file uploads
+  registerObjectStorageRoutes(app);
+
+  app.get("/api/grades", async (req, res) => {
+    const grades = await storage.getGrades();
+    res.json(grades);
+  });
+
+  app.get("/api/classrooms", async (req, res) => {
+    const classrooms = await storage.getClassrooms();
+    res.json(classrooms);
+  });
+
+  app.get("/api/classrooms/grade/:gradeId", async (req, res) => {
+    const classrooms = await storage.getClassroomsByGrade(req.params.gradeId);
+    res.json(classrooms);
+  });
+
+  app.get("/api/students", async (req, res) => {
+    const students = await storage.getStudents();
+    res.json(students);
+  });
+
+  app.get("/api/students/:id", async (req, res) => {
+    const student = await storage.getStudent(req.params.id);
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    res.json(student);
+  });
+
+  app.post("/api/students", async (req, res) => {
+    try {
+      const parsed = insertStudentSchema.parse(req.body);
+      const student = await storage.createStudent(parsed);
+      res.status(201).json(student);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid student data" });
+    }
+  });
+
+  app.patch("/api/students/:id", async (req, res) => {
+    try {
+      const student = await storage.updateStudent(req.params.id, req.body);
+      if (!student) {
+        return res.status(404).json({ error: "Student not found" });
+      }
+      res.json(student);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid student data" });
+    }
+  });
+
+  app.delete("/api/students/:id", async (req, res) => {
+    const deleted = await storage.deleteStudent(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    res.status(204).send();
+  });
+
+  // Fix missing classrooms - adds any classrooms that don't exist
+  app.post("/api/classrooms/fix-missing", async (req, res) => {
+    try {
+      const { db } = await import("./db");
+      const { classrooms, grades } = await import("@shared/schema");
+      const { eq } = await import("drizzle-orm");
+      
+      const allGrades = await storage.getGrades();
+      const allClassrooms = await storage.getClassrooms();
+      
+      // Grade 6 has only 3 classrooms, others have 4
+      const classroomCounts: Record<string, number> = {
+        "grade-1": 4, "grade-2": 4, "grade-3": 4,
+        "grade-4": 4, "grade-5": 4, "grade-6": 3,
+      };
+      
+      const gradeNames: Record<string, string> = {
+        "grade-1": "الصف الأول", "grade-2": "الصف الثاني", "grade-3": "الصف الثالث",
+        "grade-4": "الصف الرابع", "grade-5": "الصف الخامس", "grade-6": "الصف السادس",
+      };
+      
+      let addedCount = 0;
+      
+      for (const gradeId of Object.keys(classroomCounts)) {
+        const numClassrooms = classroomCounts[gradeId];
+        const gradeName = gradeNames[gradeId];
+        const gradeNumber = gradeId.replace("grade-", "");
+        
+        for (let i = 1; i <= numClassrooms; i++) {
+          const classroomId = `classroom-${gradeNumber}-${i}`;
+          const classroomName = `${gradeName} / ${i}`;
+          
+          // Check if classroom exists
+          const exists = allClassrooms.find(c => c.id === classroomId);
+          if (!exists) {
+            await db.insert(classrooms).values({
+              id: classroomId,
+              name: classroomName,
+              gradeId: gradeId,
+            }).onConflictDoNothing();
+            addedCount++;
+          }
+        }
+      }
+      
+      res.json({ 
+        message: addedCount > 0 
+          ? `تم إضافة ${addedCount} فصل ناقص` 
+          : "جميع الفصول موجودة",
+        added: addedCount 
+      });
+    } catch (error) {
+      console.error("Error fixing classrooms:", error);
+      res.status(500).json({ error: "حدث خطأ" });
+    }
+  });
+
+  app.post("/api/classrooms/fix-names", async (req, res) => {
+    try {
+      const allClassrooms = await storage.getClassrooms();
+      const grades = await storage.getGrades();
+      
+      const letterToNumber: Record<string, string> = {
+        "أ": "1", "ب": "2", "ج": "3", "د": "4",
+        "A": "1", "B": "2", "C": "3", "D": "4",
+      };
+      
+      let updatedCount = 0;
+      
+      for (const classroom of allClassrooms) {
+        let newName = classroom.name;
+        let needsUpdate = false;
+        
+        for (const [letter, number] of Object.entries(letterToNumber)) {
+          if (classroom.name.includes(`/ ${letter}`) || classroom.name.endsWith(` ${letter}`)) {
+            const grade = grades.find(g => g.id === classroom.gradeId);
+            if (grade) {
+              newName = `${grade.name} / ${number}`;
+              needsUpdate = true;
+              break;
+            }
+          }
+        }
+        
+        if (needsUpdate) {
+          const { db } = await import("./db");
+          const { classrooms } = await import("@shared/schema");
+          const { eq } = await import("drizzle-orm");
+          await db.update(classrooms).set({ name: newName }).where(eq(classrooms.id, classroom.id));
+          updatedCount++;
+        }
+      }
+      
+      res.json({ 
+        updated: updatedCount, 
+        message: `تم تحديث ${updatedCount} فصل` 
+      });
+    } catch (error) {
+      console.error("Fix classroom names error:", error);
+      res.status(500).json({ error: "فشل في تحديث أسماء الفصول" });
+    }
+  });
+
+  app.post("/api/students/bulk-import", async (req, res) => {
+    try {
+      const { students: studentsData } = req.body;
+      
+      if (!Array.isArray(studentsData)) {
+        return res.status(400).json({ error: "Students data must be an array" });
+      }
+      
+      const deletedCount = await storage.deleteAllStudents();
+      
+      const validStudents = studentsData.filter((s: any) => 
+        s.name && s.gradeId && s.classroomId
+      ).map((s: any) => ({
+        name: s.name,
+        gradeId: s.gradeId,
+        classroomId: s.classroomId,
+      }));
+      
+      const created = await storage.bulkCreateStudents(validStudents);
+      
+      res.status(201).json({ 
+        deleted: deletedCount,
+        imported: created.length,
+        message: `تم حذف ${deletedCount} طالب وإضافة ${created.length} طالب جديد`
+      });
+    } catch (error) {
+      console.error("Bulk import error:", error);
+      res.status(400).json({ error: "فشل في استيراد البيانات" });
+    }
+  });
+
+  app.get("/api/medical-cases", async (req, res) => {
+    const cases = await storage.getMedicalCases();
+    res.json(cases);
+  });
+
+  app.get("/api/medical-cases/:id", async (req, res) => {
+    const medCase = await storage.getMedicalCase(req.params.id);
+    if (!medCase) {
+      return res.status(404).json({ error: "Medical case not found" });
+    }
+    res.json(medCase);
+  });
+
+  app.post("/api/medical-cases", async (req, res) => {
+    try {
+      const parsed = insertMedicalCaseSchema.parse(req.body);
+      const medCase = await storage.createMedicalCase(parsed);
+      res.status(201).json(medCase);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid medical case data" });
+    }
+  });
+
+  app.patch("/api/medical-cases/:id", async (req, res) => {
+    try {
+      const medCase = await storage.updateMedicalCase(req.params.id, req.body);
+      if (!medCase) {
+        return res.status(404).json({ error: "Medical case not found" });
+      }
+      res.json(medCase);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid medical case data" });
+    }
+  });
+
+  app.delete("/api/medical-cases/:id", async (req, res) => {
+    const deleted = await storage.deleteMedicalCase(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Medical case not found" });
+    }
+    res.status(204).send();
+  });
+
+  app.get("/api/daily-tracking", async (req, res) => {
+    const tracking = await storage.getDailyTracking();
+    res.json(tracking);
+  });
+
+  app.get("/api/daily-tracking/:id", async (req, res) => {
+    const tracking = await storage.getDailyTrackingById(req.params.id);
+    if (!tracking) {
+      return res.status(404).json({ error: "Daily tracking record not found" });
+    }
+    res.json(tracking);
+  });
+
+  app.post("/api/daily-tracking", async (req, res) => {
+    try {
+      const parsed = insertDailyTrackingSchema.parse(req.body);
+      const tracking = await storage.createDailyTracking(parsed);
+      res.status(201).json(tracking);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid daily tracking data" });
+    }
+  });
+
+  app.patch("/api/daily-tracking/:id", async (req, res) => {
+    try {
+      const tracking = await storage.updateDailyTracking(req.params.id, req.body);
+      if (!tracking) {
+        return res.status(404).json({ error: "Daily tracking record not found" });
+      }
+      res.json(tracking);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid daily tracking data" });
+    }
+  });
+
+  app.delete("/api/daily-tracking/:id", async (req, res) => {
+    const deleted = await storage.deleteDailyTracking(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Daily tracking record not found" });
+    }
+    res.status(204).send();
+  });
+
+  app.get("/api/evacuation-drills", async (req, res) => {
+    const drills = await storage.getEvacuationDrills();
+    res.json(drills);
+  });
+
+  app.get("/api/evacuation-drills/:id", async (req, res) => {
+    const drill = await storage.getEvacuationDrill(req.params.id);
+    if (!drill) {
+      return res.status(404).json({ error: "Evacuation drill not found" });
+    }
+    res.json(drill);
+  });
+
+  app.post("/api/evacuation-drills", async (req, res) => {
+    try {
+      const parsed = insertEvacuationDrillSchema.parse(req.body);
+      const drill = await storage.createEvacuationDrill(parsed);
+      res.status(201).json(drill);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid evacuation drill data" });
+    }
+  });
+
+  app.patch("/api/evacuation-drills/:id", async (req, res) => {
+    try {
+      const drill = await storage.updateEvacuationDrill(req.params.id, req.body);
+      if (!drill) {
+        return res.status(404).json({ error: "Evacuation drill not found" });
+      }
+      res.json(drill);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid evacuation drill data" });
+    }
+  });
+
+  app.delete("/api/evacuation-drills/:id", async (req, res) => {
+    const deleted = await storage.deleteEvacuationDrill(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Evacuation drill not found" });
+    }
+    res.status(204).send();
+  });
+
+  app.get("/api/supervision-plan", async (req, res) => {
+    const plans = await storage.getSupervisionPlan();
+    res.json(plans);
+  });
+
+  app.get("/api/supervision-plan/:id", async (req, res) => {
+    const plan = await storage.getSupervisionPlanById(req.params.id);
+    if (!plan) {
+      return res.status(404).json({ error: "Supervision plan item not found" });
+    }
+    res.json(plan);
+  });
+
+  app.post("/api/supervision-plan", async (req, res) => {
+    try {
+      const parsed = insertSupervisionPlanSchema.parse(req.body);
+      const plan = await storage.createSupervisionPlan(parsed);
+      res.status(201).json(plan);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid supervision plan data" });
+    }
+  });
+
+  app.patch("/api/supervision-plan/:id", async (req, res) => {
+    try {
+      const plan = await storage.updateSupervisionPlan(req.params.id, req.body);
+      if (!plan) {
+        return res.status(404).json({ error: "Supervision plan item not found" });
+      }
+      res.json(plan);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid supervision plan data" });
+    }
+  });
+
+  app.delete("/api/supervision-plan/:id", async (req, res) => {
+    const deleted = await storage.deleteSupervisionPlan(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Supervision plan item not found" });
+    }
+    res.status(204).send();
+  });
+
+  app.get("/api/environment-inspection-schedule", async (req, res) => {
+    const schedules = await storage.getEnvironmentInspectionSchedule();
+    res.json(schedules);
+  });
+
+  app.post("/api/environment-inspection-schedule", async (req, res) => {
+    try {
+      const parsed = insertEnvironmentInspectionScheduleSchema.parse(req.body);
+      const schedule = await storage.createEnvironmentInspectionSchedule(parsed);
+      res.status(201).json(schedule);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.patch("/api/environment-inspection-schedule/:id", async (req, res) => {
+    try {
+      const schedule = await storage.updateEnvironmentInspectionSchedule(req.params.id, req.body);
+      if (!schedule) return res.status(404).json({ error: "Not found" });
+      res.json(schedule);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.delete("/api/environment-inspection-schedule/:id", async (req, res) => {
+    await storage.deleteEnvironmentInspectionSchedule(req.params.id);
+    res.status(204).send();
+  });
+
+  app.get("/api/environment-inspection", async (req, res) => {
+    const inspections = await storage.getEnvironmentInspection();
+    res.json(inspections);
+  });
+
+  app.post("/api/environment-inspection", async (req, res) => {
+    try {
+      const parsed = insertEnvironmentInspectionSchema.parse(req.body);
+      const inspection = await storage.createEnvironmentInspection(parsed);
+      res.status(201).json(inspection);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.patch("/api/environment-inspection/:id", async (req, res) => {
+    try {
+      const inspection = await storage.updateEnvironmentInspection(req.params.id, req.body);
+      if (!inspection) return res.status(404).json({ error: "Not found" });
+      res.json(inspection);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.delete("/api/environment-inspection/:id", async (req, res) => {
+    await storage.deleteEnvironmentInspection(req.params.id);
+    res.status(204).send();
+  });
+
+  app.get("/api/unhealthy-behaviors", async (req, res) => {
+    const behaviors = await storage.getUnhealthyBehaviors();
+    res.json(behaviors);
+  });
+
+  app.post("/api/unhealthy-behaviors", async (req, res) => {
+    try {
+      const parsed = insertUnhealthyBehaviorsSchema.parse(req.body);
+      const behavior = await storage.createUnhealthyBehaviors(parsed);
+      res.status(201).json(behavior);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.patch("/api/unhealthy-behaviors/:id", async (req, res) => {
+    try {
+      const behavior = await storage.updateUnhealthyBehaviors(req.params.id, req.body);
+      if (!behavior) return res.status(404).json({ error: "Not found" });
+      res.json(behavior);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.delete("/api/unhealthy-behaviors/:id", async (req, res) => {
+    await storage.deleteUnhealthyBehaviors(req.params.id);
+    res.status(204).send();
+  });
+
+  app.get("/api/chronic-diseases", async (req, res) => {
+    const diseases = await storage.getChronicDiseases();
+    res.json(diseases);
+  });
+
+  app.post("/api/chronic-diseases", async (req, res) => {
+    try {
+      const parsed = insertChronicDiseasesSchema.parse(req.body);
+      const disease = await storage.createChronicDiseases(parsed);
+      res.status(201).json(disease);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.patch("/api/chronic-diseases/:id", async (req, res) => {
+    try {
+      const disease = await storage.updateChronicDiseases(req.params.id, req.body);
+      if (!disease) return res.status(404).json({ error: "Not found" });
+      res.json(disease);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.delete("/api/chronic-diseases/:id", async (req, res) => {
+    await storage.deleteChronicDiseases(req.params.id);
+    res.status(204).send();
+  });
+
+  app.get("/api/infectious-diseases", async (req, res) => {
+    const diseases = await storage.getInfectiousDiseases();
+    res.json(diseases);
+  });
+
+  app.post("/api/infectious-diseases", async (req, res) => {
+    try {
+      const parsed = insertInfectiousDiseasesSchema.parse(req.body);
+      const disease = await storage.createInfectiousDiseases(parsed);
+      res.status(201).json(disease);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.patch("/api/infectious-diseases/:id", async (req, res) => {
+    try {
+      const disease = await storage.updateInfectiousDiseases(req.params.id, req.body);
+      if (!disease) return res.status(404).json({ error: "Not found" });
+      res.json(disease);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  app.delete("/api/infectious-diseases/:id", async (req, res) => {
+    await storage.deleteInfectiousDiseases(req.params.id);
+    res.status(204).send();
+  });
+
+  // Serve DFD HTML files
+  app.get("/dfd-arabic.html", (req, res) => {
+    const filePath = path.join(process.cwd(), "client/public/dfd-arabic.html");
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+    } else {
+      res.status(404).send("File not found");
+    }
+  });
+
+  app.get("/dfd-english.html", (req, res) => {
+    const filePath = path.join(process.cwd(), "client/public/dfd-english.html");
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+    } else {
+      res.status(404).send("File not found");
+    }
+  });
+
+  return httpServer;
+}
