@@ -1,0 +1,89 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { insertViolationSchema } from "@shared/schema";
+import { fromError } from "zod-validation-error";
+
+export async function registerRoutes(
+  httpServer: Server,
+  app: Express
+): Promise<Server> {
+  
+  // Get all violations
+  app.get("/api/violations", async (req, res) => {
+    try {
+      const violations = await storage.getAllViolations();
+      res.json(violations);
+    } catch (error) {
+      console.error("Error fetching violations:", error);
+      res.status(500).json({ error: "Failed to fetch violations" });
+    }
+  });
+
+  // Get single violation by ID
+  app.get("/api/violations/:id", async (req, res) => {
+    try {
+      const violation = await storage.getViolationById(req.params.id);
+      if (!violation) {
+        return res.status(404).json({ error: "Violation not found" });
+      }
+      res.json(violation);
+    } catch (error) {
+      console.error("Error fetching violation:", error);
+      res.status(500).json({ error: "Failed to fetch violation" });
+    }
+  });
+
+  // Create new violation
+  app.post("/api/violations", async (req, res) => {
+    try {
+      const result = insertViolationSchema.safeParse(req.body);
+      if (!result.success) {
+        const validationError = fromError(result.error);
+        return res.status(400).json({ error: validationError.toString() });
+      }
+
+      const violation = await storage.createViolation(result.data);
+      res.status(201).json(violation);
+    } catch (error) {
+      console.error("Error creating violation:", error);
+      res.status(500).json({ error: "Failed to create violation" });
+    }
+  });
+
+  // Update violation
+  app.patch("/api/violations/:id", async (req, res) => {
+    try {
+      const result = insertViolationSchema.safeParse(req.body);
+      if (!result.success) {
+        const validationError = fromError(result.error);
+        return res.status(400).json({ error: validationError.toString() });
+      }
+
+      const violation = await storage.updateViolation(req.params.id, result.data);
+      if (!violation) {
+        return res.status(404).json({ error: "Violation not found" });
+      }
+      res.json(violation);
+    } catch (error) {
+      console.error("Error updating violation:", error);
+      res.status(500).json({ error: "Failed to update violation" });
+    }
+  });
+
+  // Delete violation
+  app.delete("/api/violations/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteViolation(req.params.id);
+      if (!success) {
+        return res.status(404).json({ error: "Violation not found" });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting violation:", error);
+      res.status(500).json({ error: "Failed to delete violation" });
+    }
+  });
+
+  return httpServer;
+}
