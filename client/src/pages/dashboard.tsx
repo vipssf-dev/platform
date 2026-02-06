@@ -107,24 +107,50 @@ export default function Dashboard() {
       </header>
 
       {/* Hero Banner Section */}
-      <div className="relative w-full overflow-hidden bg-[#0a0e1a]">
-        <div className="relative w-full">
+      <div className="relative w-full overflow-hidden bg-[#070b14]">
+        <div className="relative w-full h-[200px] sm:h-[260px] md:h-[320px]">
           <img 
             src={platformBanner} 
             alt="منصة الرياض الإلكترونية" 
-            className="w-full h-auto max-h-[180px] sm:max-h-[240px] md:max-h-[300px] object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
             data-testid="img-platform-banner"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0e1a]/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070b14]/30 via-transparent to-[#070b14]/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-blue-900/20" />
           
-          {/* Accreditation seal - positioned on the left side */}
+          {/* Center text overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col items-center"
+            >
+              <h2 
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-blue-100 to-blue-300 mb-2 sm:mb-3 tracking-wide"
+                style={{ textShadow: '0 0 40px rgba(59,130,246,0.3)' }}
+                data-testid="text-platform-title"
+              >
+                منصة الرياض الإلكترونية
+              </h2>
+              <div className="w-24 sm:w-32 md:w-40 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent mb-2 sm:mb-3" />
+              <p className="text-blue-200/80 text-xs sm:text-sm md:text-base font-medium">
+                مدرسة الرياض الابتدائية — العام الدراسي 1447هـ
+              </p>
+              <p className="text-blue-300/50 text-[10px] sm:text-xs mt-1">
+                منصة موحدة لجميع الأنظمة الإدارية والتعليمية
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Accreditation seal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="absolute top-3 left-3 sm:top-4 sm:left-4 md:top-6 md:left-6"
           >
-            <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/15 backdrop-blur-md rounded-full shadow-xl border border-white/25 flex items-center justify-center overflow-hidden">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full shadow-xl border border-white/20 flex items-center justify-center overflow-hidden">
               <img 
                 src={accreditationLogo} 
                 alt="شعار الاعتماد" 
@@ -133,24 +159,6 @@ export default function Dashboard() {
               />
             </div>
           </motion.div>
-
-          {/* School info overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 px-3 sm:px-6 pb-3 sm:pb-4">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-2 sm:gap-3"
-            >
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-1.5 sm:p-2">
-                <School className="w-5 h-5 sm:w-7 sm:h-7 text-white/90" />
-              </div>
-              <div>
-                <p className="text-white/90 text-xs sm:text-sm font-medium">مدرسة الرياض الابتدائية</p>
-                <p className="text-white/60 text-[10px] sm:text-xs">منصة موحدة لجميع الأنظمة الإدارية والتعليمية</p>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </div>
 
