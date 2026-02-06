@@ -145,7 +145,17 @@ export default function Dashboard() {
               >
                 RiyadhPlatform
               </p>
-              <div className="w-32 sm:w-44 md:w-56 h-[2px] bg-gradient-to-r from-transparent via-blue-400/80 to-transparent" />
+              <div className="w-32 sm:w-44 md:w-56 h-[2px] bg-gradient-to-r from-transparent via-blue-400/80 to-transparent mb-3 sm:mb-4" />
+              <p 
+                className="text-[11px] sm:text-sm md:text-base text-blue-200/60 font-medium max-w-xl"
+                style={{ 
+                  textShadow: '0 1px 3px rgba(0,0,0,0.4)',
+                  fontFamily: 'Cairo, sans-serif'
+                }}
+                data-testid="text-platform-description"
+              >
+                منصة موحدة لجميع الأنظمة الإدارية والتعليمية لمتابعة الأداء ورفع الكفاءة
+              </p>
             </motion.div>
           </div>
 
