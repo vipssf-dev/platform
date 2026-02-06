@@ -108,40 +108,13 @@ export default function Dashboard() {
 
       {/* Hero Banner Section */}
       <div className="relative w-full overflow-hidden bg-[#070b14]">
-        <div className="relative w-full h-[200px] sm:h-[260px] md:h-[320px]">
+        <div className="relative w-full">
           <img 
             src={platformBanner} 
             alt="منصة الرياض الإلكترونية" 
-            className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+            className="w-full h-auto max-h-[180px] sm:max-h-[250px] md:max-h-[320px] object-cover object-center"
             data-testid="img-platform-banner"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070b14]/30 via-transparent to-[#070b14]/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-blue-900/20" />
-          
-          {/* Center text overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="flex flex-col items-center"
-            >
-              <h2 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-blue-100 to-blue-300 mb-2 sm:mb-3 tracking-wide"
-                style={{ textShadow: '0 0 40px rgba(59,130,246,0.3)' }}
-                data-testid="text-platform-title"
-              >
-                منصة الرياض الإلكترونية
-              </h2>
-              <div className="w-24 sm:w-32 md:w-40 h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent mb-2 sm:mb-3" />
-              <p className="text-blue-200/80 text-xs sm:text-sm md:text-base font-medium">
-                مدرسة الرياض الابتدائية — العام الدراسي 1447هـ
-              </p>
-              <p className="text-blue-300/50 text-[10px] sm:text-xs mt-1">
-                منصة موحدة لجميع الأنظمة الإدارية والتعليمية
-              </p>
-            </motion.div>
-          </div>
 
           {/* Accreditation seal */}
           <motion.div
