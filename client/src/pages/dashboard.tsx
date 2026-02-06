@@ -135,7 +135,7 @@ export default function Dashboard() {
                 منصة الرياض الإلكترونية
               </h2>
               <p 
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-wider mb-3 sm:mb-4"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-wider mb-3 sm:mb-4"
                 style={{ 
                   textShadow: '0 0 50px rgba(59,130,246,0.6), 0 0 100px rgba(59,130,246,0.4), 0 2px 4px rgba(0,0,0,0.5)',
                   fontFamily: 'Inter, sans-serif',
