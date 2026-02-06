@@ -82,26 +82,27 @@ export function KPIDashboard() {
   const { overallStats, systems } = data;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg sm:text-xl font-bold text-slate-900">مؤشرات الأنظمة</h3>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-slate-600">
-            <Wifi className="w-4 h-4 text-green-500" />
+    <div className="space-y-3 sm:space-y-4">
+      <div className="flex items-center justify-between mb-1">
+        <h3 className="text-sm sm:text-base font-bold text-slate-900">مؤشرات الأنظمة</h3>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-600">
+            <Wifi className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
             <span>{overallStats.onlineSystems}/{overallStats.totalSystems} متصل</span>
           </div>
           <button
             onClick={() => fetchData(true)}
             disabled={refreshing}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors disabled:opacity-50"
+            className="flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors disabled:opacity-50"
+            data-testid="button-refresh-kpi"
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">تحديث</span>
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
         {systems.map((system, index) => (
           <motion.div
             key={system.systemId}
@@ -109,37 +110,36 @@ export function KPIDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
           >
-            <Card className={`h-full border-2 transition-colors ${
+            <Card className={`h-full border transition-colors ${
               system.status === 'online' 
                 ? 'border-green-200 bg-white' 
                 : 'border-slate-200 bg-slate-50'
-            }`}>
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm font-bold text-slate-800">
+            }`} data-testid={`card-system-${system.systemId}`}>
+              <CardHeader className="p-2 sm:p-3 pb-1 sm:pb-2">
+                <div className="flex items-center justify-between gap-1">
+                  <CardTitle className="text-[11px] sm:text-xs font-bold text-slate-800 leading-tight truncate">
                     {system.systemName}
                   </CardTitle>
                   {system.status === 'online' ? (
-                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                      متصل
+                    <span className="flex-shrink-0 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px] bg-green-100 text-green-700">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-green-500" />
+                      <span className="hidden sm:inline">متصل</span>
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-slate-200 text-slate-500">
-                      <WifiOff className="w-3 h-3" />
-                      غير متصل
+                    <span className="flex-shrink-0 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px] bg-slate-200 text-slate-500">
+                      <WifiOff className="w-2.5 h-2.5" />
                     </span>
                   )}
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-2 sm:p-3 pt-0 sm:pt-0">
                 {system.status === 'online' && system.metrics.length > 0 ? (
-                  <div className="space-y-2">
+                  <div className="space-y-1 sm:space-y-1.5">
                     {system.metrics.map((metric, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
-                        <span className="text-slate-600">{metric.label}</span>
+                      <div key={idx} className="flex justify-between items-center text-[10px] sm:text-xs">
+                        <span className="text-slate-600 truncate ml-1">{metric.label}</span>
                         <span 
-                          className="font-bold"
+                          className="font-bold flex-shrink-0"
                           style={{ color: metric.color || '#1e293b' }}
                         >
                           {metric.value}
@@ -148,12 +148,12 @@ export function KPIDashboard() {
                     ))}
                   </div>
                 ) : system.status === 'online' ? (
-                  <p className="text-xs text-slate-400 text-center py-2">
+                  <p className="text-[10px] text-slate-400 text-center py-1">
                     لا توجد بيانات
                   </p>
                 ) : (
-                  <p className="text-xs text-slate-400 text-center py-2">
-                    يتعذر الاتصال بالنظام
+                  <p className="text-[10px] text-slate-400 text-center py-1">
+                    يتعذر الاتصال
                   </p>
                 )}
               </CardContent>
