@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { KPIDashboard } from "@/components/kpi-dashboard";
-import platformBanner from "@assets/riyadh_platform_banner.png";
+import platformBanner from "@assets/riyadh_platform_banner_new.png";
 import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 
 const systems = [
@@ -108,13 +108,35 @@ export default function Dashboard() {
 
       {/* Hero Banner Section */}
       <div className="relative w-full overflow-hidden bg-[#070b14]">
-        <div className="relative w-full">
+        <div className="relative w-full h-[200px] sm:h-[260px] md:h-[320px]">
           <img 
             src={platformBanner} 
             alt="منصة الرياض الإلكترونية" 
-            className="w-full h-auto max-h-[180px] sm:max-h-[250px] md:max-h-[320px] object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center"
             data-testid="img-platform-banner"
           />
+          
+          {/* Platform title - centered */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col items-center"
+            >
+              <h2 
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 sm:mb-4"
+                style={{ 
+                  textShadow: '0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(59,130,246,0.3), 0 2px 4px rgba(0,0,0,0.5)',
+                  fontFamily: 'Cairo, sans-serif'
+                }}
+                data-testid="text-platform-title"
+              >
+                منصة الرياض الإلكترونية
+              </h2>
+              <div className="w-32 sm:w-44 md:w-56 h-[2px] bg-gradient-to-r from-transparent via-blue-400/80 to-transparent" />
+            </motion.div>
+          </div>
 
           {/* Accreditation seal */}
           <motion.div
