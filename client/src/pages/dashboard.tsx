@@ -125,7 +125,7 @@ export default function Dashboard() {
               className="flex flex-col items-center"
             >
               <h2 
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-3 sm:mb-4"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-1 sm:mb-2"
                 style={{ 
                   textShadow: '0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(59,130,246,0.3), 0 2px 4px rgba(0,0,0,0.5)',
                   fontFamily: 'Cairo, sans-serif'
@@ -134,6 +134,17 @@ export default function Dashboard() {
               >
                 منصة الرياض الإلكترونية
               </h2>
+              <p 
+                className="text-lg sm:text-xl md:text-2xl font-bold text-blue-300/80 tracking-widest mb-3 sm:mb-4"
+                style={{ 
+                  textShadow: '0 0 30px rgba(59,130,246,0.4), 0 1px 3px rgba(0,0,0,0.4)',
+                  fontFamily: 'Inter, sans-serif',
+                  letterSpacing: '0.15em'
+                }}
+                data-testid="text-platform-subtitle"
+              >
+                RiyadhPlatform
+              </p>
               <div className="w-32 sm:w-44 md:w-56 h-[2px] bg-gradient-to-r from-transparent via-blue-400/80 to-transparent" />
             </motion.div>
           </div>
