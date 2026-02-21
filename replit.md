@@ -67,3 +67,21 @@ All hosted on `*.riyadhplatform.tech` subdomains:
 - Forms: React Hook Form with Zod resolver
 - Data: TanStack React Query, date-fns
 - Database: Drizzle ORM, pg (PostgreSQL client), connect-pg-simple for sessions
+
+## Recent Changes (Feb 2026)
+
+### Comprehensive UI/UX Redesign
+- **Login Page**: Redesigned with gradient background, animated elements, show/hide password toggle, loading state
+- **Dashboard**: Added search bar (desktop + mobile), greeting with Hijri date, quick access grid for all 17 systems, mobile hamburger menu
+- **KPI Dashboard**: Added connectivity progress bar, improved status indicators, cleaner metric display
+- **System Cards**: Redesigned with color-mapped styles, smooth hover effects, better icon containers
+- **Hub Pages**: Created shared `HubLayout` component with breadcrumb navigation, consistent header/footer, home button
+- **404 Page**: Redesigned with Arabic text and animated elements
+- **Performance**: Implemented React.lazy() code splitting for all pages, Suspense with loading fallback
+- **Meta Tags**: Updated OG/Twitter cards with proper Arabic descriptions, added theme-color
+- **Responsive**: Improved mobile menu, search, and KPI display for all screen sizes
+
+### Key Components
+- `client/src/components/hub-layout.tsx` - Shared layout for all hub/sub-pages with breadcrumbs
+- `client/src/components/system-card.tsx` - Redesigned card with color mapping
+- `client/src/components/kpi-dashboard.tsx` - Live stats from 8 external systems

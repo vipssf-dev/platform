@@ -4,11 +4,10 @@ import {
   ClipboardList,
   BookOpen,
   Building2,
-  ArrowRight,
   School
 } from "lucide-react";
-import { Link } from "wouter";
 import { SystemCard } from "@/components/system-card";
+import { HubLayout } from "@/components/hub-layout";
 
 const schoolAffairsSystems = [
   {
@@ -43,60 +42,28 @@ const schoolAffairsSystems = [
 
 export default function SchoolAffairsHub() {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans" dir="rtl">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg">
-              <School className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-base sm:text-xl font-bold text-slate-900">الشؤون المدرسية</h1>
-              <p className="text-xs sm:text-sm text-slate-500">مدرسة الرياض الابتدائية</p>
-            </div>
-          </div>
-          <Link href="/dashboard">
-            <button className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
-              <ArrowRight className="w-4 h-4" />
-              <span className="hidden sm:inline">العودة للرئيسية</span>
-              <span className="sm:hidden">رجوع</span>
-            </button>
-          </Link>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-6 sm:mb-8"
-        >
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">أنظمة الشؤون المدرسية</h2>
-          <p className="text-sm sm:text-base text-slate-600">إدارة الشؤون المالية والإدارية ومصادر التعلم والمبنى</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {schoolAffairsSystems.map((system, index) => (
-            <motion.div
-              key={system.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <SystemCard {...system} mode="grid" />
-            </motion.div>
-          ))}
-        </div>
-      </main>
-
-      <footer className="bg-slate-900 text-white py-4 mt-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-slate-400">
-            تطوير وتصميم: <span className="text-white font-medium">صالح سفر الغامدي</span>
-          </p>
-        </div>
-      </footer>
-    </div>
+    <HubLayout
+      title="الشؤون المدرسية"
+      subtitle="مدرسة الرياض الابتدائية"
+      description="أنظمة الشؤون المدرسية"
+      icon={School}
+      iconColor="bg-gradient-to-br from-emerald-500 to-green-600"
+      breadcrumbs={[{ label: "الشؤون المدرسية" }]}
+      backHref="/dashboard"
+      backLabel="العودة للرئيسية"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        {schoolAffairsSystems.map((system, index) => (
+          <motion.div
+            key={system.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.08 }}
+          >
+            <SystemCard {...system} mode="grid" />
+          </motion.div>
+        ))}
+      </div>
+    </HubLayout>
   );
 }
