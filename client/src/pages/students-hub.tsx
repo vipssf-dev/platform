@@ -4,7 +4,8 @@ import {
   HeartHandshake,
   Stethoscope,
   Bus,
-  School
+  School,
+  Brain
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -37,6 +38,13 @@ const studentsSystems = [
     icon: Bus,
     href: "https://bus.riyadhplatform.tech",
     color: "bg-red-500"
+  },
+  {
+    title: "صعوبات التعلم",
+    description: "متابعة برامج وخطط صعوبات التعلم والتربية الخاصة للطلاب.",
+    icon: Brain,
+    href: "https://special-edu.riyadhplatform.tech",
+    color: "bg-violet-500"
   }
 ];
 

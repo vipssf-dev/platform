@@ -20,6 +20,7 @@ import {
   Trophy,
   Stethoscope,
   Bus,
+  Brain,
   FileQuestion,
   FolderOpen,
   Calendar,
@@ -56,7 +57,7 @@ const systems = [
   },
   {
     title: "شؤون الطلاب",
-    description: "النشاط والتوجيه والإشراف الصحي والحافلات.",
+    description: "النشاط والتوجيه والإشراف الصحي والحافلات وصعوبات التعلم.",
     icon: HeartHandshake,
     href: "/students",
     color: "bg-amber-500",
@@ -81,6 +82,7 @@ const allSubSystems = [
   { title: "التوجيه الطلابي", icon: HeartHandshake, href: "https://counselor.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "الإشراف الصحي", icon: Stethoscope, href: "https://health.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "مخالفات الحافلات", icon: Bus, href: "https://bus.riyadhplatform.tech", category: "شؤون الطلاب" },
+  { title: "صعوبات التعلم", icon: Brain, href: "https://special-edu.riyadhplatform.tech", category: "شؤون الطلاب" },
 ];
 
 function getGreeting(): string {
@@ -400,7 +402,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-500">
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
-              <span>17 تطبيق متاح</span>
+              <span>18 تطبيق متاح</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-slate-300" />
             <span>3 أقسام رئيسية</span>

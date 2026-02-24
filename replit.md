@@ -4,7 +4,7 @@
 
 This is a comprehensive school management portal for Al-Riyadh Elementary School (مدرسة الرياض الابتدائية). The platform serves as a unified gateway to multiple school administrative systems, providing a central dashboard with KPI tracking and navigation to external subsystems covering financial management, exams, student affairs, technical operations, and educational activities.
 
-The application is built with a React frontend and Express backend, using TypeScript throughout. It follows a hub-and-spoke architecture where this main portal connects to 16+ external subsystem applications hosted on separate subdomains.
+The application is built with a React frontend and Express backend, using TypeScript throughout. It follows a hub-and-spoke architecture where this main portal connects to 17+ external subsystem applications hosted on separate subdomains.
 
 ## User Preferences
 
@@ -41,7 +41,7 @@ Preferred communication style: Simple, everyday language.
 The dashboard organizes systems into three main categories:
 1. **School Affairs** (الشؤون المدرسية) - Financial, tasks, learning resources, building maintenance
 2. **Educational Affairs** (الشؤون التعليمية) - Exams hub, technical work tracking
-3. **Student Affairs** (شؤون الطلاب) - Activities, counseling, health supervision, bus violations
+3. **Student Affairs** (شؤون الطلاب) - Activities, counseling, health supervision, bus violations, learning difficulties (special education)
 
 ### KPI Dashboard
 - Real-time aggregation of statistics from external subsystems
@@ -56,7 +56,7 @@ All hosted on `*.riyadhplatform.tech` subdomains:
 - Exam question delivery, Exam follow-up, Results analysis
 - School timetables, Portfolio management, Follow-up records
 - Written work supervision, Technical visits
-- Student activities, Student counseling, Health supervision, Bus violations
+- Student activities, Student counseling, Health supervision, Bus violations, Learning difficulties (special-edu)
 
 ### Third-Party Services
 - **Google Fonts**: Cairo (Arabic) and Inter font families
