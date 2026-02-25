@@ -34,12 +34,22 @@ async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
     clearTimeout(timeout);
     
     if (response.ok) {
-      const data = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await response.json();
+        return {
+          systemId: system.id,
+          systemName: system.name,
+          metrics: data.metrics || [],
+          lastUpdated: data.lastUpdated || new Date().toISOString(),
+          status: 'online' as const
+        };
+      }
       return {
         systemId: system.id,
         systemName: system.name,
-        metrics: data.metrics || [],
-        lastUpdated: data.lastUpdated || new Date().toISOString(),
+        metrics: [],
+        lastUpdated: new Date().toISOString(),
         status: 'online' as const
       };
     }
