@@ -12,7 +12,8 @@ const EXTERNAL_SYSTEMS = [
   { id: "activities", name: "النشاط الطلابي", url: "https://activities.riyadhplatform.tech" },
   { id: "counselor", name: "التوجيه الطلابي", url: "https://counselor.riyadhplatform.tech" },
   { id: "health", name: "الإشراف الصحي", url: "https://health.riyadhplatform.tech" },
-  { id: "bus", name: "مخالفات الحافلات", url: "https://bus.riyadhplatform.tech" }
+  { id: "bus", name: "مخالفات الحافلات", url: "https://bus.riyadhplatform.tech" },
+  { id: "special-edu", name: "صعوبات التعلم", url: "https://special-edu.riyadhplatform.tech" }
 ];
 
 interface SystemMetric {
