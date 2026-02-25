@@ -5,15 +5,15 @@ import path from "path";
 import fs from "fs";
 
 const EXTERNAL_SYSTEMS = [
-  { id: "financial", name: "النظام المالي", url: "https://financial.riyadhplatform.tech" },
-  { id: "tasks", name: "متابعة المهام", url: "https://tasks.riyadhplatform.tech" },
-  { id: "learning", name: "مصادر التعلم", url: "https://learning.riyadhplatform.tech" },
-  { id: "maintenance", name: "المبنى المدرسي", url: "https://maintenance.riyadhplatform.tech" },
-  { id: "activities", name: "النشاط الطلابي", url: "https://activities.riyadhplatform.tech" },
-  { id: "counselor", name: "التوجيه الطلابي", url: "https://counselor.riyadhplatform.tech" },
-  { id: "health", name: "الإشراف الصحي", url: "https://health.riyadhplatform.tech" },
-  { id: "bus", name: "مخالفات الحافلات", url: "https://bus.riyadhplatform.tech" },
-  { id: "special-edu", name: "صعوبات التعلم", url: "https://special-edu.riyadhplatform.tech" }
+  { id: "financial", name: "النظام المالي", url: "https://financial.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "tasks", name: "متابعة المهام", url: "https://tasks.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "learning", name: "مصادر التعلم", url: "https://learning.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "maintenance", name: "المبنى المدرسي", url: "https://maintenance.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "activities", name: "النشاط الطلابي", url: "https://activities.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "counselor", name: "التوجيه الطلابي", url: "https://counselor.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "health", name: "الإشراف الصحي", url: "https://health.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "bus", name: "مخالفات الحافلات", url: "https://bus.riyadhplatform.tech", statsEndpoint: "/api/stats" },
+  { id: "special-edu", name: "صعوبات التعلم", url: "https://special-edu.riyadhplatform.tech", statsEndpoint: "/api/documents" }
 ];
 
 interface SystemMetric {
@@ -22,12 +22,44 @@ interface SystemMetric {
   color?: string;
 }
 
+const SECTION_LABELS: Record<string, string> = {
+  monthly_reports: "التقارير الشهرية",
+  timetable_sem1: "جدول الفصل الأول",
+  timetable_sem2: "جدول الفصل الثاني",
+  aoun_support_cards: "بطاقات عَوْن",
+  aoun_student_list: "قوائم الطلاب",
+  aoun_operational: "الخطة التشغيلية",
+  lesson_plans: "خطط الدروس"
+};
+
+function buildSpecialEduMetrics(documents: any[]): SystemMetric[] {
+  const total = documents.length;
+  const sections: Record<string, number> = {};
+  documents.forEach((doc: any) => {
+    sections[doc.section] = (sections[doc.section] || 0) + 1;
+  });
+
+  const metrics: SystemMetric[] = [
+    { label: "إجمالي الوثائق", value: total, color: "#6d28d9" }
+  ];
+
+  for (const [key, count] of Object.entries(sections)) {
+    metrics.push({
+      label: SECTION_LABELS[key] || key,
+      value: count,
+      color: "#7c3aed"
+    });
+  }
+
+  return metrics;
+}
+
 async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
     
-    const response = await fetch(`${system.url}/api/stats`, {
+    const response = await fetch(`${system.url}${system.statsEndpoint}`, {
       signal: controller.signal,
       headers: { 'Accept': 'application/json' }
     });
@@ -37,6 +69,17 @@ async function fetchSystemStats(system: typeof EXTERNAL_SYSTEMS[0]) {
       const contentType = response.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
         const data = await response.json();
+
+        if (system.id === 'special-edu' && Array.isArray(data)) {
+          return {
+            systemId: system.id,
+            systemName: system.name,
+            metrics: buildSpecialEduMetrics(data),
+            lastUpdated: new Date().toISOString(),
+            status: 'online' as const
+          };
+        }
+
         return {
           systemId: system.id,
           systemName: system.name,
