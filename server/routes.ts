@@ -32,16 +32,17 @@ const SECTION_LABELS: Record<string, string> = {
   lesson_plans: "خطط الدروس"
 };
 
+const EXCLUDED_SECTIONS = new Set(["aoun_student_list", "aoun_operational"]);
+
 function buildSpecialEduMetrics(documents: any[]): SystemMetric[] {
-  const total = documents.length;
   const sections: Record<string, number> = {};
   documents.forEach((doc: any) => {
-    sections[doc.section] = (sections[doc.section] || 0) + 1;
+    if (!EXCLUDED_SECTIONS.has(doc.section)) {
+      sections[doc.section] = (sections[doc.section] || 0) + 1;
+    }
   });
 
-  const metrics: SystemMetric[] = [
-    { label: "إجمالي الوثائق", value: total, color: "#6d28d9" }
-  ];
+  const metrics: SystemMetric[] = [];
 
   for (const [key, count] of Object.entries(sections)) {
     metrics.push({
