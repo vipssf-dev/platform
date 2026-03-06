@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { 
   ClipboardCheck,
   FolderOpen,
-  School
+  School,
+  Award
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -23,6 +24,13 @@ const educationalSystems = [
     href: "/technical",
     color: "bg-orange-500",
     isInternal: true
+  },
+  {
+    title: "اختبار الرخصة المهنية المحاكي",
+    description: "نظام محاكاة اختبار الرخصة المهنية للمعلمين والتدريب عليه.",
+    icon: Award,
+    href: "https://license.riyadhplatform.tech",
+    color: "bg-purple-500"
   }
 ];
 
