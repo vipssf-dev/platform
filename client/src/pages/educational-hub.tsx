@@ -3,7 +3,8 @@ import {
   ClipboardCheck,
   FolderOpen,
   School,
-  Award
+  Award,
+  Dumbbell
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -31,6 +32,13 @@ const educationalSystems = [
     icon: Award,
     href: "https://license.riyadhplatform.tech",
     color: "bg-purple-500"
+  },
+  {
+    title: "تدريبات نافس",
+    description: "منصة التدريبات والتمارين التنافسية لتطوير مهارات الطلاب.",
+    icon: Dumbbell,
+    href: "https://nafs.riyadhplatform.tech",
+    color: "bg-sky-500"
   }
 ];
 

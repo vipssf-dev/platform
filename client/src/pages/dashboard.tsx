@@ -22,6 +22,7 @@ import {
   Bus,
   Brain,
   Award,
+  Dumbbell,
   FileQuestion,
   FolderOpen,
   Calendar,
@@ -80,6 +81,7 @@ const allSubSystems = [
   { title: "الأعمال التحريرية", icon: PenTool, href: "https://supervision.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "الزيارات الفنية", icon: UserCheck, href: "https://supervision-visit.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "الرخصة المهنية", icon: Award, href: "https://license.riyadhplatform.tech", category: "الشؤون التعليمية" },
+  { title: "تدريبات نافس", icon: Dumbbell, href: "https://nafs.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "النشاط الطلابي", icon: Trophy, href: "https://activities.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "التوجيه الطلابي", icon: HeartHandshake, href: "https://counselor.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "الإشراف الصحي", icon: Stethoscope, href: "https://health.riyadhplatform.tech", category: "شؤون الطلاب" },
@@ -404,7 +406,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-500">
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
-              <span>19 تطبيق متاح</span>
+              <span>20 تطبيق متاح</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-slate-300" />
             <span>3 أقسام رئيسية</span>
