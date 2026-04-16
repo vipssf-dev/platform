@@ -4,7 +4,8 @@ import {
   FolderOpen,
   School,
   Award,
-  Dumbbell
+  Dumbbell,
+  Gem
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -39,6 +40,13 @@ const educationalSystems = [
     icon: Dumbbell,
     href: "https://nafs.riyadhplatform.tech",
     color: "bg-sky-500"
+  },
+  {
+    title: "رياض بيرلز",
+    description: "منصة رياض بيرلز للمحتوى التعليمي والموارد الرقمية.",
+    icon: Gem,
+    href: "https://prils.riyadhplatform.tech",
+    color: "bg-rose-500"
   }
 ];
 
