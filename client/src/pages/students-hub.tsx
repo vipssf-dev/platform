@@ -5,7 +5,8 @@ import {
   Stethoscope,
   Bus,
   School,
-  Brain
+  Brain,
+  BookOpen
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -45,6 +46,13 @@ const studentsSystems = [
     icon: Brain,
     href: "https://special-edu.riyadhplatform.tech",
     color: "bg-violet-500"
+  },
+  {
+    title: "مركز مصادر التعلم",
+    description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
+    icon: BookOpen,
+    href: "https://learning.riyadhplatform.tech",
+    color: "bg-cyan-500"
   }
 ];
 

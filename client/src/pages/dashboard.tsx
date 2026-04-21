@@ -44,7 +44,7 @@ import accreditationLogo from "@assets/تنزيل_1766861652266.jpg";
 const systems = [
   {
     title: "الشؤون المدرسية",
-    description: "النظام المالي والمهام ومصادر التعلم والمبنى المدرسي.",
+    description: "النظام المالي ومتابعة المهام والمبنى المدرسي.",
     icon: School,
     href: "/school-affairs",
     color: "bg-emerald-500",
@@ -60,7 +60,7 @@ const systems = [
   },
   {
     title: "شؤون الطلاب",
-    description: "النشاط والتوجيه والإشراف الصحي والحافلات وصعوبات التعلم.",
+    description: "النشاط والتوجيه والإشراف الصحي والحافلات وصعوبات التعلم ومصادر التعلم.",
     icon: HeartHandshake,
     href: "/students",
     color: "bg-amber-500",
@@ -71,7 +71,7 @@ const systems = [
 const allSubSystems = [
   { title: "النظام المالي", icon: Calculator, href: "https://financial.riyadhplatform.tech", category: "الشؤون المدرسية" },
   { title: "متابعة المهام", icon: ClipboardList, href: "https://tasks.riyadhplatform.tech", category: "الشؤون المدرسية" },
-  { title: "مصادر التعلم", icon: BookOpen, href: "https://learning.riyadhplatform.tech", category: "الشؤون المدرسية" },
+  { title: "مصادر التعلم", icon: BookOpen, href: "https://learning.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "المبنى المدرسي", icon: Building2, href: "https://maintenance.riyadhplatform.tech", category: "الشؤون المدرسية" },
   { title: "تسليم الأسئلة", icon: FileQuestion, href: "https://exams-qs.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "متابعة الاختبارات", icon: ClipboardCheck, href: "https://exam-followup.riyadhplatform.tech", category: "الشؤون التعليمية" },

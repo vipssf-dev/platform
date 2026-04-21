@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { 
   Calculator,
   ClipboardList,
-  BookOpen,
   Building2,
   School
 } from "lucide-react";
@@ -23,13 +22,6 @@ const schoolAffairsSystems = [
     icon: ClipboardList,
     href: "https://tasks.riyadhplatform.tech",
     color: "bg-blue-500"
-  },
-  {
-    title: "مركز مصادر التعلم",
-    description: "عرض خطط وبرامج مركز مصادر التعلم والأنشطة التعليمية.",
-    icon: BookOpen,
-    href: "https://learning.riyadhplatform.tech",
-    color: "bg-cyan-500"
   },
   {
     title: "المبنى المدرسي",
