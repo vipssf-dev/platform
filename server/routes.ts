@@ -164,6 +164,15 @@ export async function registerRoutes(
     }
   });
 
+  app.get("/presentation.html", (_req, res) => {
+    const cwd = process.cwd();
+    const devPath = path.join(cwd, "client/public/presentation.html");
+    const prodPath = path.join(cwd, "dist/public/presentation.html");
+    if (fs.existsSync(devPath)) res.sendFile(devPath);
+    else if (fs.existsSync(prodPath)) res.sendFile(prodPath);
+    else res.status(404).send("File not found");
+  });
+
   app.get("/org-chart.html", (_req, res) => {
     const cwd = process.cwd();
     const devPath = path.join(cwd, "client/public/org-chart.html");

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>منصة الرياض الإلكترونية - عرض تقديمي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Cairo',sans-serif;background:#0f172a;color:#f8fafc;overflow:hidden;height:100vh;width:100vw}
+
+    /* ===== SLIDES ===== */
+    .slides-wrapper{width:100%;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px;opacity:0;transform:translateX(60px);transition:all .5s cubic-bezier(.4,0,.2,1);pointer-events:none;text-align:center}
+    .slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+    .slide.exit{opacity:0;transform:translateX(-60px)}
+
+    /* ===== BACKGROUNDS ===== */
+    .bg-blue{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%)}
+    .bg-green{background:linear-gradient(135deg,#064e3b 0%,#065f46 60%,#0f172a 100%)}
+    .bg-violet{background:linear-gradient(135deg,#2e1065 0%,#4c1d95 60%,#0f172a 100%)}
+    .bg-amber{background:linear-gradient(135deg,#78350f 0%,#92400e 60%,#0f172a 100%)}
+    .bg-dark{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%)}
+    .bg-cyan{background:linear-gradient(135deg,#0e7490 0%,#0c4a6e 100%)}
+    .bg-red{background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 60%,#0f172a 100%)}
+    .bg-emerald{background:linear-gradient(135deg,#065f46 0%,#047857 60%,#0f172a 100%)}
+    .bg-final{background:linear-gradient(135deg,#1e3a8a 0%,#4c1d95 50%,#065f46 100%)}
+
+    /* ===== SLIDE 1 - TITLE ===== */
+    .title-badge{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93c5fd;padding:8px 20px;border-radius:50px;font-size:14px;font-weight:600;margin-bottom:24px;letter-spacing:.5px}
+    .title-main{font-size:56px;font-weight:900;line-height:1.15;margin-bottom:16px;background:linear-gradient(135deg,#fff 0%,#93c5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .title-sub{font-size:22px;color:#94a3b8;margin-bottom:40px;font-weight:600}
+    .title-stats{display:flex;gap:48px;justify-content:center;margin-top:16px}
+    .stat-box{text-align:center;padding:16px 24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(10px)}
+    .stat-num{font-size:36px;font-weight:900;color:#60a5fa}
+    .stat-lbl{font-size:13px;color:#94a3b8;margin-top:4px}
+    .divider{width:80px;height:3px;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:2px;margin:24px auto}
+
+    /* ===== SECTION TITLES ===== */
+    .section-label{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:12px}
+    .slide-title{font-size:40px;font-weight:900;margin-bottom:8px}
+    .slide-desc{font-size:16px;color:#94a3b8;margin-bottom:36px;max-width:700px;line-height:1.7}
+
+    /* ===== CARDS GRID ===== */
+    .cards-grid{display:grid;gap:16px;width:100%;max-width:960px}
+    .cards-3{grid-template-columns:repeat(3,1fr)}
+    .cards-4{grid-template-columns:repeat(4,1fr)}
+    .cards-2{grid-template-columns:repeat(2,1fr)}
+    .app-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 16px;text-align:center;transition:transform .2s}
+    .app-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.09)}
+    .app-icon{font-size:28px;margin-bottom:10px}
+    .app-name{font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.4}
+    .app-url{font-size:10px;color:#64748b;margin-top:6px;direction:ltr}
+
+    /* ===== EFFICIENCY SECTION ===== */
+    .eff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;width:100%;max-width:900px}
+    .eff-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 20px;text-align:center}
+    .eff-icon{font-size:40px;margin-bottom:12px}
+    .eff-num{font-size:42px;font-weight:900;line-height:1}
+    .eff-unit{font-size:16px;font-weight:600;opacity:.7;margin-bottom:8px}
+    .eff-label{font-size:14px;color:#94a3b8;line-height:1.5}
+
+    /* ===== COMPARISON ===== */
+    .compare-grid{display:grid;grid-template-columns:1fr 80px 1fr;gap:0;width:100%;max-width:860px;align-items:center}
+    .compare-col{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px 20px}
+    .compare-col.before{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.05)}
+    .compare-col.after{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05)}
+    .compare-title{font-size:18px;font-weight:800;margin-bottom:16px}
+    .compare-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:13px;color:#cbd5e1;text-align:right;line-height:1.5}
+    .compare-icon-mid{font-size:36px;text-align:center}
+    .dot-bad{color:#ef4444;font-size:16px;flex-shrink:0;margin-top:2px}
+    .dot-good{color:#22c55e;font-size:16px;flex-shrink:0;margin-top:2px}
+
+    /* ===== NUMBERS ROW ===== */
+    .numbers-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+    .num-badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:14px 20px;text-align:center;min-width:140px}
+    .num-val{font-size:32px;font-weight:900}
+    .num-desc{font-size:12px;color:#94a3b8;margin-top:4px;line-height:1.4}
+
+    /* ===== BENEFITS LIST ===== */
+    .benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:800px;text-align:right}
+    .benefit-item{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px}
+    .benefit-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+    .benefit-text h4{font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
+    .benefit-text p{font-size:12px;color:#94a3b8;line-height:1.5}
+
+    /* ===== FINAL SLIDE ===== */
+    .final-points{display:flex;flex-direction:column;gap:14px;width:100%;max-width:700px;text-align:right}
+    .final-point{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 20px}
+    .fp-icon{font-size:26px;flex-shrink:0}
+    .fp-text{font-size:15px;font-weight:600;color:#e2e8f0}
+
+    /* ===== PROGRESS ===== */
+    .progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#3b82f6,#8b5cf6,#10b981);transition:width .4s ease;z-index:100}
+
+    /* ===== NAV ===== */
+    .nav{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px;z-index:100;background:rgba(15,23,42,.8);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:10px 24px}
+    .nav-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#e2e8f0;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .nav-btn:hover{background:rgba(59,130,246,.3);border-color:#3b82f6}
+    .nav-btn:disabled{opacity:.3;cursor:not-allowed}
+    .slide-counter{font-size:13px;color:#94a3b8;min-width:60px;text-align:center;font-weight:600}
+
+    /* ===== DOTS ===== */
+    .dots{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:100}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s}
+    .dot.active{background:#3b82f6;width:24px;border-radius:4px}
+
+    /* ===== FOOTER ===== */
+    .slide-footer{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);font-size:11px;color:#374151;z-index:100}
+
+    /* ===== KEYBOARD HINT ===== */
+    .kbd-hint{position:fixed;top:20px;left:20px;font-size:11px;color:#374151;z-index:100;direction:ltr}
+
+    /* ===== PRINT ===== */
+    @media print{
+      .nav,.dots,.slide-footer,.kbd-hint,.progress-bar{display:none}
+      .slide{position:relative;opacity:1;transform:none;page-break-after:always;height:100vh}
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .animate-in{animation:fadeUp .6s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .delay-1{animation-delay:.1s}
+    .delay-2{animation-delay:.2s}
+    .delay-3{animation-delay:.3s}
+    .delay-4{animation-delay:.4s}
+    .glow{text-shadow:0 0 40px rgba(59,130,246,.5)}
+
+    /* ===== TAG ===== */
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:50px;font-size:12px;font-weight:700;margin:0 4px 8px}
+    .tag-green{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+    .tag-blue{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93c5fd}
+    .tag-violet{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd}
+    .tag-amber{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="kbd-hint">← → للتنقل | Space للتالي</div>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide bg-blue active" data-index="0">
+    <div class="title-badge animate-in">🏫 مدرسة الرياض الابتدائية — العام الدراسي 1447هـ</div>
+    <div class="title-main animate-in delay-1">منصة الرياض الإلكترونية</div>
+    <div class="title-sub animate-in delay-2">بوابة موحدة لجميع الأنظمة الإدارية والتعليمية</div>
+    <div class="divider animate-in delay-2"></div>
+    <div class="title-stats animate-in delay-3">
+      <div class="stat-box"><div class="stat-num">21</div><div class="stat-lbl">تطبيق إلكتروني</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl">أقسام رئيسية</div></div>
+      <div class="stat-box"><div class="stat-num">∞</div><div class="stat-lbl">وصول 24/7</div></div>
+    </div>
+    <div style="margin-top:36px" class="animate-in delay-4">
+      <div class="tag tag-green">✅ متصل بالإنترنت</div>
+      <div class="tag tag-blue">🔒 آمن ومحمي</div>
+      <div class="tag tag-violet">📊 بيانات فورية</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: OVERVIEW -->
+  <div class="slide bg-dark" data-index="1">
+    <div class="section-label animate-in">نظرة عامة</div>
+    <div class="slide-title animate-in delay-1">هيكل المنصة الإلكترونية</div>
+    <div class="slide-desc animate-in delay-2">منصة موحدة تجمع جميع الأنظمة تحت سقف رقمي واحد، مع لوحة مؤشرات مباشرة لمتابعة الإنجاز</div>
+    <div class="animate-in delay-3" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+      <div class="app-card" style="min-width:200px;padding:24px 28px">
+        <div class="app-icon">🏫</div>
+        <div style="font-size:16px;font-weight:800;color:#6ee7b7;margin-bottom:6px">الشؤون المدرسية</div>
+        <div style="font-size:13px;color:#94a3b8">3 تطبيقات</div>
+        <div style="font-size:11px;color:#4ade80;margin-top:8px">النظام المالي • المهام • المبنى</div>
+      </div>
+      <div class="app-card" style="min-width:200px;padding:24px 28px">
+        <div class="app-icon">📚</div>
+        <div style="font-size:16px;font-weight:800;color:#c4b5fd;margin-bottom:6px">الشؤون التعليمية</div>
+        <div style="font-size:13px;color:#94a3b8">11 تطبيقاً</div>
+        <div style="font-size:11px;color:#a78bfa;margin-top:8px">اختبارات • أعمال فنية • تدريب</div>
+      </div>
+      <div class="app-card" style="min-width:200px;padding:24px 28px">
+        <div class="app-icon">🎓</div>
+        <div style="font-size:16px;font-weight:800;color:#fcd34d;margin-bottom:6px">شؤون الطلاب</div>
+        <div style="font-size:13px;color:#94a3b8">6 تطبيقات</div>
+        <div style="font-size:11px;color:#fbbf24;margin-top:8px">أنشطة • صحة • نقل • تعليم خاص</div>
+      </div>
+    </div>
+    <div class="animate-in delay-4" style="margin-top:28px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:14px;padding:14px 28px;font-size:14px;color:#93c5fd">
+      🔗 جميع التطبيقات مترابطة عبر نطاق <strong>riyadhplatform.tech</strong> وتُعرض في لوحة مؤشرات مباشرة
+    </div>
+  </div>
+
+  <!-- SLIDE 3: SCHOOL AFFAIRS -->
+  <div class="slide bg-green" data-index="2">
+    <div class="section-label animate-in" style="color:#6ee7b7">القسم الأول</div>
+    <div class="slide-title animate-in delay-1">الشؤون المدرسية</div>
+    <div class="slide-desc animate-in delay-2">تغطي الجانب الإداري والمالي والبنية التحتية للمدرسة</div>
+    <div class="cards-grid cards-3 animate-in delay-3" style="max-width:780px">
+      <div class="app-card" style="border-color:rgba(16,185,129,.3)">
+        <div class="app-icon">💰</div>
+        <div class="app-name">النظام المالي</div>
+        <div style="font-size:11px;color:#6ee7b7;margin-top:8px">إدارة الإيرادات والمصروفات</div>
+        <div class="app-url">financial.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(16,185,129,.3)">
+        <div class="app-icon">📋</div>
+        <div class="app-name">متابعة المهام الإدارية</div>
+        <div style="font-size:11px;color:#6ee7b7;margin-top:8px">تتبع مهام المساعدين الإداريين</div>
+        <div class="app-url">tasks.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(16,185,129,.3)">
+        <div class="app-icon">🏗️</div>
+        <div class="app-name">المبنى المدرسي</div>
+        <div style="font-size:11px;color:#6ee7b7;margin-top:8px">متابعة الصيانة والمرافق</div>
+        <div class="app-url">maintenance.riyadhplatform.tech</div>
+      </div>
+    </div>
+    <div class="animate-in delay-4" style="display:flex;gap:24px;margin-top:28px">
+      <div class="tag tag-green">✅ رصيد مالي فوري</div>
+      <div class="tag tag-green">✅ متابعة 63+ مهمة</div>
+      <div class="tag tag-green">✅ جدولة الصيانة</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: EDUCATIONAL AFFAIRS -->
+  <div class="slide bg-violet" data-index="3">
+    <div class="section-label animate-in" style="color:#c4b5fd">القسم الثاني</div>
+    <div class="slide-title animate-in delay-1">الشؤون التعليمية</div>
+    <div class="slide-desc animate-in delay-2">11 تطبيقاً تُغطي دورة الاختبارات والأعمال الفنية والتطوير المهني</div>
+    <div class="cards-grid animate-in delay-3" style="grid-template-columns:repeat(4,1fr);max-width:920px;gap:12px">
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">📝</div>
+        <div class="app-name" style="font-size:12px">تسليم الأسئلة</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">🔍</div>
+        <div class="app-name" style="font-size:12px">متابعة الاختبارات</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">📊</div>
+        <div class="app-name" style="font-size:12px">تحليل النتائج</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">🗓️</div>
+        <div class="app-name" style="font-size:12px">الجداول المدرسية</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">📁</div>
+        <div class="app-name" style="font-size:12px">ملفات الإنجاز</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">📒</div>
+        <div class="app-name" style="font-size:12px">سجلات المتابعة</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">✍️</div>
+        <div class="app-name" style="font-size:12px">الأعمال التحريرية</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">🔬</div>
+        <div class="app-name" style="font-size:12px">الزيارات الفنية</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">🏆</div>
+        <div class="app-name" style="font-size:12px">الرخصة المهنية</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">💪</div>
+        <div class="app-name" style="font-size:12px">تدريبات نافس</div>
+      </div>
+      <div class="app-card" style="padding:14px 10px">
+        <div class="app-icon" style="font-size:22px">💎</div>
+        <div class="app-name" style="font-size:12px">رياض بيرلز</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: STUDENT AFFAIRS -->
+  <div class="slide bg-amber" data-index="4">
+    <div class="section-label animate-in" style="color:#fcd34d">القسم الثالث</div>
+    <div class="slide-title animate-in delay-1">شؤون الطلاب</div>
+    <div class="slide-desc animate-in delay-2">6 تطبيقات تشمل جميع جوانب رعاية الطالب داخل المدرسة</div>
+    <div class="cards-grid animate-in delay-3" style="grid-template-columns:repeat(3,1fr);max-width:780px">
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">🏅</div>
+        <div class="app-name">النشاط الطلابي</div>
+        <div class="app-url">activities.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">🤝</div>
+        <div class="app-name">التوجيه الطلابي</div>
+        <div class="app-url">counselor.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">🏥</div>
+        <div class="app-name">الإشراف الصحي</div>
+        <div class="app-url">health.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">🚌</div>
+        <div class="app-name">مخالفات الحافلات</div>
+        <div class="app-url">bus.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">🧠</div>
+        <div class="app-name">صعوبات التعلم</div>
+        <div class="app-url">special-edu.riyadhplatform.tech</div>
+      </div>
+      <div class="app-card" style="border-color:rgba(245,158,11,.3)">
+        <div class="app-icon">📚</div>
+        <div class="app-name">مركز مصادر التعلم</div>
+        <div class="app-url">learning.riyadhplatform.tech</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: TIME SAVINGS -->
+  <div class="slide bg-cyan" data-index="5">
+    <div class="section-label animate-in" style="color:#67e8f9">كفاءة الإنفاق</div>
+    <div class="slide-title animate-in delay-1">⏱️ توفير الوقت</div>
+    <div class="slide-desc animate-in delay-2">تحويل العمليات الورقية التقليدية إلى رقمية يُقلّص وقت الإنجاز بصورة جوهرية</div>
+    <div class="compare-grid animate-in delay-3">
+      <div class="compare-col before">
+        <div class="compare-title" style="color:#f87171">❌ قبل المنصة</div>
+        <div class="compare-item"><span class="dot-bad">✗</span>طباعة وتوزيع الأسئلة يدوياً (ساعات)</div>
+        <div class="compare-item"><span class="dot-bad">✗</span>تسجيل المهام في سجلات ورقية يومياً</div>
+        <div class="compare-item"><span class="dot-bad">✗</span>إعداد التقارير المالية يدوياً كل شهر</div>
+        <div class="compare-item"><span class="dot-bad">✗</span>متابعة حضور المخالفات ورقياً</div>
+        <div class="compare-item"><span class="dot-bad">✗</span>انتظار الموافقات عبر البريد الداخلي</div>
+      </div>
+      <div class="compare-icon-mid" style="font-size:42px">⚡</div>
+      <div class="compare-col after">
+        <div class="compare-title" style="color:#4ade80">✅ مع المنصة</div>
+        <div class="compare-item"><span class="dot-good">✓</span>تسليم الأسئلة إلكترونياً في دقائق</div>
+        <div class="compare-item"><span class="dot-good">✓</span>تحديث المهام لحظياً من أي جهاز</div>
+        <div class="compare-item"><span class="dot-good">✓</span>تقارير مالية تلقائية فورية</div>
+        <div class="compare-item"><span class="dot-good">✓</span>رصد المخالفات وتحليلها آنياً</div>
+        <div class="compare-item"><span class="dot-good">✓</span>موافقة ومتابعة رقمية فورية</div>
+      </div>
+    </div>
+    <div class="numbers-row animate-in delay-4">
+      <div class="num-badge"><div class="num-val" style="color:#22d3ee">75%</div><div class="num-desc">تقليص وقت<br>إعداد التقارير</div></div>
+      <div class="num-badge"><div class="num-val" style="color:#22d3ee">90%</div><div class="num-desc">تسريع تسليم<br>الأسئلة والوثائق</div></div>
+      <div class="num-badge"><div class="num-val" style="color:#22d3ee">24/7</div><div class="num-desc">وصول مستمر<br>بلا توقف</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: EFFORT SAVINGS -->
+  <div class="slide bg-dark" data-index="6">
+    <div class="section-label animate-in">كفاءة الإنفاق</div>
+    <div class="slide-title animate-in delay-1">💪 توفير الجهد</div>
+    <div class="slide-desc animate-in delay-2">الاستغناء عن الأعمال الورقية المكررة وتوحيد البيانات في مكان واحد</div>
+    <div class="benefits-grid animate-in delay-3">
+      <div class="benefit-item">
+        <div class="benefit-icon">📊</div>
+        <div class="benefit-text">
+          <h4>لوحة مؤشرات مركزية</h4>
+          <p>عرض جميع إحصاءات الأنظمة الـ21 في شاشة واحدة بدلاً من مراجعة كل نظام على حدة</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🔍</div>
+        <div class="benefit-text">
+          <h4>البحث الموحد الفوري</h4>
+          <p>إيجاد أي تطبيق أو نظام فورياً عبر شريط البحث بدلاً من التنقل بين عدة مواقع</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📱</div>
+        <div class="benefit-text">
+          <h4>وصول من أي جهاز</h4>
+          <p>العمل من الجوال أو الحاسب أو اللوح في أي وقت دون الحاجة للتواجد في المدرسة</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🔄</div>
+        <div class="benefit-text">
+          <h4>تحديث البيانات تلقائياً</h4>
+          <p>البيانات تتحدث كل دقيقة دون تدخل بشري، مما يُلغي الجهد اليدوي المتكرر</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📋</div>
+        <div class="benefit-text">
+          <h4>إلغاء ازدواجية العمل</h4>
+          <p>بيانات الطلاب والمعلمين تُدار مرة واحدة وتظهر في جميع الأنظمة المترابطة</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-text">
+          <h4>اتخاذ قرار أسرع</h4>
+          <p>المسؤول يرى نسبة الإنجاز والحالة الفورية لكل نظام دون انتظار التقارير</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: FINANCIAL SAVINGS -->
+  <div class="slide bg-red" data-index="7">
+    <div class="section-label animate-in" style="color:#fca5a5">كفاءة الإنفاق</div>
+    <div class="slide-title animate-in delay-1">💰 توفير المال</div>
+    <div class="slide-desc animate-in delay-2">الرقمنة الشاملة تُخفّض التكاليف التشغيلية بشكل مباشر وغير مباشر</div>
+    <div class="eff-grid animate-in delay-3">
+      <div class="eff-card" style="border-color:rgba(248,113,113,.25)">
+        <div class="eff-icon">🖨️</div>
+        <div class="eff-num" style="color:#f87171">-80%</div>
+        <div class="eff-unit">تكاليف الطباعة</div>
+        <div class="eff-label">الأسئلة والتقارير والنماذج<br>أصبحت رقمية بالكامل</div>
+      </div>
+      <div class="eff-card" style="border-color:rgba(248,113,113,.25)">
+        <div class="eff-icon">📦</div>
+        <div class="eff-num" style="color:#f87171">-70%</div>
+        <div class="eff-unit">تكاليف الأرشفة</div>
+        <div class="eff-label">لا حاجة لملفات ورقية<br>أو خزائن للتخزين</div>
+      </div>
+      <div class="eff-card" style="border-color:rgba(248,113,113,.25)">
+        <div class="eff-icon">🚗</div>
+        <div class="eff-num" style="color:#f87171">-60%</div>
+        <div class="eff-unit">تكاليف التنقل</div>
+        <div class="eff-label">الاجتماعات والمراسلات<br>رقمية عن بُعد</div>
+      </div>
+    </div>
+    <div class="animate-in delay-4" style="margin-top:24px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:16px 28px;max-width:700px">
+      <div style="color:#4ade80;font-weight:800;font-size:16px;margin-bottom:8px">💡 أثر إضافي</div>
+      <div style="font-size:14px;color:#d1d5db;line-height:1.7">
+        توفير ساعات عمل إضافية يُعادل تكلفة عمالة إضافية — المنصة تؤدي دور مساعد إداري رقمي متاح باستمرار
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: REAL NUMBERS -->
+  <div class="slide bg-emerald" data-index="8">
+    <div class="section-label animate-in" style="color:#6ee7b7">أرقام حقيقية من المنصة</div>
+    <div class="slide-title animate-in delay-1">📈 ما تحقق فعلياً</div>
+    <div class="slide-desc animate-in delay-2">بيانات مباشرة من أنظمة المنصة تعكس مستوى الإنجاز الفعلي</div>
+    <div class="animate-in delay-3" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;max-width:880px">
+      <div class="num-badge" style="min-width:0">
+        <div class="num-val" style="color:#4ade80;font-size:28px">73%</div>
+        <div class="num-desc">نسبة إنجاز<br>المهام الإدارية<br>(46 من 63 مهمة)</div>
+      </div>
+      <div class="num-badge" style="min-width:0">
+        <div class="num-val" style="color:#4ade80;font-size:28px">83%</div>
+        <div class="num-desc">نسبة إنجاز<br>برامج مصادر التعلم<br>(10 من 12 برنامج)</div>
+      </div>
+      <div class="num-badge" style="min-width:0">
+        <div class="num-val" style="color:#4ade80;font-size:28px">80%</div>
+        <div class="num-desc">نسبة إنجاز<br>برامج التوجيه<br>(8 من 10 برامج)</div>
+      </div>
+      <div class="num-badge" style="min-width:0">
+        <div class="num-val" style="color:#4ade80;font-size:28px">79%</div>
+        <div class="num-desc">نسبة إنجاز<br>الأنشطة الطلابية<br>(19 من 24 نشاطاً)</div>
+      </div>
+    </div>
+    <div class="animate-in delay-4" style="display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;justify-content:center">
+      <div class="tag tag-green">📚 198 كتاب مسجل</div>
+      <div class="tag tag-green">🤝 44 إعارة منفذة</div>
+      <div class="tag tag-green">🏥 55 حالة صحية موثقة</div>
+      <div class="tag tag-green">🚌 51 مخالفة مرصودة</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CONCLUSION -->
+  <div class="slide bg-final" data-index="9">
+    <div class="section-label animate-in">الخلاصة</div>
+    <div class="slide-title animate-in delay-1 glow">منصة الرياض.. ليست رفاهية<br>بل ضرورة إدارية</div>
+    <div class="divider animate-in delay-2"></div>
+    <div class="final-points animate-in delay-3">
+      <div class="final-point">
+        <span class="fp-icon">⏱️</span>
+        <span class="fp-text">توفير الوقت — الإنجاز بدقائق بدلاً من ساعات</span>
+      </div>
+      <div class="final-point">
+        <span class="fp-icon">💪</span>
+        <span class="fp-text">توفير الجهد — بيانات مركزية بلا ازدواجية أو تكرار</span>
+      </div>
+      <div class="final-point">
+        <span class="fp-icon">💰</span>
+        <span class="fp-text">توفير المال — تقليص الطباعة والأرشفة والتنقل</span>
+      </div>
+      <div class="final-point">
+        <span class="fp-icon">📊</span>
+        <span class="fp-text">قرارات أفضل — مؤشرات فورية تدعم صانع القرار</span>
+      </div>
+    </div>
+    <div class="animate-in delay-4" style="margin-top:24px;font-size:13px;color:#64748b">
+      تصميم وتطوير: صالح سفر الغامدي &nbsp;|&nbsp; منصة الرياض الإلكترونية 1447هـ
+    </div>
+  </div>
+
+</div><!-- /slides-wrapper -->
+
+<!-- DOTS -->
+<div class="dots" id="dots"></div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">→</button>
+  <span class="slide-counter" id="counter">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">←</button>
+</div>
+
+<div class="slide-footer">منصة الرياض الإلكترونية — riyadhplatform.tech</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+  let isAnimating = false;
+
+  // Build dots
+  const dotsEl = document.getElementById('dots');
+  for(let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function updateUI(){
+    document.getElementById('counter').textContent = (current+1) + ' / ' + total;
+    document.getElementById('progressBar').style.width = ((current+1)/total*100) + '%';
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+    document.getElementById('prevBtn').disabled = current===0;
+    document.getElementById('nextBtn').disabled = current===total-1;
+  }
+
+  function goTo(idx){
+    if(isAnimating||idx===current||idx<0||idx>=total) return;
+    isAnimating = true;
+    const dir = idx > current ? 1 : -1;
+
+    slides[current].classList.add('exit');
+    slides[current].classList.remove('active');
+
+    setTimeout(()=>{
+      slides[current].classList.remove('exit');
+      current = idx;
+      slides[current].style.transform = `translateX(${dir*-60}px)`;
+      slides[current].style.opacity = '0';
+      slides[current].classList.add('active');
+
+      // Trigger animations
+      slides[current].querySelectorAll('.animate-in').forEach(el=>{
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = '';
+      });
+
+      setTimeout(()=>{
+        slides[current].style.transform = '';
+        slides[current].style.opacity = '';
+        updateUI();
+        isAnimating = false;
+      }, 50);
+    }, 350);
+  }
+
+  function navigate(dir){ goTo(current+dir); }
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='ArrowLeft'||e.key==='ArrowDown'||e.key===' ') { e.preventDefault(); navigate(1); }
+    if(e.key==='ArrowRight'||e.key==='ArrowUp') { e.preventDefault(); navigate(-1); }
+  });
+
+  // Swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e=>{
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if(Math.abs(diff)>50) navigate(diff>0?1:-1);
+  });
+
+  updateUI();
+</script>
+
+</body>
+</html>
