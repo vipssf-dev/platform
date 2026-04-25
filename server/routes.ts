@@ -164,6 +164,17 @@ export async function registerRoutes(
     }
   });
 
+  app.get("/riyadh-platform-presentation.pptx", (_req, res) => {
+    const cwd = process.cwd();
+    const devPath = path.join(cwd, "client/public/riyadh-platform-presentation.pptx");
+    const prodPath = path.join(cwd, "dist/public/riyadh-platform-presentation.pptx");
+    const filePath = fs.existsSync(devPath) ? devPath : fs.existsSync(prodPath) ? prodPath : null;
+    if (!filePath) return res.status(404).send("File not found");
+    res.setHeader("Content-Disposition", 'attachment; filename="riyadh-platform-presentation.pptx"');
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+    res.sendFile(filePath);
+  });
+
   app.get("/presentation.html", (_req, res) => {
     const cwd = process.cwd();
     const devPath = path.join(cwd, "client/public/presentation.html");

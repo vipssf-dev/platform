@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "OKPq7EfRXKd5wvzr47xyQ"
+uri = "file://client/public/riyadh-platform-presentation.pptx"
+type = "slides"
+title = "منصة الرياض الإلكترونية — عرض تقديمي PowerPoint"
