@@ -5,7 +5,8 @@ import {
   School,
   Award,
   Dumbbell,
-  Gem
+  Gem,
+  ScrollText
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -47,6 +48,13 @@ const educationalSystems = [
     icon: Gem,
     href: "https://prils.riyadhplatform.tech",
     color: "bg-rose-500"
+  },
+  {
+    title: "الأدلة واللوائح للتعليم العام 2026",
+    description: "مرجع شامل لأدلة ولوائح التعليم العام لعام 2026.",
+    icon: ScrollText,
+    href: "https://regulations.riyadhplatform.tech",
+    color: "bg-teal-500"
   }
 ];
 

@@ -34,7 +34,8 @@ import {
   ExternalLink,
   Menu,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ScrollText
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { KPIDashboard } from "@/components/kpi-dashboard";
@@ -84,6 +85,7 @@ const allSubSystems = [
   { title: "الرخصة المهنية", icon: Award, href: "https://license.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "تدريبات نافس", icon: Dumbbell, href: "https://nafs.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "رياض بيرلز", icon: Gem, href: "https://prils.riyadhplatform.tech", category: "الشؤون التعليمية" },
+  { title: "الأدلة واللوائح", icon: ScrollText, href: "https://regulations.riyadhplatform.tech", category: "الشؤون التعليمية" },
   { title: "النشاط الطلابي", icon: Trophy, href: "https://activities.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "التوجيه الطلابي", icon: HeartHandshake, href: "https://counselor.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "الإشراف الصحي", icon: Stethoscope, href: "https://health.riyadhplatform.tech", category: "شؤون الطلاب" },
@@ -408,7 +410,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-500">
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
-              <span>21 تطبيق متاح</span>
+              <span>22 تطبيق متاح</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-slate-300" />
             <span>3 أقسام رئيسية</span>
