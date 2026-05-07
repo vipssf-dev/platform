@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دليل المستخدم — منصة الرياض الإلكترونية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --sidebar-w:280px;
+      --header-h:60px;
+      --accent:#3b82f6;
+      --green:#10b981;
+      --violet:#8b5cf6;
+      --amber:#f59e0b;
+      --teal:#14b8a6;
+      --red:#ef4444;
+      --pink:#ec4899;
+      --sky:#0ea5e9;
+      --rose:#f43f5e;
+      --indigo:#6366f1;
+      --orange:#f97316;
+      --stone:#78716c;
+      --cyan:#06b6d4;
+      --bg:#f8fafc;
+      --sidebar-bg:#0f172a;
+      --text:#1e293b;
+      --muted:#64748b;
+      --border:#e2e8f0;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);direction:rtl}
+
+    /* ===== TOP BAR ===== */
+    .topbar{position:fixed;top:0;right:0;left:0;height:var(--header-h);background:#fff;border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;gap:16px;padding:0 20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+    .topbar-logo{font-size:17px;font-weight:800;color:var(--text);white-space:nowrap}
+    .topbar-logo span{color:var(--accent)}
+    .search-wrap{flex:1;max-width:480px;position:relative}
+    .search-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:8px 16px 8px 40px;font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:border-color .2s;background:#f8fafc}
+    .search-input:focus{border-color:var(--accent);background:#fff}
+    .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+    .topbar-actions{margin-right:auto;display:flex;gap:8px}
+    .btn-print{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+    .btn-print:hover{background:#2563eb}
+    .menu-btn{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:18px;color:var(--text)}
+
+    /* ===== SIDEBAR ===== */
+    .sidebar{position:fixed;top:var(--header-h);right:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--sidebar-bg);overflow-y:auto;z-index:100;padding:16px 0;transition:transform .3s}
+    .sidebar::-webkit-scrollbar{width:4px}
+    .sidebar::-webkit-scrollbar-thumb{background:#334155;border-radius:2px}
+    .nav-section{padding:8px 16px 4px;font-size:10px;font-weight:700;color:#475569;letter-spacing:1px;text-transform:uppercase}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;font-weight:600;color:#94a3b8;cursor:pointer;transition:all .15s;border-right:3px solid transparent;text-decoration:none}
+    .nav-item:hover{color:#e2e8f0;background:rgba(255,255,255,.04)}
+    .nav-item.active{color:#fff;border-right-color:var(--accent);background:rgba(59,130,246,.1)}
+    .nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .nav-divider{height:1px;background:#1e293b;margin:8px 16px}
+    .nav-badge{margin-right:auto;font-size:10px;background:#1e293b;color:#64748b;padding:2px 7px;border-radius:50px}
+
+    /* ===== MAIN ===== */
+    .main{margin-right:var(--sidebar-w);padding-top:calc(var(--header-h) + 32px);padding-bottom:60px;padding-left:32px;padding-right:32px;max-width:960px}
+
+    /* ===== SECTION HEADER ===== */
+    .section-anchor{display:block;position:relative;top:calc(-1 * var(--header-h) - 24px)}
+    .section-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;margin-top:40px}
+    .section-header:first-of-type{margin-top:0}
+    .section-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .section-title-wrap h2{font-size:22px;font-weight:800;margin-bottom:2px}
+    .section-title-wrap p{font-size:13px;color:var(--muted)}
+    .section-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;margin-right:8px}
+
+    /* ===== APP CARD ===== */
+    .app-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;transition:box-shadow .2s;scroll-margin-top:80px}
+    .app-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+    .app-card-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+    .app-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+    .app-meta{flex:1}
+    .app-num{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px}
+    .app-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px}
+    .app-desc{font-size:13px;color:var(--muted);line-height:1.6}
+    .app-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;background:#eff6ff;padding:5px 12px;border-radius:8px;border:1px solid #bfdbfe;transition:all .15s}
+    .app-link:hover{background:#dbeafe}
+
+    /* ===== STEPS ===== */
+    .steps-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .steps-list{display:flex;flex-direction:column;gap:8px}
+    .step-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg);border-radius:10px;padding:10px 14px;border:1px solid var(--border)}
+    .step-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .step-text{font-size:13px;color:var(--text);line-height:1.6}
+
+    /* ===== FEATURES ===== */
+    .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+    .feature-chip{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text)}
+    .feature-chip .fc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+    /* ===== DIVIDER ===== */
+    .content-divider{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin:32px 0}
+
+    /* ===== INTRO CARD ===== */
+    .intro-card{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);border-radius:20px;padding:32px;color:#fff;margin-bottom:32px}
+    .intro-card h1{font-size:28px;font-weight:900;margin-bottom:8px}
+    .intro-card p{font-size:15px;color:#93c5fd;line-height:1.7;margin-bottom:20px}
+    .intro-stats{display:flex;gap:16px;flex-wrap:wrap}
+    .intro-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 20px;text-align:center}
+    .intro-stat .n{font-size:28px;font-weight:900;color:#60a5fa}
+    .intro-stat .l{font-size:11px;color:#94a3b8;margin-top:2px}
+
+    /* ===== LOGIN CARD ===== */
+    .login-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
+    .login-card h3{font-size:16px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .cred-row{display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:8px}
+    .cred-label{font-size:12px;color:var(--muted);min-width:80px}
+    .cred-value{font-size:14px;font-weight:700;color:var(--text);letter-spacing:1px;background:#e0f2fe;padding:3px 10px;border-radius:6px;font-family:'Courier New',monospace}
+
+    /* ===== FAQ ===== */
+    .faq-item{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden}
+    .faq-q{padding:14px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none}
+    .faq-q:hover{background:var(--bg)}
+    .faq-a{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--muted);line-height:1.7}
+    .faq-a.open{max-height:200px;padding:0 18px 14px}
+    .faq-arrow{transition:transform .3s;font-size:16px;color:var(--muted);flex-shrink:0}
+    .faq-arrow.open{transform:rotate(180deg)}
+
+    /* ===== NOTICE ===== */
+    .notice{display:flex;gap:12px;align-items:flex-start;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#92400e}
+
+    /* ===== TIP ===== */
+    .tip{display:flex;gap:12px;align-items:flex-start;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1e40af}
+
+    /* ===== SCROLL TOP ===== */
+    .scroll-top{position:fixed;bottom:28px;left:28px;width:42px;height:42px;background:var(--accent);color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:300}
+    .scroll-top.show{opacity:1}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .sidebar{transform:translateX(100%)}
+      .sidebar.open{transform:translateX(0)}
+      .main{margin-right:0;padding:calc(var(--header-h) + 20px) 16px 40px}
+      .menu-btn{display:block}
+      .features-grid{grid-template-columns:1fr}
+      .topbar-logo{font-size:14px}
+      .intro-stats{gap:10px}
+    }
+
+    /* ===== PRINT ===== */
+    @media print{
+      .sidebar,.topbar,.scroll-top,.btn-print,.menu-btn{display:none!important}
+      .main{margin-right:0;padding:20px}
+      .app-card{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .highlight{background:#fef9c3;border-radius:4px;padding:0 3px}
+
+    /* ===== SECTION COLORS ===== */
+    .s-school{--c:#10b981}.s-edu{--c:#6366f1}.s-students{--c:#f59e0b}
+    .section-icon.s-school{background:#d1fae5;color:#065f46}
+    .section-icon.s-edu{background:#e0e7ff;color:#3730a3}
+    .section-icon.s-students{background:#fef3c7;color:#92400e}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="topbar-logo">منصة الرياض <span>الإلكترونية</span></div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" id="searchInput" placeholder="ابحث في الدليل..." oninput="doSearch(this.value)">
+  </div>
+  <div class="topbar-actions">
+    <button class="btn-print" onclick="window.print()">🖨️ طباعة الدليل</button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="nav-section">التنقل</div>
+  <a class="nav-item active" href="#intro" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#60a5fa"></span>مقدمة وكيفية الدخول
+  </a>
+  <a class="nav-item" href="#kpi" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#a78bfa"></span>لوحة المؤشرات
+  </a>
+
+  <div class="nav-divider"></div>
+  <div class="nav-section">الشؤون المدرسية <span class="nav-badge">3</span></div>
+  <a class="nav-item" href="#financial" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#10b981"></span>النظام المالي
+  </a>
+  <a class="nav-item" href="#tasks" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#10b981"></span>متابعة المهام الإدارية
+  </a>
+  <a class="nav-item" href="#maintenance" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#10b981"></span>المبنى المدرسي
+  </a>
+
+  <div class="nav-divider"></div>
+  <div class="nav-section">الشؤون التعليمية <span class="nav-badge">12</span></div>
+  <a class="nav-item" href="#exams-qs" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>تسليم الأسئلة
+  </a>
+  <a class="nav-item" href="#exam-followup" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>متابعة الاختبارات
+  </a>
+  <a class="nav-item" href="#exam-analysis" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>تحليل النتائج
+  </a>
+  <a class="nav-item" href="#timetables" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>الجداول المدرسية
+  </a>
+  <a class="nav-item" href="#portfolio" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>ملفات الإنجاز
+  </a>
+  <a class="nav-item" href="#records" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>سجلات المتابعة
+  </a>
+  <a class="nav-item" href="#supervision" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>الأعمال التحريرية
+  </a>
+  <a class="nav-item" href="#visits" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>الزيارات الفنية
+  </a>
+  <a class="nav-item" href="#license" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>الرخصة المهنية
+  </a>
+  <a class="nav-item" href="#nafs" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>تدريبات نافس
+  </a>
+  <a class="nav-item" href="#prils" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>رياض بيرلز
+  </a>
+  <a class="nav-item" href="#regulations" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#6366f1"></span>الأدلة واللوائح 2026
+  </a>
+
+  <div class="nav-divider"></div>
+  <div class="nav-section">شؤون الطلاب <span class="nav-badge">6</span></div>
+  <a class="nav-item" href="#activities" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>النشاط الطلابي
+  </a>
+  <a class="nav-item" href="#counselor" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>التوجيه الطلابي
+  </a>
+  <a class="nav-item" href="#health" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>الإشراف الصحي
+  </a>
+  <a class="nav-item" href="#bus" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>مخالفات الحافلات
+  </a>
+  <a class="nav-item" href="#special-edu" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>صعوبات التعلم
+  </a>
+  <a class="nav-item" href="#learning" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#f59e0b"></span>مركز مصادر التعلم
+  </a>
+
+  <div class="nav-divider"></div>
+  <a class="nav-item" href="#faq" onclick="setActive(this)">
+    <span class="nav-dot" style="background:#94a3b8"></span>أسئلة شائعة
+  </a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="mainContent">
+
+  <!-- INTRO -->
+  <span class="section-anchor" id="intro"></span>
+  <div class="intro-card">
+    <h1>📘 دليل المستخدم الشامل</h1>
+    <p>مرجعك الكامل لفهم واستخدام جميع تطبيقات منصة الرياض الإلكترونية — مدرسة الرياض الابتدائية 1447هـ</p>
+    <div class="intro-stats">
+      <div class="intro-stat"><div class="n">22</div><div class="l">تطبيقاً إلكترونياً</div></div>
+      <div class="intro-stat"><div class="n">3</div><div class="l">أقسام رئيسية</div></div>
+      <div class="intro-stat"><div class="n">24/7</div><div class="l">وصول مستمر</div></div>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="login-card">
+    <h3>🔐 كيفية الدخول للمنصة</h3>
+    <div class="notice">⚠️ البوابة الرئيسية هي نقطة الدخول لجميع التطبيقات — ادخل منها دائماً.</div>
+    <div class="cred-row"><span class="cred-label">رابط المنصة</span><span class="cred-value">riyadhplatform.tech</span></div>
+    <div class="cred-row"><span class="cred-label">اسم المستخدم</span><span class="cred-value">admin</span></div>
+    <div class="cred-row"><span class="cred-label">كلمة المرور</span><span class="cred-value">Riyadh@2854</span></div>
+    <div class="steps-list" style="margin-top:14px">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح المتصفح وانتقل إلى <strong>riyadhplatform.tech</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">أدخل اسم المستخدم وكلمة المرور ثم اضغط <strong>دخول</strong></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ستظهر لك لوحة التحكم الرئيسية بجميع الأقسام والتطبيقات</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">انقر على القسم المطلوب للوصول إلى تطبيقاته، أو استخدم <strong>شريط البحث</strong> للوصول السريع</div></div>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <span class="section-anchor" id="kpi"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#ede9fe;color:#5b21b6">📊</div>
+      <div class="app-meta">
+        <div class="app-num">لوحة المؤشرات</div>
+        <div class="app-title">لوحة مؤشرات الأداء المباشرة</div>
+        <div class="app-desc">تعرض ملخصاً فورياً لحالة جميع الأنظمة المتصلة، مع إحصاءات الإنجاز لكل تطبيق ومؤشر اتصال يوضح الأنظمة العاملة.</div>
+        <a class="app-link" href="https://riyadhplatform.tech/dashboard" target="_blank">🔗 riyadhplatform.tech/dashboard</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">بعد تسجيل الدخول ستجد لوحة المؤشرات في أعلى الصفحة — يمكن إخفاؤها بالضغط على زر "إخفاء المؤشرات"</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">تُحدَّث البيانات تلقائياً كل دقيقة — النقطة الخضراء تعني النظام متصل والحمراء تعني غير متاح</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">استخدم شريط البحث في الأعلى للوصول السريع لأي من الـ 22 تطبيقاً بكتابة اسمه</div></div>
+    </div>
+  </div>
+
+  <div class="content-divider"></div>
+
+  <!-- ===== SECTION: SCHOOL AFFAIRS ===== -->
+  <div class="section-header">
+    <div class="section-icon s-school">🏫</div>
+    <div class="section-title-wrap">
+      <h2>الشؤون المدرسية</h2>
+      <p>الجانب الإداري والمالي والبنية التحتية للمدرسة — <strong>3 تطبيقات</strong></p>
+    </div>
+  </div>
+
+  <!-- 1. FINANCIAL -->
+  <span class="section-anchor" id="financial"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#d1fae5;color:#065f46">💰</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون المدرسية · التطبيق 1 من 3</div>
+        <div class="app-title">النظام المالي</div>
+        <div class="app-desc">إدارة العمليات المالية والميزانية المدرسية — رصد الإيرادات والمصروفات وإصدار التقارير المالية الفورية.</div>
+        <a class="app-link" href="https://financial.riyadhplatform.tech" target="_blank">🔗 financial.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح النظام المالي من قسم <strong>الشؤون المدرسية</strong> في لوحة التحكم</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">استعرض الرصيد الحالي وآخر العمليات المالية المسجلة</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">لإضافة معاملة جديدة: انقر <strong>إضافة</strong> وأدخل البيانات (النوع، المبلغ، الوصف، التاريخ)</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">لعرض تقرير: انتقل لتبويب <strong>التقارير</strong> واختر الفترة الزمنية المطلوبة</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#10b981"></span>تتبع الإيرادات والمصروفات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#10b981"></span>تقارير مالية دورية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#10b981"></span>رصيد آني محدَّث</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#10b981"></span>سجل كامل للعمليات</div>
+    </div>
+  </div>
+
+  <!-- 2. TASKS -->
+  <span class="section-anchor" id="tasks"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#dbeafe;color:#1e40af">📋</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون المدرسية · التطبيق 2 من 3</div>
+        <div class="app-title">متابعة المهام الإدارية</div>
+        <div class="app-desc">نظام تنظيم ومتابعة المهام اليومية للطاقم الإداري — تتبع الإنجاز وتحديد المهام المعلقة والمنجزة.</div>
+        <a class="app-link" href="https://tasks.riyadhplatform.tech" target="_blank">🔗 tasks.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق متابعة المهام من قسم الشؤون المدرسية</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">تصفّح قائمة المهام الحالية وحالتها (منجزة / قيد التنفيذ / معلقة)</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">لإضافة مهمة جديدة: انقر <strong>+ مهمة جديدة</strong> وأدخل العنوان والوصف والموعد النهائي</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">لتحديث حالة مهمة: انقر عليها وغيّر حالتها إلى <strong>منجزة</strong></div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#3b82f6"></span>63+ مهمة قابلة للمتابعة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#3b82f6"></span>نسبة إنجاز فورية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#3b82f6"></span>تصنيف المهام حسب الحالة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#3b82f6"></span>تحديث لحظي</div>
+    </div>
+  </div>
+
+  <!-- 3. MAINTENANCE -->
+  <span class="section-anchor" id="maintenance"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#f5f5f4;color:#44403c">🏗️</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون المدرسية · التطبيق 3 من 3</div>
+        <div class="app-title">المبنى المدرسي</div>
+        <div class="app-desc">متابعة أعمال صيانة المبنى المدرسي وجدولة أعمال الصيانة الدورية والطارئة.</div>
+        <a class="app-link" href="https://maintenance.riyadhplatform.tech" target="_blank">🔗 maintenance.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق المبنى المدرسي وتصفّح قائمة بلاغات الصيانة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لرفع بلاغ جديد: انقر <strong>بلاغ جديد</strong> وحدد الموقع والمشكلة والأولوية</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع حالة البلاغات (معلق / جاري / منجز) وتاريخ الإغلاق المتوقع</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#78716c"></span>جدولة الصيانة الدورية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#78716c"></span>رفع البلاغات الطارئة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#78716c"></span>سجل تاريخ الصيانة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#78716c"></span>متابعة حالة كل بلاغ</div>
+    </div>
+  </div>
+
+  <div class="content-divider"></div>
+
+  <!-- ===== SECTION: EDUCATIONAL AFFAIRS ===== -->
+  <div class="section-header">
+    <div class="section-icon s-edu">📚</div>
+    <div class="section-title-wrap">
+      <h2>الشؤون التعليمية</h2>
+      <p>دورة الاختبارات والأعمال الفنية والتطوير المهني — <strong>12 تطبيقاً</strong></p>
+    </div>
+  </div>
+
+  <!-- 4. EXAMS-QS -->
+  <span class="section-anchor" id="exams-qs"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">📝</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 1 من 12</div>
+        <div class="app-title">تسليم الأسئلة</div>
+        <div class="app-desc">نظام إلكتروني لرفع وتسليم أسئلة الاختبارات من المعلمين، مع متابعة حالة التسليم لكل مادة.</div>
+        <a class="app-link" href="https://exams-qs.riyadhplatform.tech" target="_blank">🔗 exams-qs.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق تسليم الأسئلة وحدد المادة والصف الدراسي</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ارفع ملف الأسئلة (PDF أو Word) واضغط <strong>رفع</strong></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع حالة الأسئلة: مرفوعة / قيد المراجعة / معتمدة</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>رفع الأسئلة إلكترونياً</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>متابعة حالة كل مادة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تنبيهات المواعيد</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>أرشفة الأسئلة السابقة</div>
+    </div>
+  </div>
+
+  <!-- 5. EXAM FOLLOWUP -->
+  <span class="section-anchor" id="exam-followup"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">🔍</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 2 من 12</div>
+        <div class="app-title">متابعة أعمال الاختبارات</div>
+        <div class="app-desc">متابعة سير الاختبارات الفصلية والنهائية، ورصد الغياب وحالات التأجيل، وضمان سير الاختبارات بشكل منظم.</div>
+        <a class="app-link" href="https://exam-followup.riyadhplatform.tech" target="_blank">🔗 exam-followup.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وحدد الفصل الدراسي والمرحلة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">راجع جدول الاختبارات وحالة كل اختبار (قادم / جارٍ / منتهٍ)</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">سجّل ملاحظات اليوم (غياب طلاب، مشاكل، ملاحظات المراقبين)</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>جدول اختبارات تفصيلي</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>رصد الغياب في الاختبارات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تسجيل ملاحظات يومية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تقارير سير الاختبارات</div>
+    </div>
+  </div>
+
+  <!-- 6. EXAM ANALYSIS -->
+  <span class="section-anchor" id="exam-analysis"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">📊</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 3 من 12</div>
+        <div class="app-title">تحليل نتائج الاختبارات</div>
+        <div class="app-desc">أداة تحليل شاملة لنتائج الطلاب — تُظهر توزيع الدرجات، ونسب النجاح والرسوب، والمعدل العام لكل مادة وصف.</div>
+        <a class="app-link" href="https://exam-analysis.riyadhplatform.tech" target="_blank">🔗 exam-analysis.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق واختر الفصل الدراسي والمادة والصف</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ادخل درجات الطلاب أو استورد الملف المعتمد</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">اضغط <strong>تحليل</strong> لعرض الرسوم البيانية وملخص الأداء</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">صدّر التقرير بصيغة PDF للحفظ أو الطباعة</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>رسوم بيانية تفصيلية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>نسب النجاح والرسوب</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>مقارنة بين الفصول</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تصدير PDF</div>
+    </div>
+  </div>
+
+  <!-- 7. TIMETABLES -->
+  <span class="section-anchor" id="timetables"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">🗓️</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 4 من 12</div>
+        <div class="app-title">الجداول المدرسية</div>
+        <div class="app-desc">عرض وإدارة الجداول الدراسية لجميع الفصول والمعلمين، مع إمكانية الطباعة والمشاركة.</div>
+        <a class="app-link" href="https://school-timetables.riyadhplatform.tech" target="_blank">🔗 school-timetables.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق الجداول واختر عرض جدول <strong>الفصل</strong> أو <strong>المعلم</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">حدد الفصل الدراسي / الصف المطلوب لعرض الجدول كاملاً</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">اضغط <strong>طباعة</strong> لإخراج الجدول ورقياً أو <strong>مشاركة</strong> لإرساله</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>جداول الفصول والمعلمين</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>طباعة سهلة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تعديل الجدول</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>الكشف عن التعارضات</div>
+    </div>
+  </div>
+
+  <!-- 8. PORTFOLIO -->
+  <span class="section-anchor" id="portfolio"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">📁</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 5 من 12</div>
+        <div class="app-title">ملفات الإنجاز</div>
+        <div class="app-desc">منصة رفع ومتابعة ملفات إنجاز المعلمين — توثيق الأعمال التعليمية والمشاريع والإبداعات الصفية.</div>
+        <a class="app-link" href="https://portfolio.riyadhplatform.tech" target="_blank">🔗 portfolio.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق ملفات الإنجاز وحدد المعلم أو الصف</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لإضافة إنجاز: انقر <strong>+ إضافة</strong> وارفع الصور أو المستندات مع وصف مختصر</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">استعرض الإنجازات المرفوعة وصنّفها حسب النوع أو التاريخ</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>توثيق الأعمال التعليمية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>رفع صور ومستندات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تصنيف الإنجازات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>مشاركة الملفات</div>
+    </div>
+  </div>
+
+  <!-- 9. RECORDS -->
+  <span class="section-anchor" id="records"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">📒</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 6 من 12</div>
+        <div class="app-title">سجلات المتابعة</div>
+        <div class="app-desc">توثيق ومتابعة سجلات الزيارات الإشرافية والتقارير الدورية لأداء المعلمين والطلاب.</div>
+        <a class="app-link" href="https://records.riyadhplatform.tech" target="_blank">🔗 records.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح السجلات واختر نوع السجل (زيارة إشرافية / تقرير دوري)</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">انقر <strong>سجل جديد</strong> وأدخل بيانات الزيارة أو التقرير والملاحظات</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">اضغط <strong>حفظ</strong> لتوثيق السجل وإمكانية الرجوع إليه لاحقاً</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>سجلات الزيارات الإشرافية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تقارير الأداء</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>أرشيف زمني</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>بحث في السجلات</div>
+    </div>
+  </div>
+
+  <!-- 10. SUPERVISION -->
+  <span class="section-anchor" id="supervision"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">✍️</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 7 من 12</div>
+        <div class="app-title">الأعمال التحريرية</div>
+        <div class="app-desc">متابعة الإشراف على الأعمال التحريرية للطلاب والمراجعة الدورية لدفاتر التصحيح والواجبات.</div>
+        <a class="app-link" href="https://supervision.riyadhplatform.tech" target="_blank">🔗 supervision.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وحدد الفصل الدراسي والمادة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">أضف سجل متابعة تحريرية جديد وحدد المعلم والفصل والتاريخ</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">سجّل الملاحظات والتوصيات واضغط <strong>حفظ</strong></div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>متابعة دفاتر التصحيح</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>الإشراف على الواجبات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>توصيات تطويرية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تقارير دورية</div>
+    </div>
+  </div>
+
+  <!-- 11. VISITS -->
+  <span class="section-anchor" id="visits"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0e7ff;color:#3730a3">🔬</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 8 من 12</div>
+        <div class="app-title">الزيارات الفنية</div>
+        <div class="app-desc">توثيق وجدولة الزيارات الفنية والإشرافية للمشرفين التربويين، مع إدارة نتائج الزيارات والتوصيات.</div>
+        <a class="app-link" href="https://supervision-visit.riyadhplatform.tech" target="_blank">🔗 supervision-visit.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وشاهد جدول الزيارات المخططة القادمة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لإضافة زيارة: انقر <strong>+ زيارة جديدة</strong> وحدد المعلم والتاريخ والهدف</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">بعد الزيارة: افتح سجلها وأضف الملاحظات والتقييم والتوصيات</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>جدولة الزيارات مسبقاً</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>تقييم أداء المعلم</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>توصيات فنية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#6366f1"></span>أرشيف الزيارات</div>
+    </div>
+  </div>
+
+  <!-- 12. LICENSE -->
+  <span class="section-anchor" id="license"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#f3e8ff;color:#6b21a8">🏆</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 9 من 12</div>
+        <div class="app-title">اختبار الرخصة المهنية المحاكي</div>
+        <div class="app-desc">بيئة تدريبية محاكية لاختبار الرخصة المهنية للمعلمين — تساعد في التحضير للاختبار الرسمي عبر أسئلة تدريبية متعددة المجالات.</div>
+        <a class="app-link" href="https://license.riyadhplatform.tech" target="_blank">🔗 license.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="tip">💡 مصمم خصيصاً لمساعدة المعلمين على التحضير لاختبار الرخصة المهنية قبل التقديم الرسمي.</div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق واختر المجال الذي تريد التدرب عليه</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ابدأ الاختبار التجريبي وأجب على الأسئلة ضمن الوقت المحدد</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">راجع النتيجة وتحليل الأخطاء بعد انتهاء الاختبار</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>محاكاة كاملة للاختبار الرسمي</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>أسئلة متعددة المجالات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>مؤقت الاختبار</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>تحليل الأداء والأخطاء</div>
+    </div>
+  </div>
+
+  <!-- 13. NAFS -->
+  <span class="section-anchor" id="nafs"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#e0f2fe;color:#0c4a6e">💪</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 10 من 12</div>
+        <div class="app-title">تدريبات نافس</div>
+        <div class="app-desc">منصة التدريبات والتمارين التنافسية لتطوير مهارات الطلاب الأكاديمية والتنافسية استعداداً للمسابقات.</div>
+        <a class="app-link" href="https://nafs.riyadhplatform.tech" target="_blank">🔗 nafs.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح منصة تدريبات نافس واختر المادة والمستوى</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ابدأ جلسة تدريب وحل التمارين التفاعلية</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">راجع النتيجة ومستوى الأداء وتابع التقدم مع الوقت</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#0ea5e9"></span>تمارين تفاعلية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#0ea5e9"></span>مستويات متدرجة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#0ea5e9"></span>تتبع التقدم</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#0ea5e9"></span>إحصاءات الأداء</div>
+    </div>
+  </div>
+
+  <!-- 14. PRILS -->
+  <span class="section-anchor" id="prils"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#ffe4e6;color:#9f1239">💎</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 11 من 12</div>
+        <div class="app-title">رياض بيرلز</div>
+        <div class="app-desc">منصة رياض بيرلز للمحتوى التعليمي الإثرائي والموارد الرقمية المتوافقة مع المناهج الدراسية.</div>
+        <a class="app-link" href="https://prils.riyadhplatform.tech" target="_blank">🔗 prils.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح المنصة واستعرض المحتوى التعليمي المتاح حسب المادة والصف</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">حدد المورد المطلوب (فيديو / تمرين / مادة إثرائية) واستخدمه في الدرس</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">يمكن مشاركة الموارد مع الطلاب عبر رابط مباشر</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#f43f5e"></span>محتوى إثرائي رقمي</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f43f5e"></span>فيديوهات تعليمية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f43f5e"></span>تمارين تفاعلية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f43f5e"></span>متوافق مع المناهج</div>
+    </div>
+  </div>
+
+  <!-- 15. REGULATIONS -->
+  <span class="section-anchor" id="regulations"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#ccfbf1;color:#134e4a">📜</div>
+      <div class="app-meta">
+        <div class="app-num">الشؤون التعليمية · التطبيق 12 من 12</div>
+        <div class="app-title">الأدلة واللوائح للتعليم العام 2026</div>
+        <div class="app-desc">مرجع شامل ومحدَّث لجميع أدلة ولوائح التعليم العام الصادرة لعام 2026، يسهل البحث والرجوع إليها في أي وقت.</div>
+        <a class="app-link" href="https://regulations.riyadhplatform.tech" target="_blank">🔗 regulations.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="tip">💡 مرجع لا غنى عنه لكل منسوبي المدرسة — يوفر الوصول الفوري لأي لائحة أو دليل دون الحاجة للبحث في الأوراق.</div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح المنصة وتصفّح الأدلة حسب الفئة (تعليمية / إدارية / طلابية)</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">استخدم <strong>شريط البحث</strong> للعثور على لائحة محددة بسرعة</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">انقر على أي دليل لفتحه والاطلاع على تفاصيله كاملاً</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>جميع لوائح 2026</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>بحث سريع</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>تصفح حسب الفئة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>تحديث مستمر</div>
+    </div>
+  </div>
+
+  <div class="content-divider"></div>
+
+  <!-- ===== SECTION: STUDENT AFFAIRS ===== -->
+  <div class="section-header">
+    <div class="section-icon s-students">🎓</div>
+    <div class="section-title-wrap">
+      <h2>شؤون الطلاب</h2>
+      <p>رعاية الطالب وتطويره داخل البيئة المدرسية — <strong>6 تطبيقات</strong></p>
+    </div>
+  </div>
+
+  <!-- 16. ACTIVITIES -->
+  <span class="section-anchor" id="activities"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#fef3c7;color:#92400e">🏅</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 1 من 6</div>
+        <div class="app-title">النشاط الطلابي</div>
+        <div class="app-desc">منصة شاملة لمتابعة وتنظيم الفعاليات والأنشطة الطلابية — تتيح تسجيل الأنشطة وإرفاق الصور والتقارير.</div>
+        <a class="app-link" href="https://activities.riyadhplatform.tech" target="_blank">🔗 activities.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح تطبيق النشاط وشاهد الأنشطة المخططة والمنجزة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لإضافة نشاط: انقر <strong>+ نشاط جديد</strong> وأدخل الاسم والتاريخ والمشاركين والوصف</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ارفع صور النشاط وأي وثائق ذات صلة كالشهادات</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">بعد تنفيذ النشاط: حدّث حالته إلى <strong>منجز</strong> وأضف التقرير الختامي</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#f59e0b"></span>24+ نشاط قابل للمتابعة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f59e0b"></span>رفع الصور والوثائق</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f59e0b"></span>تقارير الأنشطة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#f59e0b"></span>نسبة إنجاز فورية</div>
+    </div>
+  </div>
+
+  <!-- 17. COUNSELOR -->
+  <span class="section-anchor" id="counselor"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#ccfbf1;color:#134e4a">🤝</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 2 من 6</div>
+        <div class="app-title">التوجيه الطلابي</div>
+        <div class="app-desc">نظام متابعة خطة التوجيه الطلابي — يشمل برامج الإرشاد، والزيارات الميدانية، ومتابعة الطلاب ذوي الاحتياجات الخاصة.</div>
+        <a class="app-link" href="https://counselor.riyadhplatform.tech" target="_blank">🔗 counselor.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وتصفّح خطة التوجيه للفصل الدراسي الحالي</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">سجّل جلسات الإرشاد الفردي أو الجماعي مع تفاصيلها</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع حالة كل برنامج (مخطط / جاري / منجز) ونسبة إنجاز الخطة الكلية</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>10+ برامج إرشادية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>جلسات إرشاد فردية وجماعية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>متابعة الطلاب</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#14b8a6"></span>تقارير دورية</div>
+    </div>
+  </div>
+
+  <!-- 18. HEALTH -->
+  <span class="section-anchor" id="health"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#fce7f3;color:#831843">🏥</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 3 من 6</div>
+        <div class="app-title">الإشراف الصحي</div>
+        <div class="app-desc">متابعة خطط المشرف الصحي والبرامج الصحية المدرسية — تسجيل الحالات الصحية والإحالات الطبية والبرامج الوقائية.</div>
+        <a class="app-link" href="https://health.riyadhplatform.tech" target="_blank">🔗 health.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق لعرض الحالات الصحية المسجلة وحالتها</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لتسجيل حالة جديدة: انقر <strong>+ حالة جديدة</strong> وأدخل بيانات الطالب والشكوى</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع البرامج الصحية (التوعية / الفحوصات) وأضف التقارير الدورية</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#ec4899"></span>55+ حالة صحية موثقة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ec4899"></span>إحالات طبية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ec4899"></span>برامج توعية صحية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ec4899"></span>تقارير الصحة المدرسية</div>
+    </div>
+  </div>
+
+  <!-- 19. BUS -->
+  <span class="section-anchor" id="bus"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#fee2e2;color:#7f1d1d">🚌</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 4 من 6</div>
+        <div class="app-title">مخالفات الحافلات المدرسية</div>
+        <div class="app-desc">رصد وتوثيق مخالفات الطلاب في الحافلة المدرسية لضمان سلامتهم وانضباطهم — مع إشعار ولي الأمر.</div>
+        <a class="app-link" href="https://bus.riyadhplatform.tech" target="_blank">🔗 bus.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وابحث عن الطالب بالاسم أو رقم الهوية</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لتسجيل مخالفة: انقر <strong>+ مخالفة</strong> وحدد نوعها والتاريخ والوصف</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">راجع سجل مخالفات الطالب الكامل عند الحاجة</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#ef4444"></span>51+ مخالفة مرصودة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ef4444"></span>تصنيف المخالفات</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ef4444"></span>سجل كامل لكل طالب</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#ef4444"></span>تقارير شهرية</div>
+    </div>
+  </div>
+
+  <!-- 20. SPECIAL EDU -->
+  <span class="section-anchor" id="special-edu"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#ede9fe;color:#4c1d95">🧠</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 5 من 6</div>
+        <div class="app-title">صعوبات التعلم (التربية الخاصة)</div>
+        <div class="app-desc">متابعة برامج وخطط صعوبات التعلم والتربية الخاصة — إدارة ملفات الطلاب وبطاقات عَوْن والتقارير الشهرية.</div>
+        <a class="app-link" href="https://special-edu.riyadhplatform.tech" target="_blank">🔗 special-edu.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح التطبيق وتصفّح قائمة الطلاب المسجلين في البرنامج</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لإضافة طالب جديد: انقر <strong>+ إضافة طالب</strong> وأدخل بياناته وتشخيصه</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع خطة الطالب الفردية وسجّل جلسات التدخل والتقدم الملحوظ</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">اصدر التقارير الشهرية وبطاقات عَوْن من خيارات التقارير</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>ملفات الطلاب الفردية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>بطاقات عَوْن</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>تقارير شهرية</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#8b5cf6"></span>متابعة الخطط الفردية</div>
+    </div>
+  </div>
+
+  <!-- 21. LEARNING CENTER -->
+  <span class="section-anchor" id="learning"></span>
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon" style="background:#cffafe;color:#164e63">📚</div>
+      <div class="app-meta">
+        <div class="app-num">شؤون الطلاب · التطبيق 6 من 6</div>
+        <div class="app-title">مركز مصادر التعلم</div>
+        <div class="app-desc">عرض خطط وبرامج مركز مصادر التعلم — إدارة فهرس الكتب والإعارة والأنشطة المكتبية.</div>
+        <a class="app-link" href="https://learning.riyadhplatform.tech" target="_blank">🔗 learning.riyadhplatform.tech</a>
+      </div>
+    </div>
+    <div class="steps-title">✅ كيفية الاستخدام</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">افتح مركز المصادر واستعرض الفهرس الكامل للكتب المتاحة</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">لتسجيل إعارة: ابحث عن الكتاب، حدد الطالب، وانقر <strong>إعارة</strong></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">تابع الكتب المعارة ومواعيد إعادتها وسجّل الإرجاع عند استلامه</div></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-chip"><span class="fc-dot" style="background:#06b6d4"></span>198+ كتاب مسجل</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#06b6d4"></span>نظام إعارة وإرجاع</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#06b6d4"></span>44+ إعارة منجزة</div>
+      <div class="feature-chip"><span class="fc-dot" style="background:#06b6d4"></span>12 برنامج مكتبي</div>
+    </div>
+  </div>
+
+  <div class="content-divider"></div>
+
+  <!-- ===== FAQ ===== -->
+  <span class="section-anchor" id="faq"></span>
+  <div class="section-header">
+    <div class="section-icon" style="background:#f1f5f9;color:#475569">❓</div>
+    <div class="section-title-wrap">
+      <h2>أسئلة شائعة</h2>
+      <p>إجابات على أكثر الأسئلة تكراراً</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>هل يمكن استخدام المنصة من الجوال؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">نعم، جميع التطبيقات متوافقة مع الهواتف الذكية والأجهزة اللوحية. افتح المتصفح وأدخل رابط المنصة وستعمل بشكل كامل.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>ما المتصفح الأنسب لاستخدام المنصة؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">يُنصح باستخدام Google Chrome أو Microsoft Edge أو Safari للحصول على أفضل تجربة. تجنّب المتصفحات القديمة.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>ماذا أفعل إذا ظهر النظام "غير متصل" في لوحة المؤشرات؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">تحقق من اتصالك بالإنترنت أولاً. إذا كان الاتصال سليماً، انتظر دقيقة وستُحدَّث المؤشرات تلقائياً. النقطة الحمراء تعني أن الخادم يجري عليه صيانة مؤقتة.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>كيف أصل لتطبيق معين بسرعة؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">استخدم شريط البحث في أعلى لوحة التحكم — اكتب اسم التطبيق وستظهر نتائج فورية مع رابط مباشر له.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>هل البيانات المُدخلة محفوظة عند إغلاق المتصفح؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">نعم، جميع البيانات تُحفظ على الخادم فور الإدخال. لا تحتاج لضغط "حفظ" في معظم الأنظمة — البيانات محفوظة تلقائياً.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>كيف أطبع أو أصدّر تقريراً من أحد التطبيقات؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">معظم التطبيقات تحتوي على زر "طباعة" أو "تصدير PDF" داخل صفحة التقارير. يمكن أيضاً استخدام أمر الطباعة في المتصفح (Ctrl+P).</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>هل يمكن الدخول للتطبيقات مباشرة دون المرور بالبوابة الرئيسية؟</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">نعم، لكل تطبيق رابطه المباشر (مثل financial.riyadhplatform.tech). ومع ذلك يُنصح بالدخول عبر البوابة الرئيسية للاستفادة من لوحة المؤشرات والبحث الموحد.</div>
+  </div>
+
+  <div style="text-align:center;margin-top:48px;padding:24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)">
+    منصة الرياض الإلكترونية — مدرسة الرياض الابتدائية 1447هـ &nbsp;|&nbsp; riyadhplatform.tech<br>
+    <span style="font-size:11px">إعداد: صالح سفر الغامدي</span>
+  </div>
+
+</main>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ===== SIDEBAR TOGGLE =====
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+  document.addEventListener('click', e=>{
+    const sb = document.getElementById('sidebar');
+    const mb = document.querySelector('.menu-btn');
+    if(sb.classList.contains('open') && !sb.contains(e.target) && e.target!==mb)
+      sb.classList.remove('open');
+  });
+
+  // ===== NAV ACTIVE =====
+  function setActive(el){
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    el.classList.add('active');
+    if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
+  }
+
+  // ===== SCROLL SPY =====
+  const anchors = document.querySelectorAll('.section-anchor');
+  const navLinks = document.querySelectorAll('.nav-item');
+  window.addEventListener('scroll', ()=>{
+    let current = '';
+    anchors.forEach(a=>{
+      if(window.scrollY >= a.offsetTop - 80) current = a.id;
+    });
+    navLinks.forEach(l=>{
+      l.classList.remove('active');
+      if(l.getAttribute('href')==='#'+current) l.classList.add('active');
+    });
+    document.getElementById('scrollTopBtn').classList.toggle('show', window.scrollY>300);
+  });
+
+  // ===== FAQ =====
+  function toggleFaq(el){
+    const answer = el.nextElementSibling;
+    const arrow = el.querySelector('.faq-arrow');
+    answer.classList.toggle('open');
+    arrow.classList.toggle('open');
+  }
+
+  // ===== SEARCH =====
+  function doSearch(q){
+    const query = q.trim().toLowerCase();
+    if(!query){ clearHighlight(); return; }
+    const cards = document.querySelectorAll('.app-card, .login-card');
+    cards.forEach(card=>{
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(query) ? '' : 'none';
+    });
+  }
+  function clearHighlight(){
+    document.querySelectorAll('.app-card, .login-card').forEach(c=>c.style.display='');
+  }
+</script>
+
+</body>
+</html>
