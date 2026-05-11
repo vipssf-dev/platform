@@ -40,68 +40,70 @@
 }
 
 :root {
-  /* Institutional Modern Palette - Trustworthy Blue & Clean White */
-  --background: 210 20% 98%;
-  --foreground: 222 47% 11%;
+  /* Saudi Identity — Emerald Green & Gold */
+  --background: 42 30% 97%;
+  --foreground: 150 40% 10%;
 
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card-foreground: 150 40% 10%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
+  --popover-foreground: 150 40% 10%;
 
-  /* Primary Blue/Teal */
-  --primary: 199 89% 48%;
-  --primary-foreground: 210 40% 98%;
+  /* Primary — Deep Saudi Emerald */
+  --primary: 155 68% 28%;
+  --primary-foreground: 42 80% 94%;
 
-  /* Secondary Gold/Sand for accents */
-  --secondary: 45 93% 47%;
-  --secondary-foreground: 222 47% 11%;
+  /* Secondary — Rich Gold */
+  --secondary: 42 78% 52%;
+  --secondary-foreground: 150 40% 10%;
 
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 42 20% 94%;
+  --muted-foreground: 150 15% 45%;
 
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --accent: 42 20% 92%;
+  --accent-foreground: 150 40% 12%;
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 199 89% 48%;
+  --border: 42 25% 88%;
+  --input: 42 25% 88%;
+  --ring: 155 68% 28%;
 
   --radius: 0.75rem;
+
+  /* Custom brand tokens */
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-pale: #FDF3D8;
+  --saudi-green: #0B5E3A;
+  --saudi-green-mid: #0D7A4E;
+  --saudi-green-light: #E6F4EC;
+  --ivory: #FDFBF5;
+  --ivory-dark: #F5F0E0;
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-
-  --primary: 199 89% 48%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-
-  --secondary: 45 93% 47%;
-  --secondary-foreground: 210 40% 98%;
-
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-
+  --background: 150 35% 7%;
+  --foreground: 42 40% 92%;
+  --card: 150 30% 9%;
+  --card-foreground: 42 40% 92%;
+  --popover: 150 30% 9%;
+  --popover-foreground: 42 40% 92%;
+  --primary: 155 68% 42%;
+  --primary-foreground: 150 40% 10%;
+  --secondary: 42 78% 45%;
+  --secondary-foreground: 42 40% 10%;
+  --muted: 150 25% 15%;
+  --muted-foreground: 42 20% 60%;
+  --accent: 150 25% 15%;
+  --accent-foreground: 42 40% 92%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 199 89% 48%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 150 25% 18%;
+  --input: 150 25% 18%;
+  --ring: 155 68% 42%;
 }
 
 @layer base {
@@ -111,4 +113,42 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+}
+
+/* ===== Islamic geometric pattern utility ===== */
+.bg-islamic-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpolygon points='40,0 50,29.4 80,40 50,50.6 40,80 30,50.6 0,40 30,29.4' stroke='rgba(201,168,76,0.18)' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='40,10 47.5,32.5 70,40 47.5,47.5 40,70 32.5,47.5 10,40 32.5,32.5' stroke='rgba(201,168,76,0.08)' stroke-width='0.5' fill='none'/%3E%3Crect x='0' y='0' width='80' height='80' stroke='rgba(201,168,76,0.07)' stroke-width='0.5' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.bg-islamic-pattern-subtle {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpolygon points='30,2 38,22 58,30 38,38 30,58 22,38 2,30 22,22' stroke='rgba(11,94,58,0.07)' stroke-width='0.6' fill='none'/%3E%3Crect x='0' y='0' width='60' height='60' stroke='rgba(11,94,58,0.04)' stroke-width='0.5' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ===== Gold shimmer animation ===== */
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, #C9A84C 0%, #F0D87A 40%, #C9A84C 60%, #A0762A 100%);
+  background-size: 200% auto;
+  animation: gold-shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Arabesque border ===== */
+.border-arabesque {
+  border-image: linear-gradient(90deg, transparent, #C9A84C, transparent) 1;
+}
+
+/* ===== Glow effects ===== */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(201,168,76,0.25), 0 0 40px rgba(201,168,76,0.12);
+}
+
+.glow-green {
+  box-shadow: 0 0 20px rgba(11,94,58,0.3), 0 0 40px rgba(11,94,58,0.15);
 }

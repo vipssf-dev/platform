@@ -12,69 +12,97 @@ interface SystemCardProps {
   isInternal?: boolean;
 }
 
-const colorMap: Record<string, { bg: string; text: string; light: string; border: string; shadow: string }> = {
-  'bg-emerald-500': { bg: 'bg-emerald-500', text: 'text-emerald-600', light: 'bg-emerald-50', border: 'border-emerald-200', shadow: 'shadow-emerald-500/10' },
-  'bg-indigo-500': { bg: 'bg-indigo-500', text: 'text-indigo-600', light: 'bg-indigo-50', border: 'border-indigo-200', shadow: 'shadow-indigo-500/10' },
-  'bg-amber-500': { bg: 'bg-amber-500', text: 'text-amber-600', light: 'bg-amber-50', border: 'border-amber-200', shadow: 'shadow-amber-500/10' },
-  'bg-yellow-500': { bg: 'bg-yellow-500', text: 'text-yellow-600', light: 'bg-yellow-50', border: 'border-yellow-200', shadow: 'shadow-yellow-500/10' },
-  'bg-blue-500': { bg: 'bg-blue-500', text: 'text-blue-600', light: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-blue-500/10' },
-  'bg-cyan-500': { bg: 'bg-cyan-500', text: 'text-cyan-600', light: 'bg-cyan-50', border: 'border-cyan-200', shadow: 'shadow-cyan-500/10' },
-  'bg-stone-500': { bg: 'bg-stone-500', text: 'text-stone-600', light: 'bg-stone-50', border: 'border-stone-200', shadow: 'shadow-stone-500/10' },
-  'bg-teal-500': { bg: 'bg-teal-500', text: 'text-teal-600', light: 'bg-teal-50', border: 'border-teal-200', shadow: 'shadow-teal-500/10' },
-  'bg-pink-500': { bg: 'bg-pink-500', text: 'text-pink-600', light: 'bg-pink-50', border: 'border-pink-200', shadow: 'shadow-pink-500/10' },
-  'bg-red-500': { bg: 'bg-red-500', text: 'text-red-600', light: 'bg-red-50', border: 'border-red-200', shadow: 'shadow-red-500/10' },
-  'bg-purple-500': { bg: 'bg-purple-500', text: 'text-purple-600', light: 'bg-purple-50', border: 'border-purple-200', shadow: 'shadow-purple-500/10' },
-  'bg-rose-500': { bg: 'bg-rose-500', text: 'text-rose-600', light: 'bg-rose-50', border: 'border-rose-200', shadow: 'shadow-rose-500/10' },
-  'bg-violet-500': { bg: 'bg-violet-500', text: 'text-violet-600', light: 'bg-violet-50', border: 'border-violet-200', shadow: 'shadow-violet-500/10' },
-  'bg-sky-500': { bg: 'bg-sky-500', text: 'text-sky-600', light: 'bg-sky-50', border: 'border-sky-200', shadow: 'shadow-sky-500/10' },
-  'bg-orange-500': { bg: 'bg-orange-500', text: 'text-orange-600', light: 'bg-orange-50', border: 'border-orange-200', shadow: 'shadow-orange-500/10' },
+const colorMap: Record<string, { icon: string; glow: string; accent: string }> = {
+  'bg-emerald-500': { icon: '#0B5E3A', glow: 'rgba(11,94,58,0.15)', accent: '#0D7A4E' },
+  'bg-indigo-500': { icon: '#312e81', glow: 'rgba(49,46,129,0.15)', accent: '#4338ca' },
+  'bg-amber-500': { icon: '#92400e', glow: 'rgba(146,64,14,0.15)', accent: '#d97706' },
+  'bg-yellow-500': { icon: '#78350f', glow: 'rgba(120,53,15,0.12)', accent: '#ca8a04' },
+  'bg-blue-500': { icon: '#1e3a8a', glow: 'rgba(30,58,138,0.15)', accent: '#2563eb' },
+  'bg-cyan-500': { icon: '#164e63', glow: 'rgba(22,78,99,0.15)', accent: '#0891b2' },
+  'bg-stone-500': { icon: '#44403c', glow: 'rgba(68,64,60,0.15)', accent: '#78716c' },
+  'bg-teal-500': { icon: '#134e4a', glow: 'rgba(19,78,74,0.15)', accent: '#0d9488' },
+  'bg-pink-500': { icon: '#831843', glow: 'rgba(131,24,67,0.15)', accent: '#ec4899' },
+  'bg-red-500': { icon: '#7f1d1d', glow: 'rgba(127,29,29,0.15)', accent: '#ef4444' },
+  'bg-purple-500': { icon: '#4c1d95', glow: 'rgba(76,29,149,0.15)', accent: '#9333ea' },
+  'bg-rose-500': { icon: '#881337', glow: 'rgba(136,19,55,0.15)', accent: '#f43f5e' },
+  'bg-violet-500': { icon: '#4c1d95', glow: 'rgba(76,29,149,0.15)', accent: '#8b5cf6' },
+  'bg-sky-500': { icon: '#0c4a6e', glow: 'rgba(12,74,110,0.15)', accent: '#0ea5e9' },
+  'bg-orange-500': { icon: '#7c2d12', glow: 'rgba(124,45,18,0.15)', accent: '#f97316' },
 };
 
 function getColors(color: string) {
-  return colorMap[color] || { bg: 'bg-blue-500', text: 'text-blue-600', light: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-blue-500/10' };
+  return colorMap[color] || colorMap['bg-emerald-500'];
 }
 
 export function SystemCard({ title, description, icon: Icon, href, color, mode = 'grid', isInternal = false }: SystemCardProps) {
   const colors = getColors(color);
-  
+
   const cardContent = (
-    <div className={`relative overflow-hidden rounded-xl border bg-white transition-all duration-300 group
-      ${mode === 'list' ? 'hover:shadow-lg' : 'h-full hover:shadow-xl'} 
-      hover:${colors.border} ${colors.shadow}`}
+    <div
+      className={`relative overflow-hidden rounded-2xl bg-white transition-all duration-300 group
+        ${mode === 'list' ? '' : 'h-full'}`}
+      style={{
+        border: "1px solid rgba(201,168,76,0.18)",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+      }}
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 32px ${colors.glow}, 0 0 0 1px rgba(201,168,76,0.3), 0 2px 12px rgba(0,0,0,0.08)`;
+        (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.4)";
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)";
+        (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.18)";
+      }}
       data-testid={`card-system-${title}`}
     >
-      {mode === 'grid' && (
-        <div className={`h-1.5 w-full ${colors.bg}`} />
-      )}
-      
+      {/* Top gold accent line */}
+      <div className="h-[3px] w-full"
+        style={{ background: `linear-gradient(90deg, ${colors.accent}, #C9A84C)` }} />
+
+      {/* Subtle Islamic pattern watermark */}
+      <div className="absolute inset-0 bg-islamic-pattern-subtle opacity-50 pointer-events-none" />
+
       {mode === 'list' ? (
-        <div className="flex items-center p-4 gap-4">
-          <div className={`p-3 rounded-xl flex-shrink-0 ${colors.light}`}>
-            <Icon className={`w-6 h-6 ${colors.text}`} />
+        <div className="relative flex items-center p-4 gap-4">
+          <div className="p-3 rounded-xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+            style={{ background: `${colors.glow}`, border: `1px solid ${colors.glow}` }}>
+            <Icon className="w-6 h-6" style={{ color: colors.icon }} />
           </div>
           <div className="flex-grow min-w-0">
-            <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-0.5 truncate">{title}</h3>
-            <p className="text-sm text-slate-500 truncate">{description}</p>
+            <h3 className="text-base font-bold truncate" style={{ color: "#1A2B1F" }}>{title}</h3>
+            <p className="text-sm text-slate-500 truncate mt-0.5">{description}</p>
           </div>
-          <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-[-4px]">
-            {isInternal ? <ChevronLeft className="w-5 h-5 text-slate-400" /> : <ExternalLink className="w-5 h-5 text-slate-400" />}
+          <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-0 group-hover:-translate-x-1">
+            {isInternal
+              ? <ChevronLeft className="w-5 h-5" style={{ color: "#C9A84C" }} />
+              : <ExternalLink className="w-5 h-5" style={{ color: "#C9A84C" }} />}
           </div>
         </div>
       ) : (
-        <div className="p-5 sm:p-6">
+        <div className="relative p-5 sm:p-6">
           <div className="flex justify-between items-start mb-4">
-            <div className={`p-3 rounded-xl ${colors.light} transition-transform duration-300 group-hover:scale-110`}>
-              <Icon className={`w-7 h-7 sm:w-8 sm:h-8 ${colors.text}`} />
+            <div className="p-3 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+              style={{
+                background: `linear-gradient(135deg, ${colors.glow}, rgba(201,168,76,0.08))`,
+                border: `1px solid rgba(201,168,76,0.15)`,
+              }}>
+              <Icon className="w-7 h-7 sm:w-8 sm:h-8" style={{ color: colors.icon }} />
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-all duration-300">
-              {isInternal ? <ChevronLeft className="w-5 h-5 text-slate-400" /> : <ExternalLink className="w-5 h-5 text-slate-400" />}
+              {isInternal
+                ? <ChevronLeft className="w-5 h-5" style={{ color: "#C9A84C" }} />
+                : <ExternalLink className="w-4 h-4" style={{ color: "#C9A84C" }} />}
             </div>
           </div>
-          <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">{title}</h3>
+
+          <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: "#1A2B1F" }}>{title}</h3>
           <p className="text-sm text-slate-500 leading-relaxed mb-4">{description}</p>
-          <div className={`inline-flex items-center gap-1.5 text-sm font-medium ${colors.text}`}>
+
+          {/* Gold CTA */}
+          <div className="flex items-center gap-1.5 text-sm font-bold transition-all duration-300"
+            style={{ color: "#C9A84C" }}>
             <span>{isInternal ? 'عرض الأنظمة' : 'الدخول للنظام'}</span>
-            <span className="group-hover:translate-x-[-4px] transition-transform duration-300">←</span>
+            <span className="group-hover:-translate-x-1.5 transition-transform duration-300 inline-block">←</span>
           </div>
         </div>
       )}
@@ -83,10 +111,7 @@ export function SystemCard({ title, description, icon: Icon, href, color, mode =
 
   if (isInternal) {
     return (
-      <motion.div
-        whileHover={{ y: mode === 'grid' ? -4 : 0 }}
-        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      >
+      <motion.div whileHover={{ y: mode === 'grid' ? -4 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
         <Link href={href} className={`block ${mode === 'grid' ? 'h-full' : 'w-full'}`}>
           {cardContent}
         </Link>
@@ -95,10 +120,7 @@ export function SystemCard({ title, description, icon: Icon, href, color, mode =
   }
 
   return (
-    <motion.div
-      whileHover={{ y: mode === 'grid' ? -4 : 0 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
-    >
+    <motion.div whileHover={{ y: mode === 'grid' ? -4 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
       <a href={href} target="_blank" rel="noopener noreferrer" className={`block ${mode === 'grid' ? 'h-full' : 'w-full'}`}>
         {cardContent}
       </a>
