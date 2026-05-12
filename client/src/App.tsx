@@ -23,10 +23,21 @@ const EducationalHub = lazy(() => import("@/pages/educational-hub"));
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50" dir="rtl">
-      <div className="flex flex-col items-center gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-        <p className="text-sm text-slate-500 font-medium">جاري التحميل...</p>
+    <div className="min-h-screen flex items-center justify-center font-sans relative overflow-hidden" dir="rtl"
+      style={{ background: "linear-gradient(135deg, #062618 0%, #0B5E3A 50%, #083D27 100%)" }}>
+      <div className="absolute inset-0 bg-islamic-pattern opacity-100 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-[2px]"
+        style={{ background: "linear-gradient(90deg, transparent, #C9A84C, #F0D87A, #C9A84C, transparent)" }} />
+      <div className="relative z-10 flex flex-col items-center gap-4">
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full blur-xl opacity-40"
+            style={{ background: "radial-gradient(circle, #C9A84C, transparent)" }} />
+          <div className="relative w-14 h-14 rounded-full flex items-center justify-center"
+            style={{ background: "rgba(201,168,76,0.12)", border: "1.5px solid rgba(201,168,76,0.4)" }}>
+            <Loader2 className="w-6 h-6 animate-spin" style={{ color: "#F0D87A" }} />
+          </div>
+        </div>
+        <p className="text-sm font-bold" style={{ color: "rgba(201,168,76,0.7)" }}>جاري التحميل...</p>
       </div>
     </div>
   );
