@@ -414,7 +414,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#0B5E3A" }} />
               <Clock className="w-3.5 h-3.5" />
-              <span>22 تطبيق متاح</span>
+              <span>23 تطبيق متاح</span>
             </div>
             <div className="w-px h-4 bg-slate-200" />
             <span>3 أقسام رئيسية</span>
