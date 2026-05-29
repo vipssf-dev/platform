@@ -6,7 +6,8 @@ import {
   Award,
   Dumbbell,
   Gem,
-  ScrollText
+  ScrollText,
+  BrainCircuit
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -55,6 +56,13 @@ const educationalSystems = [
     icon: ScrollText,
     href: "https://regulations.riyadhplatform.tech",
     color: "bg-teal-500"
+  },
+  {
+    title: "بنك الأسئلة الذكي",
+    description: "منصة ذكية لإنشاء وإدارة بنك أسئلة متكامل للاختبارات والتقييمات.",
+    icon: BrainCircuit,
+    href: "https://quizflow.riyadhplatform.tech",
+    color: "bg-emerald-500"
   }
 ];
 
