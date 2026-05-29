@@ -32,7 +32,8 @@ import {
   UserCheck,
   ExternalLink,
   Menu,
-  ScrollText
+  ScrollText,
+  BrainCircuit
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { KPIDashboard } from "@/components/kpi-dashboard";
@@ -88,6 +89,7 @@ const allSubSystems = [
   { title: "الإشراف الصحي", icon: Stethoscope, href: "https://health.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "مخالفات الحافلات", icon: Bus, href: "https://bus.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "صعوبات التعلم", icon: Brain, href: "https://special-edu.riyadhplatform.tech", category: "شؤون الطلاب" },
+  { title: "بنك الأسئلة الذكي", icon: BrainCircuit, href: "https://quizflow.riyadhplatform.tech", category: "الشؤون التعليمية" },
 ];
 
 function getGreeting(): string {
@@ -414,7 +416,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#0B5E3A" }} />
               <Clock className="w-3.5 h-3.5" />
-              <span>23 تطبيق متاح</span>
+              <span>{allSubSystems.length} تطبيق متاح</span>
             </div>
             <div className="w-px h-4 bg-slate-200" />
             <span>3 أقسام رئيسية</span>
