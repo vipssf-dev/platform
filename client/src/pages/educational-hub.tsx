@@ -7,7 +7,8 @@ import {
   Dumbbell,
   Gem,
   ScrollText,
-  BrainCircuit
+  BrainCircuit,
+  TrendingUp
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { HubLayout } from "@/components/hub-layout";
@@ -63,6 +64,13 @@ const educationalSystems = [
     icon: BrainCircuit,
     href: "https://quizflow.riyadhplatform.tech",
     color: "bg-emerald-500"
+  },
+  {
+    title: "بوابة تحليل نتائج اختبارات نهاية الفصل الدراسي الثاني",
+    description: "تحليل شامل لنتائج اختبارات نهاية الفصل الدراسي الثاني ومؤشرات الأداء.",
+    icon: TrendingUp,
+    href: "https://analyze.riyadhplatform.tech",
+    color: "bg-cyan-500"
   }
 ];
 

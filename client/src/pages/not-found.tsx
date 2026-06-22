@@ -107,7 +107,7 @@ export default function NotFound() {
           </div>
           <span className="text-xs font-bold text-white">مدرسة الرياض الابتدائية</span>
         </div>
-        <p className="text-[11px]" style={{ color: "rgba(201,168,76,0.3)" }}>تصميم وتطوير: صالح سفر الغامدي</p>
+        <p className="text-[11px]" style={{ color: "rgba(201,168,76,0.3)" }}>تصميم وتطوير: صالح بن سفر الغامدي</p>
       </motion.div>
 
       {/* Bottom gold line */}

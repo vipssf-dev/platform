@@ -33,7 +33,8 @@ import {
   ExternalLink,
   Menu,
   ScrollText,
-  BrainCircuit
+  BrainCircuit,
+  TrendingUp
 } from "lucide-react";
 import { SystemCard } from "@/components/system-card";
 import { KPIDashboard } from "@/components/kpi-dashboard";
@@ -90,6 +91,7 @@ const allSubSystems = [
   { title: "مخالفات الحافلات", icon: Bus, href: "https://bus.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "صعوبات التعلم", icon: Brain, href: "https://special-edu.riyadhplatform.tech", category: "شؤون الطلاب" },
   { title: "بنك الأسئلة الذكي", icon: BrainCircuit, href: "https://quizflow.riyadhplatform.tech", category: "الشؤون التعليمية" },
+  { title: "تحليل نتائج الفصل الثاني", icon: TrendingUp, href: "https://analyze.riyadhplatform.tech", category: "الشؤون التعليمية" },
 ];
 
 function getGreeting(): string {
@@ -512,8 +514,8 @@ export default function Dashboard() {
             <span className="text-sm font-bold text-white">مدرسة الرياض الابتدائية</span>
             <div className="h-px w-8 opacity-30" style={{ background: "#C9A84C" }} />
           </div>
-          <p className="text-xs" style={{ color: "rgba(201,168,76,0.4)" }} data-testid="text-footer-copyright">© 1447 جميع الحقوق محفوظة</p>
-          <p className="text-[10px] mt-1" style={{ color: "rgba(201,168,76,0.25)" }} data-testid="text-footer-developer">تصميم وتطوير: صالح سفر الغامدي</p>
+          <p className="text-xs" style={{ color: "rgba(201,168,76,0.4)" }} data-testid="text-footer-copyright">جميع الحقوق محفوظة 2026</p>
+          <p className="text-[10px] mt-1" style={{ color: "rgba(201,168,76,0.25)" }} data-testid="text-footer-developer">تصميم وتطوير: صالح بن سفر الغامدي</p>
         </div>
       </footer>
     </div>

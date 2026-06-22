@@ -230,7 +230,7 @@ export default function Login() {
             © 1447 مدرسة الرياض الابتدائية
           </span>
           <span className="block text-[11px]" style={{ color: "rgba(201,168,76,0.25)" }}>
-            تصميم وتطوير: صالح سفر الغامدي
+            تصميم وتطوير: صالح بن سفر الغامدي
           </span>
         </motion.p>
       </motion.div>

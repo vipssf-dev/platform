@@ -141,8 +141,8 @@ export function HubLayout({ title, subtitle, description, icon: Icon, breadcrumb
             <span className="text-sm font-bold text-white">مدرسة الرياض الابتدائية</span>
             <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#C9A84C" }} />
           </div>
-          <p className="text-xs" style={{ color: "rgba(201,168,76,0.5)" }}>© 1447 جميع الحقوق محفوظة</p>
-          <p className="text-[10px] mt-1" style={{ color: "rgba(201,168,76,0.3)" }}>تصميم وتطوير: صالح سفر الغامدي</p>
+          <p className="text-xs" style={{ color: "rgba(201,168,76,0.5)" }}>جميع الحقوق محفوظة 2026</p>
+          <p className="text-[10px] mt-1" style={{ color: "rgba(201,168,76,0.3)" }}>تصميم وتطوير: صالح بن سفر الغامدي</p>
         </div>
       </footer>
     </div>
